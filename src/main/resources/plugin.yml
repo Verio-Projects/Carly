@@ -1,0 +1,4 @@
+name: ${pom.name}
+version: ${pom.version}
+website: ${pom.url}
+main: ${pom.groupId}
