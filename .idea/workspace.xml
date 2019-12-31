@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="1846e8f9-bc59-4514-bcb6-8f2c637a2f24" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/java/rip/skyland/carly/rank/grants/impl/PermanentGrant.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/rip/skyland/carly/rank/grants/impl/PermanentGrant.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/rip/skyland/carly/rank/grants/impl/TemporaryGrant.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/rip/skyland/carly/rank/grants/impl/TemporaryGrant.java" afterDir="false" />
-    </list>
+    <list default="true" id="1846e8f9-bc59-4514-bcb6-8f2c637a2f24" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

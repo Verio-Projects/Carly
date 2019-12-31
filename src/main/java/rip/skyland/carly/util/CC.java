@@ -1,6 +1,7 @@
 package rip.skyland.carly.util;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -81,30 +82,7 @@ public enum CC {
     }
 
     public static CC getChatColorByCode(String colorCode){
-        switch (colorCode){
-            case "&b" : return CC.AQUA;
-            case "&0" : return CC.BLACK;
-            case "&9" : return CC.BLUE;
-            case "&l" : return CC.BOLD;
-            case "&3" : return CC.DARK_AQUA;
-            case "&1" : return CC.DARK_BLUE;
-            case "&8" : return CC.DARK_GRAY;
-            case "&2" : return CC.DARK_GREEN;
-            case "&5" : return CC.DARK_PURPLE;
-            case "&4" : return CC.DARK_RED;
-            case "&6" : return CC.GOLD;
-            case "&7" : return CC.GRAY;
-            case "&a" : return CC.GREEN;
-            case "&o" : return CC.ITALIC;
-            case "&d" : return CC.LIGHT_PURPLE;
-            case "&k" : return CC.MAGIC;
-            case "&c" : return CC.RED;
-            case "&r" : return CC.RESET;
-            case "&m" : return CC.STRIKETHROUGH;
-            case "&n" : return CC.UNDERLINE;
-            case "&e" : return CC.YELLOW;
-            default: return CC.WHITE;
-        }
+        return Arrays.stream(values()).filter(color -> color.code == colorCode.charAt(1)).findFirst().orElse(CC.WHITE);
     }
 
 
