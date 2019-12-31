@@ -2,9 +2,12 @@ package rip.skyland.carly.profile;
 
 import lombok.Getter;
 import lombok.Setter;
+import rip.skyland.carly.Core;
+import rip.skyland.carly.rank.Rank;
 import rip.skyland.carly.rank.grants.IGrant;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
 
@@ -19,6 +22,10 @@ public class Profile {
     public Profile(UUID uuid) {
         this.uuid = uuid;
         this.grants = new ArrayList<>();
+    }
+
+    public Rank getRank() {
+        return grants.stream().sorted(Comparator.comparingInt(grant -> grant.getRank().getWeight())).map(IGrant::getRank).findFirst().orElse(null);
     }
 
 }

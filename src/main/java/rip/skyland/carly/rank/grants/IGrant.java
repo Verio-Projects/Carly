@@ -14,4 +14,6 @@ public interface IGrant {
     boolean isActive();
     JsonObject toJson();
 
+    void setActive(boolean val);
+
 }

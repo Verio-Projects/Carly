@@ -5,6 +5,7 @@ import com.mongodb.client.model.Filters;
 import lombok.Getter;
 import org.bson.Document;
 import rip.skyland.carly.Core;
+import rip.skyland.carly.api.CoreAPI;
 import rip.skyland.carly.handler.IHandler;
 import rip.skyland.carly.profile.packets.ProfileCreatePacket;
 import rip.skyland.carly.rank.grants.IGrant;
@@ -44,13 +45,16 @@ public class ProfileHandler implements IHandler {
             Profile profile = new Profile(uuid);
             profile.setPlayerName(document.getString("playerName"));
 
+            CoreAPI.INSTANCE.PARSER.parse(document.getString("grants")).getAsJsonArray()
+                    .forEach(element -> this.addGrant(Core.INSTANCE.getHandlerManager().getRankHandler().getGrantByJson(element.getAsJsonObject()), profile));
+
             profiles.add(profile);
             return profile;
         }
     }
 
     public void addGrant(IGrant grant, Profile profile) {
-
+        profile.getGrants().add(grant);
     }
 
     public void unloadProfile(Profile profile) {
