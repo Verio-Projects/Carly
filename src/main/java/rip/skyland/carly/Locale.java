@@ -19,7 +19,7 @@ public enum Locale {
 
 
     RANK_HELP("rank.help", Arrays.asList(
-            StringUtils.repeat("&9&m-", 39),
+            "&9&m" + StringUtils.repeat("-", 39),
             "&c/rank create <name>",
             "&c/rank delete <name>",
             "&c/rank prefix <name> <prefix>",
@@ -27,7 +27,7 @@ public enum Locale {
             "&c/rank weight <name> <weight>",
             "&c/rank setcolor <name> <color> <bold> <italic>",
             "&c/rank permission <name> <add|remove> <permission>",
-            StringUtils.repeat("&9&m-", 39)
+            "&9&m" + StringUtils.repeat("-", 39)
     )),
     RANK_ALREADY_EXISTS("rank.error.already_exists", "&cThat rank already exists."),
     RANK_DOES_NOT_EXIST("rank.error.does_not_exist", "&cThat rank does not exist."),
@@ -40,7 +40,7 @@ public enum Locale {
     RANK_REMOVE_PERMISSION("rank.add_permission", "&eYou have removed a permission from &6\"%rank%\" &f(\"%permission%\")"),
     RANK_SET_COLOR("rank.set_color", "&eYou have set the color of &6\"%rank%\" &eto %color%&e, &f%bold%&e, &f%italic%"),
     RANK_INFO("rank.info", Arrays.asList(
-            StringUtils.repeat("&9&m-", 39),
+            "&9&m" + StringUtils.repeat("-", 39),
             "&a&l%rank% &7- &c%default%",
             "",
             "&6-> &eColor: %color%",
@@ -50,7 +50,7 @@ public enum Locale {
             "&6-> &eWeight: &c%weight%",
             "",
             "&6-> &ePermissions &6(%permissionsAmount%)&e: &c%permissions%",
-            StringUtils.repeat("&9&m-", 39)
+            "&9&m" + StringUtils.repeat("-", 39)
             ));
 
     private Object value;
