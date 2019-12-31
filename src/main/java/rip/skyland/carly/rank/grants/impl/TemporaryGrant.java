@@ -1,6 +1,7 @@
 package rip.skyland.carly.rank.grants.impl;
 
 import com.google.gson.JsonObject;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import rip.skyland.carly.rank.Rank;
 import rip.skyland.carly.rank.grants.IGrant;
@@ -9,6 +10,7 @@ import rip.skyland.carly.util.JsonBuilder;
 import java.util.UUID;
 
 @Getter
+@AllArgsConstructor
 public class TemporaryGrant implements IGrant {
 
     private Rank rank;
@@ -16,15 +18,6 @@ public class TemporaryGrant implements IGrant {
     private String granterName;
     private long grantTime, expirationTime;
     private boolean active;
-
-    public TemporaryGrant(Rank rank, UUID targetUuid, String granterName, long grantTime, long expirationTime, boolean active) {
-        this.rank = rank;
-        this.targetUuid = targetUuid;
-        this.granterName = granterName;
-        this.grantTime = grantTime;
-        this.expirationTime = expirationTime;
-        this.active = active;
-    }
 
     public JsonObject toJson() {
         return new JsonBuilder()
