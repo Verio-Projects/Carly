@@ -10,6 +10,7 @@ import org.bson.Document;
 import rip.skyland.carly.Core;
 import rip.skyland.carly.rank.Rank;
 import rip.skyland.carly.util.CC;
+import rip.skyland.carly.util.DocumentBuilder;
 import rip.skyland.carly.util.database.mongo.packet.MongoPacket;
 import rip.skyland.carly.util.database.redis.packet.RedisPacket;
 
@@ -51,18 +52,15 @@ public class RankSavePacket implements MongoPacket, RedisPacket {
         MongoCollection collection = database.getCollection("ranks");
         Preconditions.checkArgument(collection.find(Filters.eq("uuid", uuid.toString())).first() != null, "Rank with that uuid does not exist");
 
-        Document document = new Document();
-
-        document.put("uuid", uuid.toString());
-        document.put("name", name);
-        document.put("prefix", prefix);
-        document.put("suffix", suffix);
-        document.put("weight", weight);
-        document.put("color", color.name());
-        document.put("bold", bold);
-        document.put("italic", italic);
-        document.put("permissions", permissions.toString());
-
-        collection.updateOne(Filters.eq("uuid", uuid.toString()), document, new UpdateOptions().upsert(true));
+        collection.updateOne(Filters.eq("uuid", uuid.toString()), new DocumentBuilder()
+                .put("uuid", uuid.toString())
+                .put("name", name)
+                .put("prefix", prefix)
+                .put("suffix", suffix)
+                .put("weight", weight)
+                .put("color", color.name())
+                .put("bold", bold)
+                .put("italic", italic)
+                .put("permissions", permissions.toString()).getDocument(), new UpdateOptions().upsert(true));
     }
 }

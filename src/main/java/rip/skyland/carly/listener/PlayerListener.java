@@ -1,4 +1,34 @@
 package rip.skyland.carly.listener;
 
-public class PlayerListener {
+import lombok.Getter;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
+import rip.skyland.carly.Core;
+import rip.skyland.carly.profile.Profile;
+import rip.skyland.carly.profile.ProfileHandler;
+
+@Getter
+public class PlayerListener implements Listener {
+
+    private ProfileHandler profileHandler;
+    
+    @EventHandler
+    public void onJoin(PlayerJoinEvent event) {
+        Player player = event.getPlayer();
+
+        Profile profile = profileHandler.createProfile(player.getUniqueId());
+        profile.setPlayerName(player.getName());
+    }
+    
+    @EventHandler
+    public void onQuit(PlayerQuitEvent event) {
+        Player player = event.getPlayer();
+        Profile profile = profileHandler.getProfileByUuid(player.getUniqueId());
+
+        profileHandler.unloadProfile(profile);
+    }
+
 }

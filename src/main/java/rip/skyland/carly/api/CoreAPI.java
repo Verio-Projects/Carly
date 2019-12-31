@@ -13,7 +13,7 @@ public enum CoreAPI {
     @Getter
     public JsonParser PARSER;
 
-    public Rank getRank(String name) {
+    public Rank getRankByName(String name) {
         Preconditions.checkArgument(Core.INSTANCE.getHandlerManager() != null, "handler manager is null");
         return Core.INSTANCE.getHandlerManager().getRankHandler().getRankByName(name);
     }

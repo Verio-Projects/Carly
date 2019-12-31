@@ -1,10 +1,14 @@
 package rip.skyland.carly.rank;
 
+import com.google.gson.JsonObject;
 import lombok.Getter;
 import org.bson.Document;
 import rip.skyland.carly.Core;
 import rip.skyland.carly.api.CoreAPI;
 import rip.skyland.carly.handler.IHandler;
+import rip.skyland.carly.rank.grants.IGrant;
+import rip.skyland.carly.rank.grants.impl.PermanentGrant;
+import rip.skyland.carly.rank.grants.impl.TemporaryGrant;
 import rip.skyland.carly.rank.packet.RankCreatePacket;
 import rip.skyland.carly.rank.packet.RankDeletePacket;
 import rip.skyland.carly.rank.packet.RankSavePacket;
@@ -34,7 +38,7 @@ public class RankHandler implements IHandler {
     }
 
     private void loadRank(Document document) {
-        Rank rank = this.createRank(document.getString("name"), UUID.fromString(document.getString("uuid")));
+        Rank rank = this.createRank(document.getString("name"), UUID.fromString(document.getString("uuid")), false);
 
         rank.setPrefix(document.getString("prefix"));
         rank.setSuffix(document.getString("suffix"));
@@ -48,7 +52,7 @@ public class RankHandler implements IHandler {
         rank.setPermissions(permissions);
     }
 
-    public Rank createRank(String name, UUID uuid) {
+    public Rank createRank(String name, UUID uuid, boolean sendPacket) {
         Rank rank = new Rank(uuid, name, "", "", 0, CC.WHITE, false, false, Collections.emptyList());
         ranks.add(rank);
 
@@ -68,6 +72,25 @@ public class RankHandler implements IHandler {
         }
 
         Core.INSTANCE.sendPacket(new RankSavePacket(rank.getUuid(), rank.getName(), rank.getPrefix(), rank.getSuffix(), rank.getWeight(), rank.getColor(), rank.isBold(), rank.isItalic(), rank.getPermissions()));
+    }
+
+    public IGrant getGrantByJson(JsonObject object) {
+        if(object.get("expirationTime") != null) {
+            return new TemporaryGrant(
+                    this.getRankByUuid(UUID.fromString(object.get("rank").getAsString())),
+                    UUID.fromString(object.get("targetUuid").getAsString()),
+                    object.get("granterName").getAsString(),
+                    object.get("grantTime").getAsLong(),
+                    object.get("expirationTime").getAsLong(),
+                    object.get("active").getAsBoolean());
+        } else {
+            return new PermanentGrant(
+                    this.getRankByUuid(UUID.fromString(object.get("rank").getAsString())),
+                    UUID.fromString(object.get("targetUuid").getAsString()),
+                    object.get("granterName").getAsString(),
+                    object.get("grantTime").getAsLong(),
+                    object.get("active").getAsBoolean());
+        }
     }
 
     public Rank getRankByName(String name) {

@@ -5,8 +5,8 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 import lombok.AllArgsConstructor;
-import org.bson.Document;
 import rip.skyland.carly.Core;
+import rip.skyland.carly.util.DocumentBuilder;
 import rip.skyland.carly.util.database.mongo.packet.MongoPacket;
 import rip.skyland.carly.util.database.redis.packet.RedisPacket;
 
@@ -23,7 +23,7 @@ public class RankCreatePacket implements MongoPacket, RedisPacket {
         Preconditions.checkArgument(Core.INSTANCE.getHandlerManager().getRankHandler().getRankByUuid(uuid) == null, "rank with same uuid already exists");
         Preconditions.checkArgument(Core.INSTANCE.getHandlerManager().getRankHandler().getRankByName(name) == null, "rank with same name already exists");
 
-        Core.INSTANCE.getHandlerManager().getRankHandler().createRank(name, uuid);
+        Core.INSTANCE.getHandlerManager().getRankHandler().createRank(name, uuid, false);
     }
 
     @Override
@@ -34,11 +34,8 @@ public class RankCreatePacket implements MongoPacket, RedisPacket {
         MongoCollection collection = database.getCollection("ranks");
         Preconditions.checkArgument(collection.find(Filters.eq("uuid", this.uuid.toString())).first() == null, "rank with same uuid already exists");
 
-        Document document = new Document();
-
-        document.put("uuid", this.uuid.toString());
-        document.put("name", this.name);
-
-        collection.insertOne(document);
+        collection.insertOne(new DocumentBuilder()
+                .put("uuid", this.uuid.toString())
+                .put("name", this.name).getDocument());
     }
 }
