@@ -3,6 +3,9 @@ package rip.skyland.carly.rank;
 import com.google.gson.JsonObject;
 import lombok.Getter;
 import org.bson.Document;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
+import org.bukkit.permissions.PermissionAttachment;
 import rip.skyland.carly.Core;
 import rip.skyland.carly.api.CoreAPI;
 import rip.skyland.carly.handler.IHandler;
@@ -14,10 +17,7 @@ import rip.skyland.carly.rank.packet.RankDeletePacket;
 import rip.skyland.carly.rank.packet.RankSavePacket;
 import rip.skyland.carly.util.CC;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.function.Consumer;
 
 @Getter
@@ -30,6 +30,10 @@ public class RankHandler implements IHandler {
         this.ranks = new ArrayList<>();
 
         Core.INSTANCE.getMongoHandler().getCollection("ranks").find().forEach((Consumer<? super Document>) this::loadRank);
+
+        if(this.getRankByName("Default") == null) {
+            this.createRank("Default", UUID.randomUUID(), true);
+        }
     }
 
     @Override
@@ -42,21 +46,28 @@ public class RankHandler implements IHandler {
 
         rank.setPrefix(document.getString("prefix"));
         rank.setSuffix(document.getString("suffix"));
-        rank.setWeight(document.getInteger("weight"));
-        rank.setColor(CC.valueOf(document.getString("color")));
-        rank.setBold(document.getBoolean("bold"));
-        rank.setItalic(document.getBoolean("italic"));
 
-        List<String> permissions = new ArrayList<>();
-        CoreAPI.INSTANCE.PARSER.parse(document.getString("permissions")).getAsJsonArray().forEach(element -> permissions.add(element.getAsString()));
-        rank.setPermissions(permissions);
+        if(document.containsKey("weight")) {
+            rank.setWeight(document.getInteger("weight"));
+            rank.setColor(CC.valueOf(document.getString("color")));
+            rank.setBold(document.getBoolean("bold"));
+            rank.setItalic(document.getBoolean("italic"));
+
+            List<String> permissions = new ArrayList<>();
+            CoreAPI.INSTANCE.PARSER.parse(document.getString("permissions")).getAsJsonArray().forEach(element -> permissions.add(element.getAsString()));
+            rank.setPermissions(permissions);
+        }
     }
 
     public Rank createRank(String name, UUID uuid, boolean sendPacket) {
         Rank rank = new Rank(uuid, name, "", "", 0, CC.WHITE, false, false, Collections.emptyList());
         ranks.add(rank);
 
-        Core.INSTANCE.sendPacket(new RankCreatePacket(uuid, name));
+        if(sendPacket)
+            Core.INSTANCE.sendPacket(new RankCreatePacket(uuid, name));
+
+        ranks.sort(Comparator.comparingInt(Rank::getWeight));
+        Collections.reverse(ranks);
 
         return rank;
     }
@@ -72,6 +83,30 @@ public class RankHandler implements IHandler {
         }
 
         Core.INSTANCE.sendPacket(new RankSavePacket(rank.getUuid(), rank.getName(), rank.getPrefix(), rank.getSuffix(), rank.getWeight(), rank.getColor(), rank.isBold(), rank.isItalic(), rank.getPermissions()));
+    }
+
+    public void addPermission(Rank rank, String permission) {
+       this.setPermission(rank, permission, true);
+       rank.getPermissions().add(permission);
+    }
+
+    public void removePermission(Rank rank, String permission) {
+        this.setPermission(rank, permission, false);
+        rank.getPermissions().remove(permission);
+    }
+
+    private void setPermission(Rank rank, String permission, boolean active) {
+        Core.INSTANCE.getHandlerManager().getProfileHandler().getProfiles().stream()
+                .filter(profile -> profile.getGrants().stream().anyMatch(grant -> grant.getRank().equals(rank)))
+                .filter(profile -> Bukkit.getPlayer(profile.getUuid()) != null)
+                .forEach(profile -> {
+                    Player player = Bukkit.getPlayer(profile.getUuid());
+                    PermissionAttachment attachment = player.addAttachment(Core.INSTANCE.getPlugin());
+                    attachment.setPermission(permission, active);
+
+                    // some spigots don't automatically recalculate permissions after setting a permission, dont ask me why.
+                    player.recalculatePermissions();
+                });
     }
 
     public IGrant getGrantByJson(JsonObject object) {

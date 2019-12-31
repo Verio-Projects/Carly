@@ -1,5 +1,6 @@
 package rip.skyland.carly.listener;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -11,12 +12,15 @@ import rip.skyland.carly.profile.Profile;
 import rip.skyland.carly.profile.ProfileHandler;
 
 @Getter
+@AllArgsConstructor
 public class PlayerListener implements Listener {
 
     private ProfileHandler profileHandler;
     
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
+        event.setJoinMessage(null);
+
         Player player = event.getPlayer();
 
         Profile profile = profileHandler.createProfile(player.getUniqueId());

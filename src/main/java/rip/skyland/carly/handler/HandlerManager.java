@@ -1,6 +1,8 @@
 package rip.skyland.carly.handler;
 
 import lombok.Getter;
+import org.bukkit.Bukkit;
+import rip.skyland.carly.Core;
 import rip.skyland.carly.profile.ProfileHandler;
 import rip.skyland.carly.rank.RankHandler;
 
@@ -14,8 +16,8 @@ public class HandlerManager {
 
     private List<IHandler> handlers;
 
-    private RankHandler rankHandler;
-    private ProfileHandler profileHandler;
+    public RankHandler rankHandler;
+    public ProfileHandler profileHandler;
 
     public HandlerManager() throws NoSuchFieldException, IllegalAccessException {
         this.handlers = new ArrayList<>();
@@ -25,7 +27,8 @@ public class HandlerManager {
 
     private void registerHandler(Field field, IHandler handler) throws IllegalAccessException {
         field.set(this, handler);
-        handler.load();
+
+        Bukkit.getScheduler().runTaskLater(Core.INSTANCE.getPlugin(), handler::load, 5L);
         this.handlers.add(handler);
     }
 }

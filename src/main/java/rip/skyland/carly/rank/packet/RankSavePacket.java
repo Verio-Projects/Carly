@@ -4,6 +4,7 @@ import com.google.common.base.Preconditions;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.ReplaceOptions;
 import com.mongodb.client.model.UpdateOptions;
 import lombok.AllArgsConstructor;
 import org.bson.Document;
@@ -52,7 +53,7 @@ public class RankSavePacket implements MongoPacket, RedisPacket {
         MongoCollection collection = database.getCollection("ranks");
         Preconditions.checkArgument(collection.find(Filters.eq("uuid", uuid.toString())).first() != null, "Rank with that uuid does not exist");
 
-        collection.updateOne(Filters.eq("uuid", uuid.toString()), new DocumentBuilder()
+        collection.replaceOne(Filters.eq("uuid", uuid.toString()), new DocumentBuilder()
                 .put("uuid", uuid.toString())
                 .put("name", name)
                 .put("prefix", prefix)
@@ -61,6 +62,6 @@ public class RankSavePacket implements MongoPacket, RedisPacket {
                 .put("color", color.name())
                 .put("bold", bold)
                 .put("italic", italic)
-                .put("permissions", permissions.toString()).getDocument(), new UpdateOptions().upsert(true));
+                .put("permissions", permissions.toString()).getDocument(), new ReplaceOptions().upsert(true));
     }
 }

@@ -25,7 +25,7 @@ public class Profile {
     }
 
     public Rank getRank() {
-        return grants.stream().sorted(Comparator.comparingInt(grant -> grant.getRank().getWeight())).map(IGrant::getRank).findFirst().orElse(null);
+        return grants.stream().sorted(Comparator.comparingInt(grant -> grant.getRank().getWeight())).map(IGrant::getRank).reduce((first, second) -> second).orElse(null);
     }
 
 }

@@ -4,11 +4,14 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
 import lombok.Getter;
 import org.bson.Document;
+import org.bukkit.Bukkit;
 import rip.skyland.carly.Core;
 import rip.skyland.carly.api.CoreAPI;
 import rip.skyland.carly.handler.IHandler;
 import rip.skyland.carly.profile.packets.ProfileCreatePacket;
+import rip.skyland.carly.profile.packets.ProfileSavePacket;
 import rip.skyland.carly.rank.grants.IGrant;
+import rip.skyland.carly.rank.grants.impl.PermanentGrant;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +29,7 @@ public class ProfileHandler implements IHandler {
 
     @Override
     public void unload() {
-
+        profiles.forEach(this::saveProfile);
     }
 
     public Profile createProfile(UUID uuid) {
@@ -40,6 +43,10 @@ public class ProfileHandler implements IHandler {
         if (document == null) {
             Profile profile = new Profile(uuid);
             profiles.add(profile);
+
+            this.addGrant(new PermanentGrant(Core.INSTANCE.getHandlerManager().getRankHandler().getRankByName("Default"), uuid, "&4CONSOLE", System.currentTimeMillis(), true), profile);
+
+            Bukkit.getScheduler().runTaskLater(Core.INSTANCE.getPlugin(), () -> Core.INSTANCE.sendPacket(new ProfileCreatePacket(uuid, profile.getPlayerName())), 5L);
             return profile;
         } else {
             Profile profile = new Profile(uuid);
@@ -63,7 +70,7 @@ public class ProfileHandler implements IHandler {
     }
 
     public void saveProfile(Profile profile) {
-        Core.INSTANCE.sendPacket(new ProfileCreatePacket(profile.getUuid(), profile.getPlayerName()));
+        Core.INSTANCE.sendPacket(new ProfileSavePacket(profile));
     }
 
     public Profile getProfileByName(String name) {
