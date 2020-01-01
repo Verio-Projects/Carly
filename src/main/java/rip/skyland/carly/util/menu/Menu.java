@@ -26,7 +26,7 @@ public abstract class Menu {
     public void openMenu() {
         Inventory inventory = Bukkit.createInventory(null, size(), CC.translate(getTitle()));
 
-        getButtons().forEach(button -> inventory.setItem(button.getIndex(), button.getItem()));
+        this.getButtons().forEach(button -> inventory.setItem(button.getIndex(), button.getItem()));
         player.openInventory(inventory);
     }
 }

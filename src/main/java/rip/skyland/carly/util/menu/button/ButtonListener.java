@@ -20,12 +20,10 @@ public class ButtonListener implements Listener {
 
 
         if (MenuHandler.getInstance().getByTitleAndPlayer((Player) event.getWhoClicked(), event.getInventory().getTitle()) != null) {
-            System.out.println("passed check 1");
 
             Menu menu = MenuHandler.getInstance().getByTitleAndPlayer((Player) event.getWhoClicked(), event.getInventory().getTitle());
 
             if (!(event.getCurrentItem() == null || event.getCurrentItem().getItemMeta() == null)) {
-                System.out.println("passed check 2");
 
                 event.setCancelled(true);
                 List<Button> buttons = menu instanceof PaginatedMenu ? ((PaginatedMenu) menu).getPaginatedButtons() : menu.getButtons();

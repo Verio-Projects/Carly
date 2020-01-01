@@ -1,17 +1,11 @@
 package rip.skyland.carly.util;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-// shout out to OverjoY for his dedication <3
 public final class TimeUtil {
-
-    private static final String HOUR_FORMAT = "%02d:%02d:%02d";
-    private static final String MINUTE_FORMAT = "%02d:%02d";
 
     public static String unixToDate(long unixTime) {
         Date date = new Date();
@@ -20,15 +14,6 @@ public final class TimeUtil {
         return date.toString();
     }
 
-    public static String millisToTimer(long millis) {
-        long seconds = millis / 1000L;
-
-        if (seconds > 3600L) {
-            return String.format(HOUR_FORMAT, seconds / 3600L, seconds % 3600L / 60L, seconds % 60L);
-        } else {
-            return String.format(MINUTE_FORMAT, seconds / 60L, seconds % 60L);
-        }
-    }
 
     private static int daysInMonth(int cM, int wY) {
         int ret = 0;

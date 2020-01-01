@@ -8,7 +8,6 @@ import org.bukkit.Bukkit;
 import rip.skyland.carly.Core;
 import rip.skyland.carly.api.CoreAPI;
 import rip.skyland.carly.handler.IHandler;
-import rip.skyland.carly.profile.packets.ProfileCreatePacket;
 import rip.skyland.carly.profile.packets.ProfileSavePacket;
 import rip.skyland.carly.rank.grants.IGrant;
 import rip.skyland.carly.rank.grants.impl.PermanentGrant;
@@ -23,7 +22,8 @@ public class ProfileHandler implements IHandler {
     private List<Profile> profiles = new ArrayList<>();
 
     @Override
-    public void load() { }
+    public void load() {
+    }
 
     @Override
     public void unload() {
@@ -38,24 +38,26 @@ public class ProfileHandler implements IHandler {
         MongoCollection collection = Core.INSTANCE.getMongoHandler().getCollection("profiles");
         Document document = (Document) collection.find(Filters.eq("uuid", uuid.toString())).first();
 
-        if (document == null) {
-            Profile profile = new Profile(uuid);
-            profiles.add(profile);
+        // make new profile
+        Profile profile = new Profile(uuid);
 
+        if (document == null) {
+            // add default grant
             this.addGrant(new PermanentGrant(Core.INSTANCE.getHandlerManager().getRankHandler().getRankByName("Default"), uuid, "first time join", "&4CONSOLE", System.currentTimeMillis(), true), profile);
 
-            Bukkit.getScheduler().runTaskLater(Core.INSTANCE.getPlugin(), () -> Core.INSTANCE.sendPacket(new ProfileCreatePacket(uuid, profile.getPlayerName())), 5L);
-            return profile;
+            // let the player join event set the player's name so i can save it inside of mongo
+            // also instantly save the profile because it doesn't exist yet. (not needed)
+            Bukkit.getScheduler().runTaskLater(Core.INSTANCE.getPlugin(), () -> Core.INSTANCE.sendPacket(new ProfileSavePacket(profile)), 5L);
         } else {
-            Profile profile = new Profile(uuid);
-            profile.setPlayerName(document.getString("playerName"));
-
-            CoreAPI.INSTANCE.PARSER.parse(document.getString("grants")).getAsJsonArray()
-                    .forEach(element -> this.addGrant(Core.INSTANCE.getHandlerManager().getRankHandler().getGrantByJson(element.getAsJsonObject()), profile));
+            // load profile stuff from mongo
+            profile.setPlayerName(document.getString("name"));
+            CoreAPI.INSTANCE.PARSER.parse(document.getString("grants")).getAsJsonArray().forEach(element -> this.addGrant(Core.INSTANCE.getHandlerManager().getRankHandler().getGrantByJson(element.getAsJsonObject()), profile));
 
             profiles.add(profile);
-            return profile;
         }
+
+        profiles.add(profile);
+        return profile;
     }
 
     public void addGrant(IGrant grant, Profile profile) {

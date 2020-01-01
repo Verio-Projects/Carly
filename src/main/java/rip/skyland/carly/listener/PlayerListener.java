@@ -34,6 +34,8 @@ public class PlayerListener implements Listener {
     
     @EventHandler
     public void onQuit(PlayerQuitEvent event) {
+        event.setQuitMessage(null);
+
         Player player = event.getPlayer();
         Profile profile = profileHandler.getProfileByUuid(player.getUniqueId());
 

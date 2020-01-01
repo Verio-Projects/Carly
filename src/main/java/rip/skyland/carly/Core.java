@@ -3,7 +3,6 @@ package rip.skyland.carly;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
-import rip.skyland.carly.command.MenuTestCommand;
 import rip.skyland.carly.command.RankCommand;
 import rip.skyland.carly.command.grant.GrantCommand;
 import rip.skyland.carly.handler.HandlerManager;
@@ -46,7 +45,7 @@ public enum Core {
 
         // register commands
         new CommandHandler(plugin)
-            .registerCommands(new RankCommand(handlerManager.getRankHandler()), new MenuTestCommand(), new GrantCommand());
+                .registerCommands(new RankCommand(handlerManager.getRankHandler()), new GrantCommand());
 
         // register listeners
         Arrays.asList(
@@ -59,11 +58,11 @@ public enum Core {
     }
 
     public void sendPacket(IPacket packet) {
-        if(packet instanceof RedisPacket) {
+        if (packet instanceof RedisPacket) {
             redisHandler.sendPacket((RedisPacket) packet);
         }
 
-        if(packet instanceof MongoPacket) {
+        if (packet instanceof MongoPacket) {
             mongoHandler.sendPacket((MongoPacket) packet);
         }
     }
@@ -71,5 +70,4 @@ public enum Core {
     public void stop() {
         this.handlerManager.getHandlers().forEach(IHandler::unload);
     }
-
 }

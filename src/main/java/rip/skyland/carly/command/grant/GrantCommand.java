@@ -23,7 +23,6 @@ import rip.skyland.carly.util.menu.button.Button;
 import rip.skyland.carly.util.menu.pagination.PaginatedMenu;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class GrantCommand {
@@ -99,8 +98,8 @@ public class GrantCommand {
         }
     }
 
-    @Command(names="grants", permission="core.grants")
-    public void performGrants(Player player, @Param(name="player") String target) {
+    @Command(names = "grants", permission = "core.grants")
+    public void performGrants(Player player, @Param(name = "player") String target) {
         if (Bukkit.getOfflinePlayer(target) == null) {
             player.sendMessage(CC.translate("&cThat player has never played before."));
             return;
@@ -131,10 +130,10 @@ public class GrantCommand {
                     Locale locale = grant.isActive() ? Locale.GRANTS_MENU_ITEM_ACTIVE : Locale.GRANTS_MENU_ITEM_INACTIVE;
 
                     locale.getAsStringList().forEach(string -> lore.add(string.replace("%rank%", grant.getRank().getDisplayName())
-                    .replace("%granter%", grant.getGranterName())
-                    .replace("%expiration%", expirationString)
-                    .replace("%grantDate%", TimeUtil.unixToDate(grant.getGrantTime())
-                    .replace("%reason%", grant.getReason()))));
+                            .replace("%granter%", grant.getGranterName())
+                            .replace("%expiration%", expirationString)
+                            .replace("%grantDate%", TimeUtil.unixToDate(grant.getGrantTime())
+                                    .replace("%reason%", grant.getReason()))));
 
                     buttons.add(new Button(i, Material.WOOL, "&c#" + DigestUtils.sha256Hex(grant.getRank().getUuid().toString()).substring(0, 8), lore, WoolColor.getWoolColor(grant.isActive() ? CC.GREEN : CC.RED), player -> {
                         if (!grant.getRank().getName().equalsIgnoreCase("Default")) {
@@ -159,5 +158,4 @@ public class GrantCommand {
         });
 
     }
-
 }

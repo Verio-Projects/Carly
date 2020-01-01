@@ -34,7 +34,7 @@ public class RankHandler implements IHandler {
 
         Core.INSTANCE.getMongoHandler().getCollection("ranks").find().forEach((Consumer<? super Document>) this::loadRank);
 
-        if(this.getRankByName("Default") == null) {
+        if (this.getRankByName("Default") == null) {
             this.createRank("Default", UUID.randomUUID(), true);
         }
     }
@@ -50,23 +50,21 @@ public class RankHandler implements IHandler {
         rank.setPrefix(document.getString("prefix"));
         rank.setSuffix(document.getString("suffix"));
 
-        if(document.containsKey("weight")) {
-            rank.setWeight(document.getInteger("weight"));
-            rank.setColor(CC.valueOf(document.getString("color")));
-            rank.setBold(document.getBoolean("bold"));
-            rank.setItalic(document.getBoolean("italic"));
+        rank.setWeight(document.getInteger("weight"));
+        rank.setColor(CC.valueOf(document.getString("color")));
+        rank.setBold(document.getBoolean("bold"));
+        rank.setItalic(document.getBoolean("italic"));
 
-            List<String> permissions = new ArrayList<>();
-            CoreAPI.INSTANCE.PARSER.parse(document.getString("permissions")).getAsJsonArray().forEach(element -> permissions.add(element.getAsString()));
-            rank.setPermissions(permissions);
-        }
+        List<String> permissions = new ArrayList<>();
+        CoreAPI.INSTANCE.PARSER.parse(document.getString("permissions")).getAsJsonArray().forEach(element -> permissions.add(element.getAsString()));
+        rank.setPermissions(permissions);
     }
 
     public Rank createRank(String name, UUID uuid, boolean sendPacket) {
         Rank rank = new Rank(uuid, name, "", "", 0, CC.WHITE, false, false, Collections.emptyList());
         ranks.add(rank);
 
-        if(sendPacket)
+        if (sendPacket)
             Core.INSTANCE.sendPacket(new RankCreatePacket(uuid, name));
 
         ranks.sort(Comparator.comparingInt(Rank::getWeight));
@@ -81,7 +79,7 @@ public class RankHandler implements IHandler {
     }
 
     public void saveRank(Rank rank) {
-        if(!ranks.contains(rank)) {
+        if (!ranks.contains(rank)) {
             ranks.add(rank);
         }
 
@@ -89,8 +87,8 @@ public class RankHandler implements IHandler {
     }
 
     public void addPermission(Rank rank, String permission) {
-       this.setPermission(rank, permission, true);
-       rank.getPermissions().add(permission);
+        this.setPermission(rank, permission, true);
+        rank.getPermissions().add(permission);
     }
 
     public void removePermission(Rank rank, String permission) {
@@ -113,7 +111,7 @@ public class RankHandler implements IHandler {
     }
 
     public IGrant getGrantByJson(JsonObject object) {
-        if(object.get("expirationTime") != null) {
+        if (object.get("expirationTime") != null) {
             return new TemporaryGrant(
                     this.getRankByUuid(UUID.fromString(object.get("rank").getAsString())),
                     UUID.fromString(object.get("targetUuid").getAsString()),
@@ -144,5 +142,4 @@ public class RankHandler implements IHandler {
     public GrantProcedure getProcedureByUuid(UUID uuid) {
         return Core.INSTANCE.getHandlerManager().getRankHandler().getGrantProcedures().stream().filter(grantProcedure -> grantProcedure.getGranterUuid().equals(uuid)).findFirst().orElse(null);
     }
-
 }

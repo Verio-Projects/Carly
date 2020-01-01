@@ -28,7 +28,7 @@ public class HandlerManager {
     private void registerHandler(Field field, IHandler handler) throws IllegalAccessException {
         field.set(this, handler);
 
-        Bukkit.getScheduler().runTaskLater(Core.INSTANCE.getPlugin(), handler::load, 5L);
+        Bukkit.getScheduler().runTaskLater(Core.INSTANCE.getPlugin(), handler::load, 1L);
         this.handlers.add(handler);
     }
 }

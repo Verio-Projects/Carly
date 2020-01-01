@@ -20,5 +20,5 @@ public class RankDeletePacket implements RedisPacket {
     }
 
     @Override
-    public void onSend() { }
+    public void onSend() {}
 }

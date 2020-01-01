@@ -44,9 +44,7 @@ public class RankSavePacket implements MongoPacket, RedisPacket {
     }
 
     @Override
-    public void onSend() {
-
-    }
+    public void onSend() {}
 
     @Override
     public void savePacket(MongoDatabase database) {

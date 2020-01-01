@@ -35,5 +35,4 @@ public enum CoreAPI {
     public Profile getProfileByPlayer(Player player) {
         return this.getProfileByUuid(player.getUniqueId());
     }
-
 }

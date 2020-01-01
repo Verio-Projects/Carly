@@ -15,7 +15,7 @@ import rip.skyland.carly.util.database.redis.packet.RedisPacket;
 import java.util.UUID;
 
 @AllArgsConstructor
-public class RankCreatePacket implements MongoPacket, RedisPacket {
+public class RankCreatePacket implements RedisPacket {
 
     private UUID uuid;
     private String name;
@@ -29,15 +29,7 @@ public class RankCreatePacket implements MongoPacket, RedisPacket {
     }
 
     @Override
-    public void onSend() {}
+    public void onSend() {
 
-    @Override
-    public void savePacket(MongoDatabase database) {
-        MongoCollection collection = database.getCollection("ranks");
-        Preconditions.checkArgument(collection.find(Filters.eq("uuid", this.uuid.toString())).first() == null, "rank with same uuid already exists");
-
-        collection.replaceOne(Filters.eq("uuid", uuid.toString()), new DocumentBuilder()
-                .put("uuid", this.uuid.toString())
-                .put("name", this.name).getDocument(), new ReplaceOptions().upsert(true));
     }
 }

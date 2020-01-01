@@ -29,8 +29,7 @@ public class MenuHandler {
         menus.remove(menu);
     }
 
-    public Menu getByTitleAndPlayer(Player player, String title) { return this.menus.stream().filter(menu -> CC.translate(menu.getTitle()).equalsIgnoreCase(CC.translate(title)) &&
-            menu.getPlayer().equals(player)).findFirst().orElse(null); }
+    public Menu getByTitleAndPlayer(Player player, String title) { return this.menus.stream().filter(menu -> CC.translate(menu.getTitle()).equalsIgnoreCase(CC.translate(title)) && menu.getPlayer().equals(player)).findFirst().orElse(null); }
     public Menu getMenuByPlayer(Player player) { return menus.stream().filter(menu -> menu.getPlayer().equals(player)).findFirst().orElse(null); }
     public Menu getByTitle(String title) { return menus.stream().filter(menu -> menu.getTitle().equals(title)).findFirst().orElse(null); }
 

@@ -37,12 +37,6 @@ public class Button {
         this.updateItem();
     }
 
-    public Button addToInventory(Inventory inventory) {
-        inventory.setItem(index, item);
-
-        return this;
-    }
-
     public Button updateItem() {
         this.item = new ItemStack(type, 0, durability);
         ItemMeta meta = item.getItemMeta();
