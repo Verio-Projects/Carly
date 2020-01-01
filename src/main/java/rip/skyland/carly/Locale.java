@@ -25,8 +25,9 @@ public enum Locale {
             "&c/rank prefix <name> <prefix>",
             "&c/rank suffix <name> <suffix>",
             "&c/rank weight <name> <weight>",
-            "&c/rank setcolor <name> <color> <bold> <italic>",
+            "&c/rank color <name> <color> <bold> <italic>",
             "&c/rank permission <name> <add|remove> <permission>",
+            "&c/rank info <name>",
             "&9&m" + StringUtils.repeat("-", 39)
     )),
     RANK_ALREADY_EXISTS("rank.error.already_exists", "&cThat rank already exists."),

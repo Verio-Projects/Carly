@@ -16,8 +16,6 @@ public class ButtonListener implements Listener {
 
     @EventHandler
     public void onClick(InventoryClickEvent event) {
-        MenuHandler.getInstance().getMenus().forEach(menu -> System.out.println(menu.getTitle()));
-
 
         if (MenuHandler.getInstance().getByTitleAndPlayer((Player) event.getWhoClicked(), event.getInventory().getTitle()) != null) {
 

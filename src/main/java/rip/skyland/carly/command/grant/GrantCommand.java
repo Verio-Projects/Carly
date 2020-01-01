@@ -29,15 +29,18 @@ public class GrantCommand {
 
     @Command(names = "grant", permission = "core.grant")
     public void performGrant(CommandSender sender, @Param(name = "player") String target, @Param(name = "rank", value = "not set") String rankName) {
-        if (Bukkit.getOfflinePlayer(target) == null) {
+        if (Bukkit.getOfflinePlayer(target).getUniqueId() == null) {
             sender.sendMessage(CC.translate("&cThat player has never played before."));
             return;
         }
 
         Profile profile;
-
         if (Bukkit.getPlayer(target) == null) {
             profile = Core.INSTANCE.getHandlerManager().getProfileHandler().createProfile(Bukkit.getOfflinePlayer(target).getUniqueId());
+
+            if(profile.getPlayerName() == null) {
+                profile.setPlayerName(Bukkit.getOfflinePlayer(target).getName());
+            }
         } else {
             profile = CoreAPI.INSTANCE.getProfileByUuid(Bukkit.getPlayer(target).getUniqueId());
         }
@@ -100,16 +103,20 @@ public class GrantCommand {
 
     @Command(names = "grants", permission = "core.grants")
     public void performGrants(Player player, @Param(name = "player") String target) {
-        if (Bukkit.getOfflinePlayer(target) == null) {
+        if (Bukkit.getOfflinePlayer(target).getUniqueId() == null) {
             player.sendMessage(CC.translate("&cThat player has never played before."));
             return;
         }
 
         Profile profile;
-        if (CoreAPI.INSTANCE.getProfileByName(target) == null) {
+        if (Bukkit.getPlayer(target) == null) {
             profile = Core.INSTANCE.getHandlerManager().getProfileHandler().createProfile(Bukkit.getOfflinePlayer(target).getUniqueId());
+
+            if(profile.getPlayerName() == null) {
+                profile.setPlayerName(Bukkit.getOfflinePlayer(target).getName());
+            }
         } else {
-            profile = CoreAPI.INSTANCE.getProfileByName(target);
+            profile = CoreAPI.INSTANCE.getProfileByUuid(Bukkit.getPlayer(target).getUniqueId());
         }
 
         Core.INSTANCE.getMenuHandler().createMenu(new PaginatedMenu(player) {
@@ -132,8 +139,8 @@ public class GrantCommand {
                     locale.getAsStringList().forEach(string -> lore.add(string.replace("%rank%", grant.getRank().getDisplayName())
                             .replace("%granter%", grant.getGranterName())
                             .replace("%expiration%", expirationString)
-                            .replace("%grantDate%", TimeUtil.unixToDate(grant.getGrantTime())
-                                    .replace("%reason%", grant.getReason()))));
+                            .replace("%grantDate%", TimeUtil.unixToDate(grant.getGrantTime()))
+                            .replace("%reason%", grant.getReason())));
 
                     buttons.add(new Button(i, Material.WOOL, "&c#" + DigestUtils.sha256Hex(grant.getRank().getUuid().toString()).substring(0, 8), lore, WoolColor.getWoolColor(grant.isActive() ? CC.GREEN : CC.RED), player -> {
                         if (!grant.getRank().getName().equalsIgnoreCase("Default")) {

@@ -2,24 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1846e8f9-bc59-4514-bcb6-8f2c637a2f24" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/rip/skyland/carly/command/ListCommand.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dependency-reduced-pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/dependency-reduced-pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/rip/skyland/carly/Core.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/rip/skyland/carly/Core.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/rip/skyland/carly/api/CoreAPI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/rip/skyland/carly/api/CoreAPI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/rip/skyland/carly/command/MenuTestCommand.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/rip/skyland/carly/Locale.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/rip/skyland/carly/Locale.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/rip/skyland/carly/command/grant/GrantCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/rip/skyland/carly/command/grant/GrantCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/rip/skyland/carly/handler/HandlerManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/rip/skyland/carly/handler/HandlerManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/rip/skyland/carly/listener/PlayerListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/rip/skyland/carly/listener/PlayerListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/rip/skyland/carly/profile/ProfileHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/rip/skyland/carly/profile/ProfileHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/rip/skyland/carly/profile/packets/ProfileCreatePacket.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/rip/skyland/carly/profile/packets/ProfileSavePacket.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/rip/skyland/carly/profile/packets/ProfileSavePacket.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/rip/skyland/carly/rank/RankHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/rip/skyland/carly/rank/RankHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/rip/skyland/carly/rank/packet/RankCreatePacket.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/rip/skyland/carly/rank/packet/RankCreatePacket.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/rip/skyland/carly/rank/packet/RankDeletePacket.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/rip/skyland/carly/rank/packet/RankDeletePacket.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/rip/skyland/carly/rank/packet/RankSavePacket.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/rip/skyland/carly/rank/packet/RankSavePacket.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/rip/skyland/carly/util/TimeUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/rip/skyland/carly/util/TimeUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/rip/skyland/carly/util/menu/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/rip/skyland/carly/util/menu/Menu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/rip/skyland/carly/util/menu/MenuHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/rip/skyland/carly/util/menu/MenuHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/rip/skyland/carly/util/menu/button/Button.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/rip/skyland/carly/util/menu/button/Button.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/rip/skyland/carly/util/menu/button/ButtonListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/rip/skyland/carly/util/menu/button/ButtonListener.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -33,8 +21,8 @@
       <list>
         <option value="FxmlFile" />
         <option value="Enum" />
-        <option value="Class" />
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
