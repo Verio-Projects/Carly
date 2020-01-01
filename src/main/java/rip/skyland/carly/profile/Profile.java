@@ -28,4 +28,7 @@ public class Profile {
         return grants.stream().sorted(Comparator.comparingInt(grant -> grant.getRank().getWeight())).map(IGrant::getRank).reduce((first, second) -> second).orElse(null);
     }
 
+    public String getDisplayName() {
+        return this.getRank().getDisplayColor() + playerName;
+    }
 }

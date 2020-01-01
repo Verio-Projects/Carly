@@ -17,14 +17,16 @@ public class TemporaryGrant implements IGrant {
 
     private Rank rank;
     private UUID targetUuid;
+    private String reason;
     private String granterName;
     private long grantTime, expirationTime;
     private boolean active;
 
     public JsonObject toJson() {
         return new JsonBuilder()
-                .addProperty("rank", rank.getName())
+                .addProperty("rank", rank.getUuid().toString())
                 .addProperty("targetUuid", targetUuid.toString())
+                .addProperty("reason", reason)
                 .addProperty("granterName", granterName)
                 .addProperty("grantTime", grantTime)
                 .addProperty("expirationTime", expirationTime)

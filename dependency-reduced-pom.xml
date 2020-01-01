@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>rip.skyland.carly.CorePlugin</groupId>
   <artifactId>Carly</artifactId>
-  <version>0.1-SNAPSHOT</version>
+  <version>0.3-SNAPSHOT</version>
   <url>https://github.com/NotNV6/Carly</url>
   <build>
     <sourceDirectory>${basedir}/src/main/java</sourceDirectory>
@@ -42,6 +42,12 @@
       </plugin>
     </plugins>
   </build>
+  <repositories>
+    <repository>
+      <id>spigot-releases</id>
+      <url>http://repo.ja-s.de/mvn</url>
+    </repository>
+  </repositories>
   <properties>
     <maven.compiler.target>1.8</maven.compiler.target>
     <maven.compiler.source>1.8</maven.compiler.source>

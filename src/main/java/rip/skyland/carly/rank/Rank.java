@@ -33,4 +33,11 @@ public class Rank {
         collection.deleteOne(document);
     }
 
+    public String getDisplayColor() {
+        return (bold ? "&l" : "") + (italic ? "&o" : "") + color;
+    }
+
+    public String getDisplayName() {
+        return this.getDisplayColor() + name;
+    }
 }

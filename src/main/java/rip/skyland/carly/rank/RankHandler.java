@@ -9,6 +9,7 @@ import org.bukkit.permissions.PermissionAttachment;
 import rip.skyland.carly.Core;
 import rip.skyland.carly.api.CoreAPI;
 import rip.skyland.carly.handler.IHandler;
+import rip.skyland.carly.rank.grants.GrantProcedure;
 import rip.skyland.carly.rank.grants.IGrant;
 import rip.skyland.carly.rank.grants.impl.PermanentGrant;
 import rip.skyland.carly.rank.grants.impl.TemporaryGrant;
@@ -24,10 +25,12 @@ import java.util.function.Consumer;
 public class RankHandler implements IHandler {
 
     private List<Rank> ranks;
+    private List<GrantProcedure> grantProcedures;
 
     @Override
     public void load() {
         this.ranks = new ArrayList<>();
+        this.grantProcedures = new ArrayList<>();
 
         Core.INSTANCE.getMongoHandler().getCollection("ranks").find().forEach((Consumer<? super Document>) this::loadRank);
 
@@ -114,6 +117,7 @@ public class RankHandler implements IHandler {
             return new TemporaryGrant(
                     this.getRankByUuid(UUID.fromString(object.get("rank").getAsString())),
                     UUID.fromString(object.get("targetUuid").getAsString()),
+                    object.get("reason").getAsString(),
                     object.get("granterName").getAsString(),
                     object.get("grantTime").getAsLong(),
                     object.get("expirationTime").getAsLong(),
@@ -122,6 +126,7 @@ public class RankHandler implements IHandler {
             return new PermanentGrant(
                     this.getRankByUuid(UUID.fromString(object.get("rank").getAsString())),
                     UUID.fromString(object.get("targetUuid").getAsString()),
+                    object.get("reason").getAsString(),
                     object.get("granterName").getAsString(),
                     object.get("grantTime").getAsLong(),
                     object.get("active").getAsBoolean());
@@ -134,6 +139,10 @@ public class RankHandler implements IHandler {
 
     public Rank getRankByUuid(UUID uuid) {
         return ranks.stream().filter(rank -> rank.getUuid().equals(uuid)).findFirst().orElse(null);
+    }
+
+    public GrantProcedure getProcedureByUuid(UUID uuid) {
+        return Core.INSTANCE.getHandlerManager().getRankHandler().getGrantProcedures().stream().filter(grantProcedure -> grantProcedure.getGranterUuid().equals(uuid)).findFirst().orElse(null);
     }
 
 }

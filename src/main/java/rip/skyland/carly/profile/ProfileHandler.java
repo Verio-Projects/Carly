@@ -23,9 +23,7 @@ public class ProfileHandler implements IHandler {
     private List<Profile> profiles = new ArrayList<>();
 
     @Override
-    public void load() {
-
-    }
+    public void load() { }
 
     @Override
     public void unload() {
@@ -38,13 +36,13 @@ public class ProfileHandler implements IHandler {
         }
 
         MongoCollection collection = Core.INSTANCE.getMongoHandler().getCollection("profiles");
-        Document document = (Document) collection.find(Filters.eq("uuid", uuid)).first();
+        Document document = (Document) collection.find(Filters.eq("uuid", uuid.toString())).first();
 
         if (document == null) {
             Profile profile = new Profile(uuid);
             profiles.add(profile);
 
-            this.addGrant(new PermanentGrant(Core.INSTANCE.getHandlerManager().getRankHandler().getRankByName("Default"), uuid, "&4CONSOLE", System.currentTimeMillis(), true), profile);
+            this.addGrant(new PermanentGrant(Core.INSTANCE.getHandlerManager().getRankHandler().getRankByName("Default"), uuid, "first time join", "&4CONSOLE", System.currentTimeMillis(), true), profile);
 
             Bukkit.getScheduler().runTaskLater(Core.INSTANCE.getPlugin(), () -> Core.INSTANCE.sendPacket(new ProfileCreatePacket(uuid, profile.getPlayerName())), 5L);
             return profile;

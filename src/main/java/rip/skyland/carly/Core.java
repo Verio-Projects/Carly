@@ -3,9 +3,12 @@ package rip.skyland.carly;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
+import rip.skyland.carly.command.MenuTestCommand;
 import rip.skyland.carly.command.RankCommand;
+import rip.skyland.carly.command.grant.GrantCommand;
 import rip.skyland.carly.handler.HandlerManager;
 import rip.skyland.carly.handler.IHandler;
+import rip.skyland.carly.listener.GrantProcedureListener;
 import rip.skyland.carly.listener.PlayerListener;
 import rip.skyland.carly.util.command.CommandHandler;
 import rip.skyland.carly.util.database.IPacket;
@@ -13,7 +16,10 @@ import rip.skyland.carly.util.database.mongo.MongoHandler;
 import rip.skyland.carly.util.database.mongo.packet.MongoPacket;
 import rip.skyland.carly.util.database.redis.RedisHandler;
 import rip.skyland.carly.util.database.redis.packet.RedisPacket;
+import rip.skyland.carly.util.menu.MenuHandler;
+import rip.skyland.carly.util.menu.button.ButtonListener;
 
+import java.util.Arrays;
 import java.util.Collections;
 
 @Getter
@@ -24,6 +30,7 @@ public enum Core {
     private JavaPlugin plugin;
     private MongoHandler mongoHandler;
     private RedisHandler redisHandler;
+    private MenuHandler menuHandler;
 
     private HandlerManager handlerManager;
 
@@ -41,10 +48,17 @@ public enum Core {
 
         // register commands
         new CommandHandler(plugin)
-            .registerCommands(new RankCommand(handlerManager.getRankHandler()));
+            .registerCommands(new RankCommand(handlerManager.getRankHandler()), new MenuTestCommand(), new GrantCommand());
 
         // register listeners
-        Collections.singletonList(new PlayerListener(handlerManager.getProfileHandler())).forEach(listener -> Bukkit.getPluginManager().registerEvents(listener, plugin));
+        Arrays.asList(
+                new PlayerListener(handlerManager.getProfileHandler()),
+                new GrantProcedureListener(),
+                new ButtonListener()
+        ).forEach(listener -> Bukkit.getPluginManager().registerEvents(listener, plugin));
+
+        // register menu handler
+        this.menuHandler = new MenuHandler();
     }
 
     public void sendPacket(IPacket packet) {

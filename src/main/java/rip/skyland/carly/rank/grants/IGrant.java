@@ -10,6 +10,7 @@ public interface IGrant {
     Rank getRank();
     UUID getTargetUuid();
     String getGranterName();
+    String getReason();
     long getGrantTime();
     boolean isActive();
     JsonObject toJson();
