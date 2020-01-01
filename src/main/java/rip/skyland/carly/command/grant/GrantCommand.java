@@ -36,10 +36,11 @@ public class GrantCommand {
         }
 
         Profile profile;
-        if (CoreAPI.INSTANCE.getProfileByName(target) == null) {
+
+        if (Bukkit.getPlayer(target) == null) {
             profile = Core.INSTANCE.getHandlerManager().getProfileHandler().createProfile(Bukkit.getOfflinePlayer(target).getUniqueId());
         } else {
-            profile = CoreAPI.INSTANCE.getProfileByName(target);
+            profile = CoreAPI.INSTANCE.getProfileByUuid(Bukkit.getPlayer(target).getUniqueId());
         }
 
         if (sender instanceof Player) {
@@ -48,7 +49,7 @@ public class GrantCommand {
             Core.INSTANCE.getMenuHandler().createMenu(new PaginatedMenu(player) {
                 @Override
                 public String getTitle() {
-                    return "Choose a Rank";
+                    return Locale.GRANT_MENU_TITLE.getAsString();
                 }
 
                 @Override
@@ -57,17 +58,17 @@ public class GrantCommand {
                     List<Rank> ranks = Core.INSTANCE.getHandlerManager().getRankHandler().getRanks();
                     for (int i = 0; i < ranks.size(); i++) {
                         Rank rank = ranks.get(i);
-                        buttons.add(new Button(i, Material.WOOL, rank.getDisplayName(), CC.translate(Arrays.asList(
-                                "&7&m--------------------------",
-                                "&9Click to grant " + profile.getDisplayName() + " &9the " + rank.getDisplayName() + " &9rank.",
-                                "&7&m--------------------------"
-                        )), WoolColor.getWoolColor(rank.getColor()), player -> {
+
+                        List<String> lore = new ArrayList<>();
+                        Locale.GRANT_MENU_ITEM.getAsStringList().forEach(string -> lore.add(string.replace("%rank%", rank.getDisplayName()).replace("%player%", profile.getDisplayName())));
+
+                        buttons.add(new Button(i, Material.WOOL, rank.getDisplayName(), CC.translate(lore), WoolColor.getWoolColor(rank.getColor()), player -> {
                             if (!rank.getName().equalsIgnoreCase("Default")) {
 
                                 player.closeInventory();
                                 new GrantProcedure(rank, profile.getUuid(), player.getUniqueId(), CoreAPI.INSTANCE.getProfileByPlayer(player).getDisplayName());
 
-                                player.sendMessage(CC.translate("&ePlease type a reason for this grant to be added, or type &ccancel &eto cancel."));
+                                player.sendMessage(CC.translate(Locale.GRANT_SET_REASON.getAsString()));
                             }
                         }));
                     }
@@ -115,7 +116,7 @@ public class GrantCommand {
         Core.INSTANCE.getMenuHandler().createMenu(new PaginatedMenu(player) {
             @Override
             public String getTitle() {
-                return profile.getPlayerName() + "&r's Grants";
+                return Locale.GRANTS_MENU_TITLE.getAsString().replace("%player%", profile.getPlayerName());
             }
 
             @Override
@@ -124,20 +125,18 @@ public class GrantCommand {
 
                 for (int i = profile.getGrants().size() - 1; i >= 0; i--) {
                     IGrant grant = profile.getGrants().get(i);
-                    String expirationString = grant.isActive() ? "Expired" : (grant instanceof PermanentGrant ? "Never" : TimeUtil.millisToRoundedTime(((TemporaryGrant) grant).getExpirationTime()));
+                    String expirationString = !grant.isActive() ? "Expired" : (grant instanceof PermanentGrant ? "Never" : TimeUtil.millisToRoundedTime(((TemporaryGrant) grant).getExpirationTime()));
 
-                    buttons.add(new Button(i, Material.WOOL, "&c" + DigestUtils.sha256Hex(grant.getRank().getUuid().toString()).substring(0, 8), Arrays.asList(
-                            "&7&m--------------------------",
-                            "&eRank: &f" + grant.getRank().getDisplayName(),
-                            "&eGranted By: &f" + grant.getGranterName(),
-                            "&eExpires In: &f" + expirationString,
-                            "&eGrant Date: &f" + TimeUtil.unixToDate(grant.getGrantTime()),
-                            "&eReason: &f" + grant.getReason(),
-                            "",
-                            grant.isActive() ? "&aClick to expire this grant" : "&eClick to un-expire this grant",
-                            "&7&m--------------------------"
+                    List<String> lore = new ArrayList<>();
+                    Locale locale = grant.isActive() ? Locale.GRANTS_MENU_ITEM_ACTIVE : Locale.GRANTS_MENU_ITEM_INACTIVE;
 
-                    ), WoolColor.getWoolColor(grant.isActive() ? CC.GREEN : CC.RED), player -> {
+                    locale.getAsStringList().forEach(string -> lore.add(string.replace("%rank%", grant.getRank().getDisplayName())
+                    .replace("%granter%", grant.getGranterName())
+                    .replace("%expiration%", expirationString)
+                    .replace("%grantDate%", TimeUtil.unixToDate(grant.getGrantTime())
+                    .replace("%reason%", grant.getReason()))));
+
+                    buttons.add(new Button(i, Material.WOOL, "&c#" + DigestUtils.sha256Hex(grant.getRank().getUuid().toString()).substring(0, 8), lore, WoolColor.getWoolColor(grant.isActive() ? CC.GREEN : CC.RED), player -> {
                         if (!grant.getRank().getName().equalsIgnoreCase("Default")) {
                             grant.setActive(!grant.isActive());
                             this.updatePage();

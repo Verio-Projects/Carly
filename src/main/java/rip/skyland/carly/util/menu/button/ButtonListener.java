@@ -16,11 +16,17 @@ public class ButtonListener implements Listener {
 
     @EventHandler
     public void onClick(InventoryClickEvent event) {
-        System.out.println(MenuHandler.getInstance().getMenus().size());
+        MenuHandler.getInstance().getMenus().forEach(menu -> System.out.println(menu.getTitle()));
+
+
         if (MenuHandler.getInstance().getByTitleAndPlayer((Player) event.getWhoClicked(), event.getInventory().getTitle()) != null) {
+            System.out.println("passed check 1");
+
             Menu menu = MenuHandler.getInstance().getByTitleAndPlayer((Player) event.getWhoClicked(), event.getInventory().getTitle());
 
             if (!(event.getCurrentItem() == null || event.getCurrentItem().getItemMeta() == null)) {
+                System.out.println("passed check 2");
+
                 event.setCancelled(true);
                 List<Button> buttons = menu instanceof PaginatedMenu ? ((PaginatedMenu) menu).getPaginatedButtons() : menu.getButtons();
                 Objects.requireNonNull(buttons.stream().filter(button -> button.getItem().equals(event.getCurrentItem())).findFirst().orElse(null)).getClick().accept((Player) event.getWhoClicked());

@@ -51,7 +51,41 @@ public enum Locale {
             "",
             "&6-> &ePermissions &6(%permissionsAmount%)&e: &c%permissions%",
             "&9&m" + StringUtils.repeat("-", 39)
-            ));
+            )),
+
+    GRANTS_MENU_TITLE("grant.grants_menu.title", "%player%'s Grants"),
+    GRANTS_MENU_ITEM_INACTIVE("grant.grants_menu.item.inactive", Arrays.asList(
+            "&7&m--------------------------",
+            "&eRank: %rank%",
+            "&eGranted By: %granter%",
+            "&eExpires In: %expiration%",
+            "&eGrant Date: &f%grantDate%",
+            "&eReason: &f%reason%",
+            "",
+            "&eClick to un-expire this grant",
+            "&7&m--------------------------"
+    )),
+    GRANTS_MENU_ITEM_ACTIVE("grant.grants_menu.item.active", Arrays.asList(
+            "&7&m--------------------------",
+            "&eRank: %rank%",
+            "&eGranted By: %granter%",
+            "&eExpires In: %expiration%",
+            "&eGrant Date: &f%grantDate%",
+            "&eReason: &f%reason%",
+            "",
+            "&aClick to expire this grant",
+            "&7&m--------------------------"
+    )),
+
+    GRANT_SET_REASON("grant.set_reason", "&ePlease type a reason for this grant to be added, or type &ccancel &eto cancel."),
+    GRANT_SET_DURATION("grant.set_duration", "&ePlease type a duration for this grant, \"perm\" for permanent or type &ccancel &eto cancel."),
+    GRANT_CANCELLED_GRANTING("grant.cancelled_granting", "&cYou have cancelled granting"),
+    GRANT_MENU_TITLE("grant.menu.title", "Choose a Rank"),
+    GRANT_MENU_ITEM("grant.menu.item", Arrays.asList(
+            "&7&m--------------------------",
+            "&9Click to grant %player% &9the %rank% &9rank.",
+            "&7&m--------------------------"
+    ));
 
     private Object value;
 

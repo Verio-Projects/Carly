@@ -26,6 +26,8 @@ public class GrantProcedure {
         this.rank = rank;
         this.granterUuid = granterUuid;
         this.granterName = granterName;
+
+        Core.INSTANCE.getHandlerManager().getRankHandler().getGrantProcedures().add(this);
     }
 
     private String reason = "Not set";

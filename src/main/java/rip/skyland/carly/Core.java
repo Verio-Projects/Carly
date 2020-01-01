@@ -8,7 +8,6 @@ import rip.skyland.carly.command.RankCommand;
 import rip.skyland.carly.command.grant.GrantCommand;
 import rip.skyland.carly.handler.HandlerManager;
 import rip.skyland.carly.handler.IHandler;
-import rip.skyland.carly.listener.GrantProcedureListener;
 import rip.skyland.carly.listener.PlayerListener;
 import rip.skyland.carly.util.command.CommandHandler;
 import rip.skyland.carly.util.database.IPacket;
@@ -20,7 +19,6 @@ import rip.skyland.carly.util.menu.MenuHandler;
 import rip.skyland.carly.util.menu.button.ButtonListener;
 
 import java.util.Arrays;
-import java.util.Collections;
 
 @Getter
 public enum Core {
@@ -53,7 +51,6 @@ public enum Core {
         // register listeners
         Arrays.asList(
                 new PlayerListener(handlerManager.getProfileHandler()),
-                new GrantProcedureListener(),
                 new ButtonListener()
         ).forEach(listener -> Bukkit.getPluginManager().registerEvents(listener, plugin));
 
