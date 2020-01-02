@@ -32,6 +32,14 @@ public enum CoreAPI {
         return Core.INSTANCE.getHandlerManager().getProfileHandler().getProfileByUuid(uuid);
     }
 
+    public Profile getOrCreateProfileByUuid(UUID uuid) {
+        Preconditions.checkArgument(Core.INSTANCE.getHandlerManager() != null, "handler manager is null");
+        if(this.getProfileByUuid(uuid) != null)
+            return this.getProfileByUuid(uuid);
+        else
+            return Core.INSTANCE.getHandlerManager().getProfileHandler().createProfile(uuid);
+    }
+
     public Profile getProfileByPlayer(Player player) {
         return this.getProfileByUuid(player.getUniqueId());
     }

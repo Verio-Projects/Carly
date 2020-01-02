@@ -86,7 +86,17 @@ public enum Locale {
             "&7&m--------------------------",
             "&9Click to grant %player% &9the %rank% &9rank.",
             "&7&m--------------------------"
-    ));
+    )),
+
+    PUNISHMENT_BAN_KICK("punishment.ban.kick_message", "&cYou have been banned off the SkylandRIP Network\n \n \n&cVisit skyland.rip/appeal to appeal for an unban."),
+    PUNISHMENT_MUTE_SILENT("punishment.mute.silent_broadcast", "&7[Silent] %player% &ahas been muted by %punisher%&a."),
+    PUNISHMENT_BAN_SILENT("punishment.ban.silent_broadcast", "&7[Silent] %player% &ahas been banned by %punisher%&a."),
+    PUNISHMENT_BAN("punishment.ban.broadcast", "%player% &ahas been banned by %punisher%&a."),
+    PUNISHMENT_MUTE("punishment.mute.broadcast", "%player% &ahas been muted by %punisher%&a."),
+    PUNISHMENT_UNMUTE_SILENT("punishment.mute.undo_silent_broadcast", "&7[Silent] %player% &ahas been unmuted by %punisher%&a."),
+    PUNISHMENT_UNBAN_SILENT("punishment.ban.undo_silent_broadcast", "&7[Silent] %player% &ahas been unbanned by %punisher%&a."),
+    PUNISHMENT_UNBAN("punishment.ban.undo_broadcast", "%player% &ahas been unbanned by %punisher%&a."),
+    PUNISHMENT_UNMUTE("punishment.mute.undo_broadcast", "%player% &ahas been unmuted by %punisher%&a.");
 
     private Object value;
 
