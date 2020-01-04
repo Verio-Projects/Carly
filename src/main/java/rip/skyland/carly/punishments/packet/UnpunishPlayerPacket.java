@@ -31,6 +31,7 @@ public class UnpunishPlayerPacket implements RedisPacket {
 
         if(silent) {
             Bukkit.getOnlinePlayers().stream().filter(player -> player.hasPermission("core.staff")).forEach(player -> player.sendMessage(CC.translate(banMessage)));
+            Bukkit.getConsoleSender().sendMessage(CC.translate(banMessage));
         } else {
             Bukkit.broadcastMessage(CC.translate(banMessage));
         }

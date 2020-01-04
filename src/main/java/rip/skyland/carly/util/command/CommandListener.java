@@ -7,7 +7,6 @@ import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerChatTabCompleteEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.server.ServerCommandEvent;
 import rip.skyland.carly.util.CC;
@@ -38,7 +37,7 @@ public class CommandListener implements Listener {
                 .stream()
                 .filter(key -> Arrays.stream(key.getNames()).filter(name -> {
                     String alias = name + " ";
-                    String message = event.getMessage().replace("/", "") + " ";
+                    String message = event.getMessage().replace("/", "").replace(handler.getFallbackPrefix(), "") + " ";
 
                     return message.toLowerCase().startsWith(alias.toLowerCase());
                 }).findFirst().orElse(null) != null)
@@ -52,7 +51,7 @@ public class CommandListener implements Listener {
                 .stream()
                 .filter(key -> Arrays.stream(key.getNames()).filter(name -> {
                     String alias = name + " ";
-                    String message = event.getCommand().replace("/", "") + " ";
+                    String message = event.getCommand().replace("/", "").replace(handler.getFallbackPrefix(), "") + " ";
 
                     return message.toLowerCase().startsWith(alias.toLowerCase());
                 }).findFirst().orElse(null) != null)
@@ -130,4 +129,5 @@ public class CommandListener implements Listener {
             sender.sendMessage(ChatColor.RED + "Usage: " + data.getUsage(alias));
         }
     }
+
 }

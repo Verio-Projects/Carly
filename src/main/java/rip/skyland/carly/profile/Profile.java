@@ -3,6 +3,9 @@ package rip.skyland.carly.profile;
 import lombok.Getter;
 import lombok.Setter;
 import rip.skyland.carly.Core;
+import rip.skyland.carly.punishments.IPunishment;
+import rip.skyland.carly.punishments.PunishmentType;
+import rip.skyland.carly.punishments.impl.TemporaryPunishment;
 import rip.skyland.carly.rank.Rank;
 import rip.skyland.carly.rank.grants.IGrant;
 
@@ -22,6 +25,21 @@ public class Profile {
     public Profile(UUID uuid) {
         this.uuid = uuid;
         this.grants = new ArrayList<>();
+    }
+
+    public IPunishment getActivePunishment(PunishmentType type) {
+        return Core.INSTANCE.getHandlerManager().getPunishmentHandler().getPunishments().stream()
+                .filter(punishment -> {
+                    if(punishment instanceof TemporaryPunishment) {
+                        if(((TemporaryPunishment) punishment).getExpiration()-System.currentTimeMillis() <= 0)
+                            punishment.setActive(false);
+                            return false;
+                    }
+
+                    return punishment.getPunishmentType().equals(type) && punishment.getTargetUuid().equals(uuid) && punishment.isActive();
+                })
+                .findFirst()
+                .orElse(null);
     }
 
     public Rank getRank() {

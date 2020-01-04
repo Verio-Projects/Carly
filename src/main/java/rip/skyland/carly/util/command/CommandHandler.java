@@ -20,15 +20,18 @@ import java.lang.reflect.Method;
 import java.util.*;
 import java.util.stream.IntStream;
 
+@Getter
 public class CommandHandler {
 
-    @Getter
     private List<CommandData> commands;
     private Map<Class<?>, CommandTypeAdapter> parameterTypes;
+    private String fallbackPrefix;
 
-    public CommandHandler(JavaPlugin plugin) {
+    public CommandHandler(JavaPlugin plugin, String fallbackPrefix) {
         commands = new ArrayList<>();
         parameterTypes = new HashMap<>();
+
+        this.fallbackPrefix = fallbackPrefix;
 
         Bukkit.getPluginManager().registerEvents(new CommandListener(this), plugin);
 

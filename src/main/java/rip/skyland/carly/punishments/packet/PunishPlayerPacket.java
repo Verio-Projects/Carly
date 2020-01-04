@@ -4,6 +4,7 @@ import com.mongodb.client.model.Filters;
 import lombok.AllArgsConstructor;
 import org.bson.Document;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import rip.skyland.carly.Core;
 import rip.skyland.carly.Locale;
 import rip.skyland.carly.api.CoreAPI;
@@ -12,6 +13,9 @@ import rip.skyland.carly.punishments.PunishmentType;
 import rip.skyland.carly.util.CC;
 import rip.skyland.carly.util.database.redis.packet.RedisPacket;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -31,13 +35,16 @@ public class PunishPlayerPacket implements RedisPacket {
 
         if(silent) {
             Bukkit.getOnlinePlayers().stream().filter(player -> player.hasPermission("core.staff")).forEach(player -> player.sendMessage(CC.translate(banMessage)));
+            Bukkit.getConsoleSender().sendMessage(CC.translate(banMessage));
         } else {
             Bukkit.broadcastMessage(CC.translate(banMessage));
         }
 
         if (punishment.getPunishmentType().equals(PunishmentType.BAN) && punishment.isActive()) {
+            // async catcher bypass
             if (Bukkit.getPlayer(punishment.getTargetUuid()) != null) {
-                Bukkit.getPlayer(punishment.getTargetUuid()).kickPlayer(Locale.PUNISHMENT_BAN_KICK.getAsString());
+                Player player = Bukkit.getPlayer(punishment.getTargetUuid());
+                Bukkit.getScheduler().runTaskLater(Core.INSTANCE.getPlugin(), () -> player.kickPlayer(CC.translate(Locale.PUNISHMENT_BAN_KICK.getAsString().replace("%reason%", punishment.getReason().replace("-s", "")))), 1L);
             }
         }
     }

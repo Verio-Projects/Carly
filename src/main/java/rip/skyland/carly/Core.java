@@ -6,6 +6,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import rip.skyland.carly.command.ListCommand;
 import rip.skyland.carly.command.RankCommand;
 import rip.skyland.carly.command.grant.GrantCommand;
+import rip.skyland.carly.command.punishments.PunishmentCommands;
 import rip.skyland.carly.handler.HandlerManager;
 import rip.skyland.carly.handler.IHandler;
 import rip.skyland.carly.listener.PlayerListener;
@@ -45,8 +46,11 @@ public enum Core {
         this.handlerManager = new HandlerManager();
 
         // register commands
-        new CommandHandler(plugin)
-                .registerCommands(new RankCommand(handlerManager.getRankHandler()), new GrantCommand(), new ListCommand());
+        new CommandHandler(plugin, "carly").registerCommands(
+                new RankCommand(handlerManager.getRankHandler()),
+                new GrantCommand(),
+                new ListCommand(),
+                new PunishmentCommands(handlerManager.getPunishmentHandler()));
 
         // register listeners
         Arrays.asList(
