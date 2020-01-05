@@ -3,10 +3,13 @@ package rip.skyland.carly.api;
 import com.google.common.base.Preconditions;
 import com.google.gson.JsonParser;
 import lombok.Getter;
+import org.bukkit.Bukkit;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import rip.skyland.carly.Core;
 import rip.skyland.carly.profile.Profile;
 import rip.skyland.carly.rank.Rank;
+import rip.skyland.carly.util.CC;
 
 import java.util.UUID;
 
@@ -24,7 +27,23 @@ public enum CoreAPI {
 
     public Profile getProfileByName(String name) {
         Preconditions.checkArgument(Core.INSTANCE.getHandlerManager() != null, "handler manager is null");
-        return Core.INSTANCE.getHandlerManager().getProfileHandler().getProfileByName(name);
+
+        if (Bukkit.getOfflinePlayer(name).getUniqueId() == null) {
+            return null;
+        }
+
+        Profile profile;
+        if (Bukkit.getPlayer(name) == null) {
+            profile = Core.INSTANCE.getHandlerManager().getProfileHandler().createProfile(Bukkit.getOfflinePlayer(name).getUniqueId());
+
+            if(profile.getPlayerName() == null) {
+                profile.setPlayerName(Bukkit.getOfflinePlayer(name).getName());
+            }
+        } else {
+            profile = CoreAPI.INSTANCE.getProfileByUuid(Bukkit.getPlayer(name).getUniqueId());
+        }
+
+        return profile;
     }
 
     public Profile getProfileByUuid(UUID uuid) {

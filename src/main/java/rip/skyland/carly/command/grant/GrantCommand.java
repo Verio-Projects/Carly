@@ -29,21 +29,12 @@ public class GrantCommand {
 
     @Command(names = "grant", permission = "core.grant")
     public void performGrant(CommandSender sender, @Param(name = "player") String target, @Param(name = "rank", value = "not set") String rankName) {
-        if (Bukkit.getOfflinePlayer(target).getUniqueId() == null) {
-            sender.sendMessage(CC.translate("&cThat player has never played before."));
-            return;
-        }
+       Profile profile = CoreAPI.INSTANCE.getProfileByName(target);
 
-        Profile profile;
-        if (Bukkit.getPlayer(target) == null) {
-            profile = Core.INSTANCE.getHandlerManager().getProfileHandler().createProfile(Bukkit.getOfflinePlayer(target).getUniqueId());
-
-            if(profile.getPlayerName() == null) {
-                profile.setPlayerName(Bukkit.getOfflinePlayer(target).getName());
-            }
-        } else {
-            profile = CoreAPI.INSTANCE.getProfileByUuid(Bukkit.getPlayer(target).getUniqueId());
-        }
+       if(profile == null) {
+           sender.sendMessage(CC.translate("&cThat player does not exist"));
+           return;
+       }
 
         if (sender instanceof Player) {
             Player player = (Player) sender;
@@ -103,22 +94,12 @@ public class GrantCommand {
 
     @Command(names = "grants", permission = "core.grants")
     public void performGrants(Player player, @Param(name = "player") String target) {
-        if (Bukkit.getOfflinePlayer(target).getUniqueId() == null) {
-            player.sendMessage(CC.translate("&cThat player has never played before."));
+        Profile profile = CoreAPI.INSTANCE.getProfileByName(target);
+
+        if(profile == null) {
+            player.sendMessage(CC.translate("&cThat player does not exist"));
             return;
         }
-
-        Profile profile;
-        if (Bukkit.getPlayer(target) == null) {
-            profile = Core.INSTANCE.getHandlerManager().getProfileHandler().createProfile(Bukkit.getOfflinePlayer(target).getUniqueId());
-
-            if(profile.getPlayerName() == null) {
-                profile.setPlayerName(Bukkit.getOfflinePlayer(target).getName());
-            }
-        } else {
-            profile = CoreAPI.INSTANCE.getProfileByUuid(Bukkit.getPlayer(target).getUniqueId());
-        }
-
         Core.INSTANCE.getMenuHandler().createMenu(new PaginatedMenu(player) {
             @Override
             public String getTitle() {

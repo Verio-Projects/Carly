@@ -46,20 +46,11 @@ public class PunishmentCommands {
 
 
     private void execute(CommandSender sender, String targetName, String reason, String duration, PunishmentType punishmentType, boolean undo) {
-        if (Bukkit.getOfflinePlayer(targetName).getUniqueId() == null) {
-            sender.sendMessage(CC.translate("&cThat player has never played before."));
+        Profile profile = CoreAPI.INSTANCE.getProfileByName(targetName);
+
+        if(profile == null) {
+            sender.sendMessage(CC.translate("&cThat player does not exist"));
             return;
-        }
-
-        Profile profile;
-        if (Bukkit.getPlayer(targetName) == null) {
-            profile = Core.INSTANCE.getHandlerManager().getProfileHandler().createProfile(Bukkit.getOfflinePlayer(targetName).getUniqueId());
-
-            if(profile.getPlayerName() == null) {
-                profile.setPlayerName(Bukkit.getOfflinePlayer(targetName).getName());
-            }
-        } else {
-            profile = CoreAPI.INSTANCE.getProfileByUuid(Bukkit.getPlayer(targetName).getUniqueId());
         }
 
         if(undo) {

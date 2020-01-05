@@ -14,33 +14,22 @@ import java.util.stream.IntStream;
 
 public class HistoryCommand {
 
-    @Command(names="history", permission="core.history")
-    public void execute(CommandSender sender, @Param(name="player") String targetName, @Param(name="page", value="1") int page) {
-        if (Bukkit.getOfflinePlayer(targetName).getUniqueId() == null) {
-            sender.sendMessage(CC.translate("&cThat player has never played before."));
+    @Command(names = "history", permission = "core.history")
+    public void execute(CommandSender sender, @Param(name = "player") String targetName, @Param(name = "page", value = "1") int page) {
+        Profile profile = CoreAPI.INSTANCE.getProfileByName(targetName);
+
+        if(profile == null) {
+            sender.sendMessage(CC.translate("&cThat player does not exist"));
             return;
-        }
-
-        Profile profile;
-        if (Bukkit.getPlayer(targetName) == null) {
-            profile = Core.INSTANCE.getHandlerManager().getProfileHandler().createProfile(Bukkit.getOfflinePlayer(targetName).getUniqueId());
-
-            if(profile.getPlayerName() == null) {
-                profile.setPlayerName(Bukkit.getOfflinePlayer(targetName).getName());
-            }
-        } else {
-            profile = CoreAPI.INSTANCE.getProfileByUuid(Bukkit.getPlayer(targetName).getUniqueId());
         }
 
         int maxOnPage = 8;
 
-        IntStream.range(maxOnPage*page-maxOnPage, Math.min(maxOnPage*page, profile.getHistory().size())).forEach(i -> {
+        IntStream.range(maxOnPage * page - maxOnPage, Math.min(maxOnPage * page, profile.getHistory().size())).forEach(i -> {
             IHistoryIndex historyIndex = profile.getHistory().get(i);
 
             sender.sendMessage(CC.translate("&3" + historyIndex.getHistoryType() + " &7- " + historyIndex.getHistoryDescription().entrySet().stream()
                     .map(entry -> Character.toUpperCase(entry.getKey().charAt(0)) + entry.getKey().substring(1) + ": " + entry.getValue().getAsString())));
         });
-
     }
-
 }
