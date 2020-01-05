@@ -7,6 +7,8 @@ import java.util.List;
 
 public enum Locale {
 
+    SERVER_NAME("server.id", "dev-1"),
+
     MONGO_HOST("mongo.host", "127.0.0.1"),
     MONGO_PORT("mongo.port", 27017),
     MONGO_DATABASE("mongo.database", "carly"),
@@ -105,7 +107,11 @@ public enum Locale {
     CHAT_SLOW("chat.slow", "&dThe public chat has been slowed"),
     CHAT_UNSLOW("chat.unslow", "&dThe public chat has been unslowed"),
     CHAT_UNSLOW_ALREADY_UNSLOWED("chat.unslow_already_unslowed", "&cThe chat is already unslowed."),
-    CHAT_SLOWCHAT("chat.slowchat", "&cYou are currently still on chat cooldown");
+    CHAT_SLOWCHAT("chat.slowchat", "&cYou are currently still on chat cooldown"),
+
+    PROFILE_CONNECT("profile.connect", "&9[Staff] &b%playerName% &ajoined &bthe network (%server%)"),
+    PROFILE_SWITCH_SERVER("profile.switch_server", "&9[Staff] &b%playerName% &bjoined %newServer% (from %previousServer%)"),
+    PROFILE_DISCONNECT("profile.disconnect", "&9[Staff] &b%playerName% &cleft &bthe network (from %server%)");
 
     private Object value;
 

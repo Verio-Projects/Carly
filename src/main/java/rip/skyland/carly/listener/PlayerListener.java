@@ -31,9 +31,8 @@ public class PlayerListener implements Listener {
         Profile profile = profileHandler.createProfile(player.getUniqueId());
         if(profile.getActivePunishment(PunishmentType.BAN) != null && profile.getActivePunishment(PunishmentType.BAN).isActive()) {
             event.disallow(PlayerLoginEvent.Result.KICK_BANNED, CC.translate(Locale.PUNISHMENT_BAN_KICK.getAsString().replace("%reason%", profile.getActivePunishment(PunishmentType.BAN).getReason().replace("-s", ""))));
+            profileHandler.unloadProfile(profile);
         }
-
-        profileHandler.unloadProfile(profile);
     }
 
     @EventHandler
@@ -58,7 +57,4 @@ public class PlayerListener implements Listener {
             profileHandler.unloadProfile(profile);
         }
     }
-
-
-
 }

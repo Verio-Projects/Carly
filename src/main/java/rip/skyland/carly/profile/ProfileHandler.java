@@ -6,9 +6,13 @@ import lombok.Getter;
 import org.bson.Document;
 import org.bukkit.Bukkit;
 import rip.skyland.carly.Core;
+import rip.skyland.carly.Locale;
 import rip.skyland.carly.api.CoreAPI;
 import rip.skyland.carly.handler.IHandler;
 import rip.skyland.carly.profile.packets.ProfileSavePacket;
+import rip.skyland.carly.profile.redis.RedisProfile;
+import rip.skyland.carly.profile.redis.packet.RedisProfileJoin;
+import rip.skyland.carly.profile.redis.packet.RedisProfileLeave;
 import rip.skyland.carly.rank.grants.IGrant;
 import rip.skyland.carly.rank.grants.impl.PermanentGrant;
 
@@ -20,6 +24,7 @@ import java.util.UUID;
 public class ProfileHandler implements IHandler {
 
     private List<Profile> profiles = new ArrayList<>();
+    private List<RedisProfile> redisProfiles = new ArrayList<>();
 
     @Override
     public void load() {
@@ -56,6 +61,12 @@ public class ProfileHandler implements IHandler {
             profiles.add(profile);
         }
 
+        RedisProfile redisProfile = new RedisProfile(uuid, profile.getDisplayName());
+        redisProfile.setLastSeenServer(Locale.SERVER_NAME.getAsString());
+        redisProfile.setLastAction(RedisProfile.LastAction.JOIN_SERVER);
+
+        Core.INSTANCE.sendPacket(new RedisProfileJoin(redisProfile.toJson(), Locale.SERVER_NAME.getAsString()));
+
         profiles.add(profile);
         return profile;
     }
@@ -65,6 +76,11 @@ public class ProfileHandler implements IHandler {
     }
 
     public void unloadProfile(Profile profile) {
+        RedisProfile redisProfile = this.getRedisProfileByUuid(profile.getUuid());
+        redisProfile.setLastAction(RedisProfile.LastAction.LEFT_SERVER);
+
+        Core.INSTANCE.sendPacket(new RedisProfileLeave(redisProfile.toJson(), Locale.SERVER_NAME.getAsString()));
+
         profiles.remove(profile);
         this.saveProfile(profile);
     }
@@ -79,6 +95,10 @@ public class ProfileHandler implements IHandler {
 
     public Profile getProfileByUuid(UUID uuid) {
         return profiles.stream().filter(profile -> profile.getUuid().equals(uuid)).findFirst().orElse(null);
+    }
+
+    public RedisProfile getRedisProfileByUuid(UUID uuid) {
+        return redisProfiles.stream().filter(profile -> profile.getUuid().equals(uuid)).findFirst().orElse(null);
     }
 
 

@@ -41,7 +41,7 @@ public class RankHandler implements IHandler {
         // run grant task (pretty ugly, but idc)
         Bukkit.getScheduler().runTaskTimerAsynchronously(Core.INSTANCE.getPlugin(), () -> Core.INSTANCE.getHandlerManager().getProfileHandler().getProfiles().forEach(profile -> profile.getGrants().stream().filter(grant -> grant instanceof TemporaryGrant).forEach(grant -> {
             if(((TemporaryGrant) grant).getExpirationTime()-System.currentTimeMillis() <= 0) {
-                grant.setActive(false);
+                profile.getGrants().remove(grant);
             }
         })), 20L, 20L);
 
