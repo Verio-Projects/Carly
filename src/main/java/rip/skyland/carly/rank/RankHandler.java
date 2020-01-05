@@ -83,7 +83,6 @@ public class RankHandler implements IHandler {
     }
 
     public void deleteRank(Rank rank) {
-        ranks.remove(rank);
         Core.INSTANCE.sendPacket(new RankDeletePacket(rank.getUuid()));
     }
 
