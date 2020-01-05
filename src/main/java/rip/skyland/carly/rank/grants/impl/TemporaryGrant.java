@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import rip.skyland.carly.api.CoreAPI;
 import rip.skyland.carly.rank.Rank;
 import rip.skyland.carly.rank.grants.IGrant;
 import rip.skyland.carly.util.JsonBuilder;
@@ -34,4 +35,17 @@ public class TemporaryGrant implements IGrant {
                 .getObject();
     }
 
+    @Override
+    public String getHistoryType() {
+        return "Temporary Grant";
+    }
+
+    @Override
+    public JsonObject getHistoryDescription() {
+        return new JsonBuilder()
+                .addProperty("rank", rank.getDisplayName())
+                .addProperty("reason", reason)
+                .addProperty("granter", granterName)
+                .getObject();
+    }
 }

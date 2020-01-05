@@ -49,7 +49,6 @@ public class RankSavePacket implements MongoPacket, RedisPacket {
     @Override
     public void savePacket(MongoDatabase database) {
         MongoCollection collection = database.getCollection("ranks");
-        Preconditions.checkArgument(collection.find(Filters.eq("uuid", uuid.toString())).first() != null, "Rank with that uuid does not exist");
 
         collection.replaceOne(Filters.eq("uuid", uuid.toString()), new DocumentBuilder()
                 .put("uuid", uuid.toString())

@@ -33,8 +33,13 @@ public class PunishmentHandler implements IHandler {
     }
 
     public IPunishment loadPunishment(Document document) {
+        IPunishment punishment = this.getPunishments().stream().filter(punishment1 -> punishment1.getUuid().equals(UUID.fromString(document.getString("uuid")))).findFirst().orElse(null);
+        if(punishment != null) {
+            return punishment;
+        }
+
         if(document.containsKey("expiration")) {
-            TemporaryPunishment punishment = new TemporaryPunishment(
+            TemporaryPunishment toReturn = new TemporaryPunishment(
                     document.getString("reason"),
                     document.getString("punisher"),
                     UUID.fromString(document.getString("uuid")),
@@ -44,10 +49,10 @@ public class PunishmentHandler implements IHandler {
                     document.getLong("punishDate"),
                     document.getLong("expiration"));
 
-            punishments.add(punishment);
-            return punishment;
+            punishments.add(toReturn);
+            return toReturn;
         } else {
-            PermanentPunishment punishment = new PermanentPunishment(
+            PermanentPunishment toReturn = new PermanentPunishment(
                     document.getString("reason"),
                     document.getString("punisher"),
                     UUID.fromString(document.getString("uuid")),
@@ -57,26 +62,28 @@ public class PunishmentHandler implements IHandler {
                     document.getLong("punishDate")
             );
 
-            punishments.add(punishment);
-            return punishment;
+            punishments.add(toReturn);
+            return toReturn;
         }
     }
 
     public void punish(IPunishment punishment) {
-        this.savePunishment(punishment);
         Core.INSTANCE.sendPacket(new PunishPlayerPacket(punishment.getUuid()));
 
+        this.punishments.stream().filter(punishment1 -> punishment.getPunishmentType().equals(punishment1.getPunishmentType())).forEach(punishment1 -> punishment1.setActive(false));
         this.punishments.add(punishment);
+
+        this.savePunishment(punishment);
     }
 
-    public void unpunish(UUID uuid) {
-        if(this.punishments.stream().anyMatch(punishment -> punishment.getTargetUuid().equals(uuid))) {
-            Core.INSTANCE.sendPacket(new UnpunishPlayerPacket(this.punishments.stream().filter(punishment -> punishment.getTargetUuid().equals(uuid) && punishment.isActive()).findFirst().orElse(null).getUuid()));
-            this.punishments.stream().filter(punishment -> punishment.getTargetUuid().equals(uuid)).forEach(punishment -> punishment.setActive(false));
+    public void unpunish(PunishmentType type, UUID uuid) {
+        this.punishments.forEach(this::savePunishment);
+        if(this.punishments.stream().anyMatch(punishment -> type.equals(punishment.getPunishmentType()) && punishment.getTargetUuid().equals(uuid))) {
+            Core.INSTANCE.sendPacket(new UnpunishPlayerPacket(this.punishments.stream().filter(punishment -> type.equals(punishment.getPunishmentType()) && punishment.getTargetUuid().equals(uuid) && punishment.isActive()).findFirst().orElse(null).getUuid()));
         }
     }
 
-    private void savePunishment(IPunishment punishment) {
+    public void savePunishment(IPunishment punishment) {
         Document document = Document.parse(punishment.toJson().toString());
 
         Core.INSTANCE.getMongoHandler().getCollection("punishments").replaceOne(Filters.eq("uuid", punishment.getUuid().toString()), document, new ReplaceOptions().upsert(true));

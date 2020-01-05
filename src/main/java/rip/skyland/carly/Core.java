@@ -3,6 +3,7 @@ package rip.skyland.carly;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
+import rip.skyland.carly.command.HistoryCommand;
 import rip.skyland.carly.command.ListCommand;
 import rip.skyland.carly.command.RankCommand;
 import rip.skyland.carly.command.grant.GrantCommand;
@@ -50,7 +51,8 @@ public enum Core {
                 new RankCommand(handlerManager.getRankHandler()),
                 new GrantCommand(),
                 new ListCommand(),
-                new PunishmentCommands(handlerManager.getPunishmentHandler()));
+                new PunishmentCommands(handlerManager.getPunishmentHandler()),
+                new HistoryCommand());
 
         // register listeners
         Arrays.asList(

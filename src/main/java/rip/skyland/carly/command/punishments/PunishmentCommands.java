@@ -25,7 +25,7 @@ public class PunishmentCommands {
     private PunishmentHandler handler;
     
     @Command(names="ban", permission="core.ban")
-    public void executeBan(CommandSender sender, @Param(name="player") String targetName, @Param(name="reason", value="Not set -s") String reason, @Param(name="duration", value="perm") String duration) {
+    public void executeBan(CommandSender sender, @Param(name="player") String targetName, @Param(name="duration", value="perm") String duration, @Param(name="reason", value="Not set -s") String reason) {
         this.execute(sender, targetName, reason, duration, PunishmentType.BAN, false);
     }
 
@@ -35,7 +35,7 @@ public class PunishmentCommands {
     }
 
     @Command(names="mute", permission="core.mute")
-    public void executeMute(CommandSender sender, @Param(name="player") String targetName, @Param(name="reason", value="Not set -s") String reason, @Param(name="duration", value="perm") String duration) {
+    public void executeMute(CommandSender sender, @Param(name="player") String targetName, @Param(name="duration", value="perm") String duration, @Param(name="reason", value="Not set -s") String reason) {
         this.execute(sender, targetName, reason, duration, PunishmentType.MUTE, false);
     }
 
@@ -63,11 +63,11 @@ public class PunishmentCommands {
         }
 
         if(undo) {
-            handler.unpunish(profile.getUuid());
+            handler.unpunish(punishmentType, profile.getUuid());
         }
 
         if(!undo) {
-            String punisher = sender instanceof Player ? CoreAPI.INSTANCE.getProfileByPlayer((Player) sender).getDisplayName() : "&4&l" + sender;
+            String punisher = sender instanceof Player ? CoreAPI.INSTANCE.getProfileByPlayer((Player) sender).getDisplayName() : "&4&lCONSOLE";
             IPunishment punishment;
             if (duration.equalsIgnoreCase("perm") || duration.equalsIgnoreCase("permanent")) {
                 if (!(sender.hasPermission("core." + punishmentType.name().toLowerCase() + ".permanent"))) {

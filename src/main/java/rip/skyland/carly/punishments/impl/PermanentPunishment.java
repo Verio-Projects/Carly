@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import rip.skyland.carly.api.CoreAPI;
 import rip.skyland.carly.punishments.IPunishment;
 import rip.skyland.carly.punishments.PunishmentType;
 import rip.skyland.carly.util.JsonBuilder;
@@ -32,6 +33,20 @@ public class PermanentPunishment implements IPunishment {
                 .addProperty("punishmentType", punishmentType.name())
                 .addProperty("punishDate", punishDate)
                 .addProperty("active", active)
+                .getObject();
+    }
+
+    @Override
+    public String getHistoryType() {
+        return "Permanent Punishment";
+    }
+
+    @Override
+    public JsonObject getHistoryDescription() {
+        return new JsonBuilder()
+                .addProperty("type", punishmentType.name())
+                .addProperty("reason", reason)
+                .addProperty("punisher", punisher)
                 .getObject();
     }
 }

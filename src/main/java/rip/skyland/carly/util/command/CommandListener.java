@@ -46,7 +46,6 @@ public class CommandListener implements Listener {
 
     @EventHandler
     public void onCommand(ServerCommandEvent event) {
-        CommandSender player = event.getSender();
         this.handler.getCommands()
                 .stream()
                 .filter(key -> Arrays.stream(key.getNames()).filter(name -> {
@@ -59,7 +58,7 @@ public class CommandListener implements Listener {
                     if(data.getMethodData().getMethod().getParameters()[0].getType().equals(Player.class))
                         return;
 
-                    executeCommand(player, data, event.getCommand(), null);
+                    executeCommand(event.getSender(), data, event.getCommand(), null);
         });
 
     }
@@ -68,7 +67,7 @@ public class CommandListener implements Listener {
         if(event != null)
             ((Cancellable) event).setCancelled(true);
 
-        if (!sender.hasPermission(data.getPermission())) {
+        if (!data.getPermission().equalsIgnoreCase("") && !sender.hasPermission(data.getPermission())) {
             sender.sendMessage(CC.translate("&cNo permission."));
             return;
         }
@@ -78,7 +77,7 @@ public class CommandListener implements Listener {
         int nameLength = Objects.requireNonNull(Arrays.stream(data.getNames()).filter(namez -> message.replace("/", "").toLowerCase().startsWith(namez.toLowerCase())).findFirst().orElse(null)).length() + 1;
 
         if (message.length() > nameLength) {
-            args = message.substring(nameLength + 1).split(" ");
+            args = message.substring(nameLength + (sender instanceof Player ? 1 : 0)).split(" ");
         }
 
         List<Object> transformedParameters = new ArrayList<>();

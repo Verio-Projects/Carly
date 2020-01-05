@@ -3,6 +3,7 @@ package rip.skyland.carly.handler;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import rip.skyland.carly.Core;
+import rip.skyland.carly.handler.impl.ServerHandler;
 import rip.skyland.carly.profile.ProfileHandler;
 import rip.skyland.carly.punishments.PunishmentHandler;
 import rip.skyland.carly.rank.RankHandler;
@@ -20,12 +21,14 @@ public class HandlerManager {
     public RankHandler rankHandler;
     public ProfileHandler profileHandler;
     public PunishmentHandler punishmentHandler;
+    public ServerHandler serverHandler;
 
     public HandlerManager() throws NoSuchFieldException, IllegalAccessException {
         this.handlers = new ArrayList<>();
         this.registerHandler(this.getClass().getField("rankHandler"), new RankHandler());
         this.registerHandler(this.getClass().getField("profileHandler"), new ProfileHandler());
         this.registerHandler(this.getClass().getField("punishmentHandler"), new PunishmentHandler());
+        this.registerHandler(this.getClass().getField("serverHandler"), new ServerHandler());
     }
 
     private void registerHandler(Field field, IHandler handler) throws IllegalAccessException {

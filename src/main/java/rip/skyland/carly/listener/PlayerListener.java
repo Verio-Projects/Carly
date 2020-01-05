@@ -29,7 +29,7 @@ public class PlayerListener implements Listener {
         Player player = event.getPlayer();
 
         Profile profile = profileHandler.createProfile(player.getUniqueId());
-        if(profile.getActivePunishment(PunishmentType.BAN) != null) {
+        if(profile.getActivePunishment(PunishmentType.BAN) != null && profile.getActivePunishment(PunishmentType.BAN).isActive()) {
             event.disallow(PlayerLoginEvent.Result.KICK_BANNED, CC.translate(Locale.PUNISHMENT_BAN_KICK.getAsString().replace("%reason%", profile.getActivePunishment(PunishmentType.BAN).getReason().replace("-s", ""))));
         }
 

@@ -72,9 +72,10 @@ public class RankHandler implements IHandler {
         Rank rank = new Rank(uuid, name, "", "", 0, CC.WHITE, false, false, Collections.emptyList());
         ranks.add(rank);
 
-        if (sendPacket)
+        if (sendPacket) {
             Core.INSTANCE.sendPacket(new RankCreatePacket(uuid, name));
-
+            this.saveRank(rank);
+        }
         ranks.sort(Comparator.comparingInt(Rank::getWeight));
         Collections.reverse(ranks);
 

@@ -46,9 +46,8 @@ public class GrantProcedure {
             } else {
                 Core.INSTANCE.getHandlerManager().getProfileHandler().addGrant(new TemporaryGrant(rank, uuid, reason, granterName, System.currentTimeMillis(), System.currentTimeMillis()+ TimeUtil.parseTime(duration), true), CoreAPI.INSTANCE.getProfileByUuid(uuid));
             }
+
+            Core.INSTANCE.getHandlerManager().getRankHandler().getGrantProcedures().remove(this);
         }
     }
-
-
-
 }

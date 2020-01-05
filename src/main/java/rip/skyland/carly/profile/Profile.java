@@ -3,6 +3,7 @@ package rip.skyland.carly.profile;
 import lombok.Getter;
 import lombok.Setter;
 import rip.skyland.carly.Core;
+import rip.skyland.carly.history.IHistoryIndex;
 import rip.skyland.carly.punishments.IPunishment;
 import rip.skyland.carly.punishments.PunishmentType;
 import rip.skyland.carly.punishments.impl.TemporaryPunishment;
@@ -21,10 +22,12 @@ public class Profile {
     private UUID uuid;
     private String playerName;
     private List<IGrant> grants;
+    private List<IHistoryIndex> history;
 
     public Profile(UUID uuid) {
         this.uuid = uuid;
         this.grants = new ArrayList<>();
+        this.history = new ArrayList<>();
     }
 
     public IPunishment getActivePunishment(PunishmentType type) {

@@ -36,4 +36,19 @@ public class TemporaryPunishment implements IPunishment {
                 .addProperty("expiration", expiration)
                 .getObject();
     }
+
+    @Override
+    public String getHistoryType() {
+        return "Temporary Punishment";
+    }
+
+    @Override
+    public JsonObject getHistoryDescription() {
+        return new JsonBuilder()
+                .addProperty("type", punishmentType.name())
+                .addProperty("reason", reason)
+                .addProperty("punisher", punisher)
+                .getObject();
+    }
+
 }
