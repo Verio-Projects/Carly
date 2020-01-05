@@ -2,15 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1846e8f9-bc59-4514-bcb6-8f2c637a2f24" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/rip/skyland/carly/profile/packets/ProfileJoinPacket.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/rip/skyland/carly/profile/redis/RedisProfile.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/rip/skyland/carly/profile/redis/packet/RedisProfileJoin.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/rip/skyland/carly/profile/redis/packet/RedisProfileLeave.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/discord.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/rip/skyland/carly/command/GamemodeCommand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/rip/skyland/carly/util/database/redis/packet/impl/StaffChatPacket.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/rip/skyland/carly/Core.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/rip/skyland/carly/Core.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/rip/skyland/carly/Locale.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/rip/skyland/carly/Locale.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/rip/skyland/carly/listener/PlayerListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/rip/skyland/carly/listener/PlayerListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/rip/skyland/carly/command/ChatCommands.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/rip/skyland/carly/command/ChatCommands.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/rip/skyland/carly/profile/ProfileHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/rip/skyland/carly/profile/ProfileHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/rip/skyland/carly/rank/RankHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/rip/skyland/carly/rank/RankHandler.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />

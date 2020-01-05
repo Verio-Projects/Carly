@@ -36,17 +36,16 @@ public class ProfileHandler implements IHandler {
     }
 
     public Profile createProfile(UUID uuid) {
-        if (this.getProfileByUuid(uuid) != null) {
-            return this.getProfileByUuid(uuid);
-        }
-
         MongoCollection collection = Core.INSTANCE.getMongoHandler().getCollection("profiles");
         Document document = (Document) collection.find(Filters.eq("uuid", uuid.toString())).first();
 
         // make new profile
-        Profile profile = new Profile(uuid);
+        Profile profile;
 
-        if (document == null) {
+        if (this.getProfileByUuid(uuid) != null) {
+            profile = this.getProfileByUuid(uuid);
+        } else if (document == null) {
+            profile = new Profile(uuid);
             // add default grant
             this.addGrant(new PermanentGrant(Core.INSTANCE.getHandlerManager().getRankHandler().getRankByName("Default"), uuid, "first time join", "&4CONSOLE", System.currentTimeMillis(), true), profile);
 
@@ -54,6 +53,8 @@ public class ProfileHandler implements IHandler {
             // also instantly save the profile because it doesn't exist yet. (not needed)
             Bukkit.getScheduler().runTaskLater(Core.INSTANCE.getPlugin(), () -> Core.INSTANCE.sendPacket(new ProfileSavePacket(profile)), 5L);
         } else {
+            profile = new Profile(uuid);
+
             // load profile stuff from mongo
             profile.setPlayerName(document.getString("name"));
             CoreAPI.INSTANCE.PARSER.parse(document.getString("grants")).getAsJsonArray().forEach(element -> this.addGrant(Core.INSTANCE.getHandlerManager().getRankHandler().getGrantByJson(element.getAsJsonObject()), profile));

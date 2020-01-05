@@ -111,7 +111,12 @@ public enum Locale {
 
     PROFILE_CONNECT("profile.connect", "&9[Staff] &b%playerName% &ajoined &bthe network (%server%)"),
     PROFILE_SWITCH_SERVER("profile.switch_server", "&9[Staff] &b%playerName% &bjoined %newServer% (from %previousServer%)"),
-    PROFILE_DISCONNECT("profile.disconnect", "&9[Staff] &b%playerName% &cleft &bthe network (from %server%)");
+    PROFILE_DISCONNECT("profile.disconnect", "&9[Staff] &b%playerName% &cleft &bthe network (from %server%)"),
+
+    STAFF_CHAT("chat.staffchat", "&7[%server%] &5%playerName%: &d%message%"),
+
+    CHANGE_GAMEMODE("general.change_gamemode", "&6You have set your gamemode to &f%gamemode%"),
+    CHANGE_GAMEMODE_TARGET("general.change_gamemode_target", "&6You have set &f%player%'s &6gamemode to &f%gamemode%");
 
     private Object value;
 
