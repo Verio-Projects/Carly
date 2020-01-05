@@ -35,18 +35,4 @@ public class PermanentPunishment implements IPunishment {
                 .addProperty("active", active)
                 .getObject();
     }
-
-    @Override
-    public String getHistoryType() {
-        return "Permanent Punishment";
-    }
-
-    @Override
-    public JsonObject getHistoryDescription() {
-        return new JsonBuilder()
-                .addProperty("type", punishmentType.name())
-                .addProperty("reason", reason)
-                .addProperty("punisher", punisher)
-                .getObject();
-    }
 }

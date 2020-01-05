@@ -9,9 +9,7 @@ import rip.skyland.carly.rank.Rank;
 import rip.skyland.carly.util.CC;
 import rip.skyland.carly.util.command.annotation.Command;
 
-import java.util.Collections;
 import java.util.Comparator;
-import java.util.List;
 import java.util.stream.Collectors;
 
 public class ListCommand {
@@ -23,6 +21,7 @@ public class ListCommand {
                 .map(Rank::getDisplayName)
                 .collect(Collectors.joining(CC.WHITE + ", "));
         String profiles = Bukkit.getOnlinePlayers().stream()
+                .filter(player -> CoreAPI.INSTANCE.getProfileByPlayer(player) != null)
                 .sorted(Comparator.comparingInt(player -> CoreAPI.INSTANCE.getProfileByPlayer((Player) player).getRank().getWeight()).reversed())
                 .filter(player -> CoreAPI.INSTANCE.getProfileByPlayer(player) != null)
                 .map(player -> CoreAPI.INSTANCE.getProfileByPlayer(player).getDisplayName())

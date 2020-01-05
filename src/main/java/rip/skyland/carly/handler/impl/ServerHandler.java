@@ -13,7 +13,8 @@ public class ServerHandler implements IHandler {
 
     @Override
     public void load() {
-
+        this.chatMuted = false;
+        this.chatSlowDuration = 0L;
     }
 
     @Override

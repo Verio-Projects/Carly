@@ -33,18 +33,4 @@ public class PermanentGrant implements IGrant {
                 .addProperty("active", active)
                 .getObject();
     }
-
-    @Override
-    public String getHistoryType() {
-        return "Permanent Grant";
-    }
-
-    @Override
-    public JsonObject getHistoryDescription() {
-        return new JsonBuilder()
-                .addProperty("rank", rank.getDisplayName())
-                .addProperty("reason", reason)
-                .addProperty("granter", granterName)
-                .getObject();
-    }
 }

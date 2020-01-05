@@ -1,11 +1,10 @@
 package rip.skyland.carly.punishments;
 
 import com.google.gson.JsonObject;
-import rip.skyland.carly.history.IHistoryIndex;
 
 import java.util.UUID;
 
-public interface IPunishment extends IHistoryIndex {
+public interface IPunishment {
 
     /**
      * @return the reason of the punishment

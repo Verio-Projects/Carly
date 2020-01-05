@@ -1,6 +1,6 @@
 package rip.skyland.carly.profile.packets;
 
-    import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.ReplaceOptions;

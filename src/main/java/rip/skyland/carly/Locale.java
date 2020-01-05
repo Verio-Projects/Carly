@@ -96,7 +96,16 @@ public enum Locale {
     PUNISHMENT_UNMUTE_SILENT("punishment.mute.undo_silent_broadcast", "&7[Silent] %player% &ahas been unmuted by %punisher%&a."),
     PUNISHMENT_UNBAN_SILENT("punishment.ban.undo_silent_broadcast", "&7[Silent] %player% &ahas been unbanned by %punisher%&a."),
     PUNISHMENT_UNBAN("punishment.ban.undo_broadcast", "%player% &ahas been unbanned by %punisher%&a."),
-    PUNISHMENT_UNMUTE("punishment.mute.undo_broadcast", "%player% &ahas been unmuted by %punisher%&a.");
+    PUNISHMENT_UNMUTE("punishment.mute.undo_broadcast", "%player% &ahas been unmuted by %punisher%&a."),
+
+    CHAT_MUTED("chat.mutechat", "&cThe chat is currently temporarily muted."),
+    CHAT_CLEARED("chat.cleared", "&dThe public chat has been cleared."),
+    CHAT_MUTE("chat.mute", "&dThe public chat has been muted."),
+    CHAT_UNMUTE("chat.unmute", "&dThe public chat has been unmuted."),
+    CHAT_SLOW("chat.slow", "&dThe public chat has been slowed"),
+    CHAT_UNSLOW("chat.unslow", "&dThe public chat has been unslowed"),
+    CHAT_UNSLOW_ALREADY_UNSLOWED("chat.unslow_already_unslowed", "&cThe chat is already unslowed."),
+    CHAT_SLOWCHAT("chat.slowchat", "&cYou are currently still on chat cooldown");
 
     private Object value;
 

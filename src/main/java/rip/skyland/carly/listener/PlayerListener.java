@@ -59,39 +59,6 @@ public class PlayerListener implements Listener {
         }
     }
 
-    @EventHandler()
-    public void onChat(AsyncPlayerChatEvent event) {
-        Player player = event.getPlayer();
-        Profile profile = profileHandler.getProfileByUuid(player.getUniqueId());
 
-        if(Core.INSTANCE.getHandlerManager().getRankHandler().getProcedureByUuid(player.getUniqueId()) != null) {
-            event.setCancelled(true);
-            GrantProcedure procedure = Core.INSTANCE.getHandlerManager().getRankHandler().getProcedureByUuid(player.getUniqueId());
-
-            if(event.getMessage().equalsIgnoreCase("cancel")) {
-                Core.INSTANCE.getHandlerManager().getRankHandler().getGrantProcedures().remove(procedure);
-                player.sendMessage(CC.translate(Locale.GRANT_CANCELLED_GRANTING.getAsString()));
-                return;
-            }
-
-            if(procedure.getReason().equalsIgnoreCase("Not set")) {
-                procedure.setReason(event.getMessage());
-                player.sendMessage(CC.translate(Locale.GRANT_SET_DURATION.getAsString()));
-                return;
-            }
-
-            if(procedure.getDuration().equalsIgnoreCase("Not set")) {
-                procedure.setDuration(event.getMessage());
-
-                procedure.finishProcedure();
-            }
-
-            return;
-        }
-
-        if(!event.isCancelled()) {
-            event.setFormat(CC.translate(profile.getRank().getPrefix() + profile.getPlayerName() + "&7: &f") + event.getMessage().replace("%", "%%"));
-        }
-    }
 
 }

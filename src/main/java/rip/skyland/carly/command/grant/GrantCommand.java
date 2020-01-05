@@ -1,7 +1,6 @@
 package rip.skyland.carly.command.grant;
 
 import org.apache.commons.codec.digest.DigestUtils;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;

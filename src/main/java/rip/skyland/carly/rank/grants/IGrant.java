@@ -1,12 +1,11 @@
 package rip.skyland.carly.rank.grants;
 
 import com.google.gson.JsonObject;
-import rip.skyland.carly.history.IHistoryIndex;
 import rip.skyland.carly.rank.Rank;
 
 import java.util.UUID;
 
-public interface IGrant extends IHistoryIndex {
+public interface IGrant {
 
     Rank getRank();
     UUID getTargetUuid();

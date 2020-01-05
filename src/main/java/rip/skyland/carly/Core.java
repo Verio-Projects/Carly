@@ -3,13 +3,14 @@ package rip.skyland.carly;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
-import rip.skyland.carly.command.HistoryCommand;
+import rip.skyland.carly.command.ChatCommands;
 import rip.skyland.carly.command.ListCommand;
 import rip.skyland.carly.command.RankCommand;
 import rip.skyland.carly.command.grant.GrantCommand;
 import rip.skyland.carly.command.punishments.PunishmentCommands;
 import rip.skyland.carly.handler.HandlerManager;
 import rip.skyland.carly.handler.IHandler;
+import rip.skyland.carly.listener.ChatListener;
 import rip.skyland.carly.listener.PlayerListener;
 import rip.skyland.carly.util.command.CommandHandler;
 import rip.skyland.carly.util.database.IPacket;
@@ -52,12 +53,13 @@ public enum Core {
                 new GrantCommand(),
                 new ListCommand(),
                 new PunishmentCommands(handlerManager.getPunishmentHandler()),
-                new HistoryCommand());
+                new ChatCommands(handlerManager.getServerHandler()));
 
         // register listeners
         Arrays.asList(
                 new PlayerListener(handlerManager.getProfileHandler()),
-                new ButtonListener()
+                new ButtonListener(),
+                new ChatListener()
         ).forEach(listener -> Bukkit.getPluginManager().registerEvents(listener, plugin));
 
         // register menu handler

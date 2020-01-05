@@ -16,13 +16,10 @@ public class ButtonListener implements Listener {
 
     @EventHandler
     public void onClick(InventoryClickEvent event) {
+        Menu menu = MenuHandler.getInstance().getByTitleAndPlayer((Player) event.getWhoClicked(), event.getInventory().getTitle());
 
-        if (MenuHandler.getInstance().getByTitleAndPlayer((Player) event.getWhoClicked(), event.getInventory().getTitle()) != null) {
-
-            Menu menu = MenuHandler.getInstance().getByTitleAndPlayer((Player) event.getWhoClicked(), event.getInventory().getTitle());
-
+        if (menu != null) {
             if (!(event.getCurrentItem() == null || event.getCurrentItem().getItemMeta() == null)) {
-
                 event.setCancelled(true);
                 List<Button> buttons = menu instanceof PaginatedMenu ? ((PaginatedMenu) menu).getPaginatedButtons() : menu.getButtons();
                 Objects.requireNonNull(buttons.stream().filter(button -> button.getItem().equals(event.getCurrentItem())).findFirst().orElse(null)).getClick().accept((Player) event.getWhoClicked());
@@ -32,9 +29,10 @@ public class ButtonListener implements Listener {
 
     @EventHandler
     public void onClose(InventoryCloseEvent event) {
-        if (MenuHandler.getInstance().getByTitleAndPlayer((Player) event.getPlayer(), event.getInventory().getTitle()) != null) {
-            MenuHandler.getInstance().getByTitleAndPlayer((Player) event.getPlayer(), event.getInventory().getTitle()).onClose();
-            MenuHandler.getInstance().destroyMenu(MenuHandler.getInstance().getByTitleAndPlayer((Player) event.getPlayer(), event.getInventory().getTitle()));
+        Menu menu = MenuHandler.getInstance().getByTitleAndPlayer((Player) event.getPlayer(), event.getInventory().getTitle());
+        if (menu != null) {
+            menu.onClose();
+            MenuHandler.getInstance().destroyMenu(menu);
         }
     }
 }
