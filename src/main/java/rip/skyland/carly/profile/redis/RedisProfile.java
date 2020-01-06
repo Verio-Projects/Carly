@@ -19,7 +19,7 @@ public class RedisProfile {
 
     public RedisProfile(JsonObject object) {
         this.uuid = UUID.fromString(object.get("uuid").getAsString());
-        this.name = object.get("username").getAsString();
+        this.name = object.get("name").getAsString();
         this.lastAction = LastAction.valueOf(object.get("lastAction").getAsString());
         this.lastSeenServer = object.get("lastSeenServer").getAsString();
     }
@@ -32,7 +32,7 @@ public class RedisProfile {
     public JsonObject toJson() {
         return new JsonBuilder()
                 .addProperty("uuid", uuid.toString())
-                .addProperty("username", name)
+                .addProperty("name", name)
                 .addProperty("lastAction", lastAction.name())
                 .addProperty("lastSeenServer", lastSeenServer)
                 .getObject();

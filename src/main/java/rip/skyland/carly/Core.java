@@ -3,10 +3,7 @@ package rip.skyland.carly;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
-import rip.skyland.carly.command.ChatCommands;
-import rip.skyland.carly.command.GamemodeCommand;
-import rip.skyland.carly.command.ListCommand;
-import rip.skyland.carly.command.RankCommand;
+import rip.skyland.carly.command.*;
 import rip.skyland.carly.command.grant.GrantCommand;
 import rip.skyland.carly.command.punishments.PunishmentCommands;
 import rip.skyland.carly.handler.HandlerManager;
@@ -55,7 +52,8 @@ public enum Core {
                 new ListCommand(),
                 new PunishmentCommands(handlerManager.getPunishmentHandler()),
                 new ChatCommands(handlerManager.getServerHandler()),
-                new GamemodeCommand());
+                new GamemodeCommand(),
+                new PingCommand());
 
         // register listeners
         Arrays.asList(
@@ -70,11 +68,11 @@ public enum Core {
 
     public void sendPacket(IPacket packet) {
         if (packet instanceof RedisPacket) {
-            redisHandler.sendPacket((RedisPacket) packet);
+            this.redisHandler.sendPacket((RedisPacket) packet);
         }
 
         if (packet instanceof MongoPacket) {
-            mongoHandler.sendPacket((MongoPacket) packet);
+            this.mongoHandler.sendPacket((MongoPacket) packet);
         }
     }
 

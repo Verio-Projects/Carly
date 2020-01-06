@@ -1,6 +1,7 @@
 package rip.skyland.carly;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.logging.log4j.core.lookup.StrSubstitutor;
 
 import java.util.Arrays;
 import java.util.List;
@@ -116,7 +117,9 @@ public enum Locale {
     STAFF_CHAT("chat.staffchat", "&7[%server%] &5%playerName%: &d%message%"),
 
     CHANGE_GAMEMODE("general.change_gamemode", "&6You have set your gamemode to &f%gamemode%"),
-    CHANGE_GAMEMODE_TARGET("general.change_gamemode_target", "&6You have set &f%player%'s &6gamemode to &f%gamemode%");
+    CHANGE_GAMEMODE_TARGET("general.change_gamemode_target", "&6You have set &f%player%'s &6gamemode to &f%gamemode%"),
+
+    PING("general.ping", "&e%player%&e's Ping: &c%ping%");
 
     private Object value;
 

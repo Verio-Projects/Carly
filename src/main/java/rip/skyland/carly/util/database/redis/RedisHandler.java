@@ -40,7 +40,9 @@ public class RedisHandler {
 
     public RedisHandler connect(String channel) {
         this.jedisPool = new JedisPool(host, port);
-        jedisPool.getResource().auth(password.isEmpty() ? null : password);
+
+        if(password != null && !password.isEmpty())
+            jedisPool.getResource().auth(password);
 
         this.channel = channel;
 
@@ -74,7 +76,9 @@ public class RedisHandler {
 
         Thread thread = new Thread(() ->
                 runCommand(redis -> {
-                    redis.auth(password.isEmpty() ? null : password);
+                    if(password != null && !password.isEmpty())
+                        jedisPool.getResource().auth(password);
+
                     redis.publish(channel, packet.getClass().getName() + "||" + gson.toJson(packet));
                 }));
 

@@ -17,13 +17,18 @@ public class ListCommand {
     @Command(names="list")
     public void execute(CommandSender sender) {
         String ranks = Core.INSTANCE.getHandlerManager().getRankHandler().getRanks().stream()
+                // reversed sort by rank's weight
                 .sorted(Comparator.comparingInt(Rank::getWeight).reversed())
+                // map to rank's displayname
                 .map(Rank::getDisplayName)
                 .collect(Collectors.joining(CC.WHITE + ", "));
+
         String profiles = Bukkit.getOnlinePlayers().stream()
+                // filter by profiles which arent null
                 .filter(player -> CoreAPI.INSTANCE.getProfileByPlayer(player) != null)
+                // reversed sort by player's rank weight
                 .sorted(Comparator.comparingInt(player -> CoreAPI.INSTANCE.getProfileByPlayer((Player) player).getRank().getWeight()).reversed())
-                .filter(player -> CoreAPI.INSTANCE.getProfileByPlayer(player) != null)
+                // map to player's displayname
                 .map(player -> CoreAPI.INSTANCE.getProfileByPlayer(player).getDisplayName())
                 .collect(Collectors.joining(CC.WHITE + ", "));
 
