@@ -8,10 +8,7 @@ import java.util.regex.Pattern;
 public final class TimeUtil {
 
     public static String unixToDate(long unixTime) {
-        Date date = new Date();
-        date.setTime(unixTime *1000);
-
-        return date.toString();
+        return new Date(unixTime*1000).toString();
     }
 
 

@@ -7,7 +7,9 @@ import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import rip.skyland.carly.profile.Profile;
 import rip.skyland.carly.util.CC;
+import rip.skyland.carly.util.JavaUtils;
 import rip.skyland.carly.util.command.annotation.Command;
 import rip.skyland.carly.util.command.annotation.Param;
 import rip.skyland.carly.util.command.annotation.adapter.CommandTypeAdapter;
@@ -35,7 +37,7 @@ public class CommandHandler {
 
         Bukkit.getPluginManager().registerEvents(new CommandListener(this), plugin);
 
-        Map.of(boolean.class, new BooleanTypeAdapter(), CC.class, new ChatColorTypeAdapter(), float.class, new FloatTypeAdapter(), double.class, new DoubleTypeAdapter(), int.class, new IntegerTypeAdapter(), OfflinePlayer.class, new OfflinePlayerTypeAdapter(), Player.class, new PlayerTypeAdapter(), World.class, new WorldTypeAdapter())
+        JavaUtils.mapOf(boolean.class, new BooleanTypeAdapter(), CC.class, new ChatColorTypeAdapter(), float.class, new FloatTypeAdapter(), double.class, new DoubleTypeAdapter(), int.class, new IntegerTypeAdapter(), OfflinePlayer.class, new OfflinePlayerTypeAdapter(), Player.class, new PlayerTypeAdapter(), World.class, new WorldTypeAdapter(), Profile.class, new ProfileTypeAdapter())
             .forEach(this::registerParameterType);
     }
 

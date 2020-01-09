@@ -5,6 +5,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import rip.skyland.carly.command.*;
 import rip.skyland.carly.command.grant.GrantCommand;
+import rip.skyland.carly.command.punishments.HistoryCommand;
 import rip.skyland.carly.command.punishments.PunishmentCommands;
 import rip.skyland.carly.handler.HandlerManager;
 import rip.skyland.carly.handler.IHandler;
@@ -53,7 +54,8 @@ public enum Core {
                 new PunishmentCommands(handlerManager.getPunishmentHandler()),
                 new ChatCommands(handlerManager.getServerHandler()),
                 new GamemodeCommand(),
-                new PingCommand());
+                new PingCommand(),
+                new HistoryCommand(handlerManager.getPunishmentHandler()));
 
         // register listeners
         Arrays.asList(

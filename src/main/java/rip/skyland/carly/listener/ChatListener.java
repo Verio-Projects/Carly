@@ -2,6 +2,7 @@ package rip.skyland.carly.listener;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import rip.skyland.carly.Core;
@@ -14,7 +15,7 @@ import rip.skyland.carly.util.CC;
 
 public class ChatListener implements Listener {
 
-    @EventHandler()
+    @EventHandler(priority= EventPriority.HIGHEST, ignoreCancelled=true)
     public void onChat(AsyncPlayerChatEvent event) {
         ProfileHandler profileHandler = Core.INSTANCE.getHandlerManager().getProfileHandler();
 
@@ -63,7 +64,7 @@ public class ChatListener implements Listener {
         }
 
         if(!event.isCancelled()) {
-            event.setFormat(CC.translate(profile.getRank().getPrefix() + profile.getPlayerName() + "&7: &f") + event.getMessage().replace("%", "%%"));
+            event.setFormat(CC.translate(profile.getRank().getFormattedPrefix() + profile.getPlayerName() + CC.RESET + ": %2$s"));
             profile.setLastChat(System.currentTimeMillis());
         }
     }

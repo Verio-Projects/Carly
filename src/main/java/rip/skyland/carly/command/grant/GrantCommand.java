@@ -8,6 +8,7 @@ import rip.skyland.carly.Core;
 import rip.skyland.carly.Locale;
 import rip.skyland.carly.api.CoreAPI;
 import rip.skyland.carly.profile.Profile;
+import rip.skyland.carly.profile.ProfileHandler;
 import rip.skyland.carly.rank.Rank;
 import rip.skyland.carly.rank.grants.GrantProcedure;
 import rip.skyland.carly.rank.grants.IGrant;
@@ -25,6 +26,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GrantCommand {
+
+    @Command(names="setrank", permission="core.setrank")
+    public void performSetRank(CommandSender sender, @Param(name = "player") String target, @Param(name = "rank") String rankName) {
+        Profile profile = CoreAPI.INSTANCE.getProfileByName(target);
+
+        if(profile == null) {
+            sender.sendMessage(CC.translate("&cThat player does not exist"));
+            return;
+        }
+
+        Rank rank = Core.INSTANCE.getHandlerManager().getRankHandler().getRankByName(rankName);
+        if(rank == null) {
+            sender.sendMessage(CC.translate("&cThat rank does not exist"));
+            return;
+        }
+
+
+        profile.getGrants().stream().filter(grant -> grant.getRank().getWeight() > rank.getWeight() && grant instanceof PermanentGrant).forEach(grant -> grant.setActive(false));
+        profile.getGrants().stream().filter(grant -> grant.getRank().getWeight() > rank.getWeight() && grant instanceof TemporaryGrant).forEach(grant -> profile.getGrants().remove(grant));
+
+        Core.INSTANCE.getHandlerManager().getProfileHandler().addGrant(new PermanentGrant(rank, profile.getUuid(), "set rank", sender.getName(), System.currentTimeMillis(), true), profile);
+        sender.sendMessage(CC.translate(Locale.SET_RANK.getAsString().replace("%player%", profile.getPlayerName()).replace("%rank%", rank.getDisplayName())));
+    }
 
     @Command(names = "grant", permission = "core.grant")
     public void performGrant(CommandSender sender, @Param(name = "player") String target, @Param(name = "rank", value = "not set") String rankName) {
@@ -70,6 +94,7 @@ public class GrantCommand {
 
                 @Override
                 public void onClose() {
+                    Core.INSTANCE.getMenuHandler().destroyMenu(this);
                 }
 
                 @Override
@@ -135,7 +160,7 @@ public class GrantCommand {
 
             @Override
             public void onClose() {
-
+                Core.INSTANCE.getMenuHandler().destroyMenu(this);
             }
 
             @Override

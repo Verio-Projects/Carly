@@ -4,6 +4,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.core.lookup.StrSubstitutor;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public enum Locale {
@@ -101,6 +102,16 @@ public enum Locale {
     PUNISHMENT_UNBAN("punishment.ban.undo_broadcast", "%player% &ahas been unbanned by %punisher%&a."),
     PUNISHMENT_UNMUTE("punishment.mute.undo_broadcast", "%player% &ahas been unmuted by %punisher%&a."),
 
+    HISTORY_MAIN_BUTTON("punishment.history.main_button", Collections.singletonList("&7%active% active punishments, %inactive% inactive punishments")),
+    HISTORY_PUNISHMENT_BUTTON("punishment.history.punishment_button", Arrays.asList(
+            "",
+            "&6Reason: &f%reason%",
+            "&6Punisher: &f%punisher%",
+            "&6Expiration: &f%expiration%",
+            "",
+            "&6Punishment Date: &f%date%"
+    )),
+
     CHAT_MUTED("chat.mutechat", "&cThe chat is currently temporarily muted."),
     CHAT_CLEARED("chat.cleared", "&dThe public chat has been cleared."),
     CHAT_MUTE("chat.mute", "&dThe public chat has been muted."),
@@ -118,6 +129,7 @@ public enum Locale {
 
     CHANGE_GAMEMODE("general.change_gamemode", "&6You have set your gamemode to &f%gamemode%"),
     CHANGE_GAMEMODE_TARGET("general.change_gamemode_target", "&6You have set &f%player%'s &6gamemode to &f%gamemode%"),
+    SET_RANK("rank.set_rank", "&eYou have set &f%player%'s &erank to %rank%"),
 
     PING("general.ping", "&e%player%&e's Ping: &c%ping%");
 

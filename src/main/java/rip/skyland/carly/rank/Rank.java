@@ -33,6 +33,7 @@ public class Rank {
         collection.deleteOne(document);
     }
 
+    public String getFormattedPrefix() { return this.prefix.replace("_", " "); }
     public String getDisplayColor() {
         return (bold ? "&l" : "") + (italic ? "&o" : "") + color;
     }

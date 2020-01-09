@@ -40,15 +40,13 @@ public class RedisHandler {
 
     public RedisHandler connect(String channel) {
         this.jedisPool = new JedisPool(host, port);
-
-        if(password != null && !password.isEmpty())
-            jedisPool.getResource().auth(password);
+        jedisPool.getResource().auth(password);
 
         this.channel = channel;
 
         new Thread(() ->
             runCommand(redis -> {
-                redis.auth(password.isEmpty() ? null : password);
+                redis.auth(password);
                 redis.subscribe(new JedisPubSub() {
                     @Override
                     public void onMessage(String channel, String message) {
@@ -76,8 +74,7 @@ public class RedisHandler {
 
         Thread thread = new Thread(() ->
                 runCommand(redis -> {
-                    if(password != null && !password.isEmpty())
-                        jedisPool.getResource().auth(password);
+                    redis.auth(password);
 
                     redis.publish(channel, packet.getClass().getName() + "||" + gson.toJson(packet));
                 }));

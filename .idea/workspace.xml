@@ -2,18 +2,20 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1846e8f9-bc59-4514-bcb6-8f2c637a2f24" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/rip/skyland/carly/command/PingCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/rip/skyland/carly/profile/packets/ProfileCreatePacket.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/rip/skyland/carly/util/JavaUtils.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/rip/skyland/carly/util/command/annotation/adapter/impl/ProfileTypeAdapter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/rip/skyland/carly/command/punishments/HistoryCommand.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dependency-reduced-pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/dependency-reduced-pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/rip/skyland/carly/Core.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/rip/skyland/carly/Core.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/rip/skyland/carly/Locale.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/rip/skyland/carly/Locale.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/rip/skyland/carly/api/CoreAPI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/rip/skyland/carly/api/CoreAPI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/rip/skyland/carly/command/GamemodeCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/rip/skyland/carly/command/GamemodeCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/rip/skyland/carly/command/ListCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/rip/skyland/carly/command/ListCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/rip/skyland/carly/profile/packets/ProfileJoinPacket.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/rip/skyland/carly/profile/redis/RedisProfile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/rip/skyland/carly/profile/redis/RedisProfile.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/rip/skyland/carly/command/grant/GrantCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/rip/skyland/carly/command/grant/GrantCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/rip/skyland/carly/listener/ChatListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/rip/skyland/carly/listener/ChatListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/rip/skyland/carly/punishments/PunishmentType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/rip/skyland/carly/punishments/PunishmentType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/rip/skyland/carly/rank/Rank.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/rip/skyland/carly/rank/Rank.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/rip/skyland/carly/util/JavaUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/rip/skyland/carly/util/JavaUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/rip/skyland/carly/util/TimeUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/rip/skyland/carly/util/TimeUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/rip/skyland/carly/util/command/CommandHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/rip/skyland/carly/util/command/CommandHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/rip/skyland/carly/util/database/redis/RedisHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/rip/skyland/carly/util/database/redis/RedisHandler.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -48,7 +50,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/java/rip" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Obfuscator" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
