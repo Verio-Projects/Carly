@@ -103,13 +103,23 @@ public enum Locale {
     PUNISHMENT_UNMUTE("punishment.mute.undo_broadcast", "%player% &ahas been unmuted by %punisher%&a."),
 
     HISTORY_MAIN_BUTTON("punishment.history.main_button", Collections.singletonList("&7%active% active punishments, %inactive% inactive punishments")),
-    HISTORY_PUNISHMENT_BUTTON("punishment.history.punishment_button", Arrays.asList(
+    HISTORY_PUNISHMENT_BUTTON("punishment.history.punishment_button.active", Arrays.asList(
             "",
             "&6Reason: &f%reason%",
             "&6Punisher: &f%punisher%",
             "&6Expiration: &f%expiration%",
             "",
             "&6Punishment Date: &f%date%"
+    )),
+
+    HISTORY_PUNISHMENT_BUTTON_INACTIVE("punishment.history.punishment_button.inactive", Arrays.asList(
+            "",
+            "&6Reason: &f%reason%",
+            "&6Punisher: &f%punisher%",
+            "&6Expiration: &f%expiration%",
+            "",
+            "&6Punishment Date: &f%date%",
+            "&6Unpunish Reason: &f%unpunishReason%"
     )),
 
     CHAT_MUTED("chat.mutechat", "&cThe chat is currently temporarily muted."),

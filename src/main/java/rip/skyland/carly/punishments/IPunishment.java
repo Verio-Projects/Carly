@@ -12,6 +12,11 @@ public interface IPunishment {
     String getReason();
 
     /**
+     * @return the reason why the punishment was undone
+     */
+    String getUnpunishReason();
+
+    /**
      * @return the name of the punisher
      */
 
@@ -44,6 +49,14 @@ public interface IPunishment {
      * @param val the activity
      */
     void setActive(boolean val);
+
+    /**
+     *
+     * sets the reason why the player was unpunished
+     *
+     * @param reason the reason
+     */
+    void setUnpunishReason(String reason);
 
     /**
      * @return the date on which the punishment was issued

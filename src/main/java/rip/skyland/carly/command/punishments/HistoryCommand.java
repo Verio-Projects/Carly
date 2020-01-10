@@ -91,14 +91,18 @@ public class HistoryCommand {
 
 
                     List<String> strings = new ArrayList<>();
-                    Locale.HISTORY_PUNISHMENT_BUTTON.getAsStringList().forEach(string -> strings.add(string
-                    .replace("%reason%", punishment.getReason())
-                    .replace("%punisher%", punishment.getPunisher())
-                    .replace("%expiration%", expirationString)
-                    .replace("%date%", TimeUtil.unixToDate(punishment.getPunishDate()))));
+
+                    Locale locale = punishment.isActive() ? Locale.HISTORY_PUNISHMENT_BUTTON : Locale.HISTORY_PUNISHMENT_BUTTON_INACTIVE;
+                    locale.getAsStringList().forEach(string -> strings.add(string
+                            .replace("%reason%", punishment.getReason())
+                            .replace("%punisher%", punishment.getPunisher())
+                            .replace("%expiration%", expirationString)
+                            .replace("%unpunishReason%", punishment.getUnpunishReason())
+                            .replace("%date%", TimeUtil.unixToDate(punishment.getPunishDate()))));
 
                     buttons.add(new Button(i, Material.WOOL, CC.RED + "#" + DigestUtils.sha256Hex(punishment.getUuid().toString()).substring(0, 8), strings,
-                            punishment.isActive() ? WoolColor.getWoolColor(CC.ORANGE) : WoolColor.getWoolColor(CC.RED), player->{}));
+                            punishment.isActive() ? WoolColor.getWoolColor(CC.ORANGE) : WoolColor.getWoolColor(CC.RED), player -> {
+                    }));
                 });
 
                 return buttons;

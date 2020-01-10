@@ -18,7 +18,7 @@ Requirements:
  Compilation:
  * Clone the repository using ``git clone https://github.com/NotNV6/Carly``
  * Open git bash inside of the root folder
- * Execute mvn clean install
+ * Execute ``mvn clean install``
  * The jar should be located in ~/target/
  
  It is recommended to compile it outside of an IDE due to the dependency Lombok inside of the pom.

@@ -18,6 +18,8 @@ public class PermanentPunishment implements IPunishment {
 
     private String reason;
     private String punisher;
+    private String unpunishReason;
+
     private UUID uuid, targetUuid;
     private PunishmentType punishmentType;
     private boolean active;
@@ -27,6 +29,7 @@ public class PermanentPunishment implements IPunishment {
     public JsonObject toJson() {
         return new JsonBuilder()
                 .addProperty("reason", reason)
+                .addProperty("unpunishReason", unpunishReason)
                 .addProperty("punisher", punisher)
                 .addProperty("uuid", uuid.toString())
                 .addProperty("targetUuid", targetUuid.toString())

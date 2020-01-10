@@ -42,6 +42,7 @@ public class PunishmentHandler implements IHandler {
             TemporaryPunishment toReturn = new TemporaryPunishment(
                     document.getString("reason"),
                     document.getString("punisher"),
+                    document.getString("unpunishReason"),
                     UUID.fromString(document.getString("uuid")),
                     UUID.fromString(document.getString("targetUuid")),
                     PunishmentType.valueOf(document.getString("punishmentType")),
@@ -55,6 +56,7 @@ public class PunishmentHandler implements IHandler {
             PermanentPunishment toReturn = new PermanentPunishment(
                     document.getString("reason"),
                     document.getString("punisher"),
+                    document.getString("unpunishReason"),
                     UUID.fromString(document.getString("uuid")),
                     UUID.fromString(document.getString("targetUuid")),
                     PunishmentType.valueOf(document.getString("punishmentType")),

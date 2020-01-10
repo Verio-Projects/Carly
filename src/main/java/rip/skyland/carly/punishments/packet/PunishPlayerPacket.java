@@ -23,6 +23,7 @@ public class PunishPlayerPacket implements RedisPacket {
 
     @Override
     public void onReceive() {
+        // load punishment
         IPunishment punishment = Core.INSTANCE.getHandlerManager().getPunishmentHandler().loadPunishment((Document) Objects.requireNonNull(Core.INSTANCE.getMongoHandler().getCollection("punishments").find(Filters.eq("uuid", punishmentUuid.toString())).first()));
 
         boolean silent = punishment.getReason().contains("-s");

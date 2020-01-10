@@ -30,8 +30,8 @@ public class PunishmentCommands {
     }
 
     @Command(names="unban", permission="core.unban")
-    public void executeUnban(CommandSender sender, @Param(name="player") String targetName) {
-        this.execute(sender, targetName, "", "", PunishmentType.BAN, true);
+    public void executeUnban(CommandSender sender, @Param(name="player") String targetName, @Param(name="reason", value="Not set -s") String reason) {
+        this.execute(sender, targetName, reason, "", PunishmentType.BAN, true);
     }
 
     @Command(names="mute", permission="core.mute")
@@ -40,8 +40,8 @@ public class PunishmentCommands {
     }
 
     @Command(names="unmute", permission="core.unmute")
-    public void executeUnmute(CommandSender sender, @Param(name="player") String targetName) {
-        this.execute(sender, targetName, "", "", PunishmentType.MUTE, true);
+    public void executeUnmute(CommandSender sender, @Param(name="player") String targetName, @Param(name="reason", value="Not set -s") String reason) {
+        this.execute(sender, targetName, reason, "", PunishmentType.MUTE, true);
     }
 
 
@@ -53,7 +53,8 @@ public class PunishmentCommands {
             return;
         }
 
-        if(undo) {
+        if(undo && profile.getActivePunishment(punishmentType) != null) {
+            profile.getActivePunishment(punishmentType).setUnpunishReason(reason);
             handler.unpunish(punishmentType, profile.getUuid());
         }
 
@@ -65,10 +66,10 @@ public class PunishmentCommands {
                     sender.sendMessage(CC.translate("&cNo permission."));
                     return;
                 }
-                punishment = new PermanentPunishment(reason, punisher, UUID.randomUUID(), profile.getUuid(), punishmentType, true, System.currentTimeMillis());
+                punishment = new PermanentPunishment(reason, punisher, "", UUID.randomUUID(), profile.getUuid(), punishmentType, true, System.currentTimeMillis());
             } else {
                 long expiration = System.currentTimeMillis() + TimeUtil.parseTime(duration);
-                punishment = new TemporaryPunishment(reason, punisher, UUID.randomUUID(), profile.getUuid(), punishmentType, true, System.currentTimeMillis(), expiration);
+                punishment = new TemporaryPunishment(reason, punisher, "", UUID.randomUUID(), profile.getUuid(), punishmentType, true, System.currentTimeMillis(), expiration);
             }
 
             handler.punish(punishment);
