@@ -90,10 +90,6 @@ public class ProfileHandler implements IHandler {
         Core.INSTANCE.sendPacket(new ProfileSavePacket(profile));
     }
 
-    public Profile getProfileByName(String name) {
-        return profiles.stream().filter(profile -> profile.getPlayerName().equalsIgnoreCase(name)).findFirst().orElse(null);
-    }
-
     public Profile getProfileByUuid(UUID uuid) {
         return profiles.stream().filter(profile -> profile.getUuid().equals(uuid)).findFirst().orElse(null);
     }

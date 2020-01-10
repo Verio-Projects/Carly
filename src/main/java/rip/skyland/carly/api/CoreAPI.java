@@ -4,13 +4,11 @@ import com.google.common.base.Preconditions;
 import com.google.gson.JsonParser;
 import lombok.Getter;
 import org.bukkit.Bukkit;
-import org.bukkit.command.CommandSender;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import rip.skyland.carly.Core;
 import rip.skyland.carly.profile.Profile;
 import rip.skyland.carly.rank.Rank;
-import rip.skyland.carly.util.CC;
+import rip.skyland.carly.util.ReflectionCache;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.UUID;
@@ -33,6 +31,7 @@ public enum CoreAPI {
         return Core.INSTANCE.getHandlerManager().getProfileHandler().getProfiles().stream().filter(profile -> profile.getPlayerName().equalsIgnoreCase(name)).findFirst().orElse(null);
     }
 
+    @Deprecated
     public Profile getProfileByName(String name) {
         Preconditions.checkArgument(Core.INSTANCE.getHandlerManager() != null, "handler manager is null");
 
@@ -72,6 +71,6 @@ public enum CoreAPI {
     }
 
     public int getPing(Player player) throws NoSuchMethodException, NoSuchFieldException, IllegalAccessException, InvocationTargetException {
-        return player.getClass().getMethod("getHandle").invoke(player).getClass().getField("ping").getInt(player.getClass().getMethod("getHandle").invoke(player));
+        return ReflectionCache.INSTANCE.getPing(player);
     }
 }

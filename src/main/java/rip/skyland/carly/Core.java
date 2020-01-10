@@ -34,6 +34,7 @@ public enum Core {
 
     private HandlerManager handlerManager;
 
+    @Deprecated
     public void start(JavaPlugin plugin) throws NoSuchFieldException, IllegalAccessException {
         this.plugin = plugin;
 
@@ -78,6 +79,7 @@ public enum Core {
         }
     }
 
+    @Deprecated
     public void stop() {
         this.handlerManager.getHandlers().forEach(IHandler::unload);
     }
