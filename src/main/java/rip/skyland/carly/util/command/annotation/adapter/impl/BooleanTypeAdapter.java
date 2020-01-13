@@ -4,6 +4,7 @@ import org.apache.commons.lang.StringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import rip.skyland.carly.util.JavaUtils;
 import rip.skyland.carly.util.command.annotation.adapter.CommandTypeAdapter;
 
 import java.util.HashMap;
@@ -13,7 +14,7 @@ import java.util.stream.Collectors;
 
 public class BooleanTypeAdapter implements CommandTypeAdapter<Boolean> {
 
-    private static final Map<String, Boolean> MAP = Map.of("true", true, "on", true, "yes", true, "false", false, "off", false, "no", false);
+    private static final Map<String, Boolean> MAP = JavaUtils.mapOf("true", true, "on", true, "yes", true, "false", false, "off", false, "no", false);
 
     public Boolean transform(CommandSender sender, String source) {
         if (!MAP.containsKey(source.toLowerCase())) {

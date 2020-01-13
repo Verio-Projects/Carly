@@ -29,7 +29,7 @@ public class GrantCommand {
 
     @Command(names="setrank", permission="core.setrank")
     public void performSetRank(CommandSender sender, @Param(name = "player") String target, @Param(name = "rank") String rankName) {
-        Profile profile = CoreAPI.INSTANCE.getProfileByName(target);
+        Profile profile = CoreAPI.INSTANCE.getProfileByNameAndCreate(target);
 
         if(profile == null) {
             sender.sendMessage(CC.translate("&cThat player does not exist"));
@@ -52,7 +52,7 @@ public class GrantCommand {
 
     @Command(names = "grant", permission = "core.grant")
     public void performGrant(CommandSender sender, @Param(name = "player") String target, @Param(name = "rank", value = "not set") String rankName, @Param(name="reason", value="console grant") String reason, @Param(name="duration", value="perm") String duration) {
-       Profile profile = CoreAPI.INSTANCE.getProfileByName(target);
+       Profile profile = CoreAPI.INSTANCE.getProfileByNameAndCreate(target);
 
        if(profile == null) {
            sender.sendMessage(CC.translate("&cThat player does not exist"));
@@ -126,7 +126,7 @@ public class GrantCommand {
 
     @Command(names = "grants", permission = "core.grants")
     public void performGrants(Player player, @Param(name = "player") String target) {
-        Profile profile = CoreAPI.INSTANCE.getProfileByName(target);
+        Profile profile = CoreAPI.INSTANCE.getProfileByNameAndCreate(target);
 
         if(profile == null) {
             player.sendMessage(CC.translate("&cThat player does not exist"));

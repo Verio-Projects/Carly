@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 public class PlayerTypeAdapter implements CommandTypeAdapter<Player> {
 
     public Player transform(CommandSender sender, String source) {
-        if (sender instanceof Player && (source.equalsIgnoreCase("self") || source.equals(""))) {
+        if (sender instanceof Player && (source.equalsIgnoreCase("sender") || source.equals(""))) {
             return (Player) sender;
         }
 

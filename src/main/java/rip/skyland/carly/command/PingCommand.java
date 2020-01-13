@@ -14,7 +14,7 @@ import java.lang.reflect.InvocationTargetException;
 public class PingCommand {
 
     @Command(names="ping")
-    public void execute(Player player, @Param(name="player", value="self") Profile target) {
+    public void execute(Player player, @Param(name="player", value="sender") Profile target) {
         try {
             player.sendMessage(CC.translate(Locale.PING.getAsString().replace("%player%", target.getDisplayName()).replace("%ping%", "" + CoreAPI.INSTANCE.getPing(Bukkit.getPlayer(target.getUuid())))));
         } catch (NoSuchMethodException | IllegalAccessException | NoSuchFieldException | InvocationTargetException e) {

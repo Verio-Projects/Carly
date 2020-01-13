@@ -22,7 +22,7 @@ public class GamemodeCommand {
     );
 
     @Command(names={"gamemode", "gm"}, permission="core.gamemode")
-    public void execute(Player player, @Param(name="gamemode") String gamemode, @Param(name="player", value="self") Player targetPlayer) {
+    public void execute(Player player, @Param(name="gamemode") String gamemode, @Param(name="player", value="sender") Player targetPlayer) {
         if(!this.gamemodes.containsKey(gamemode)) {
             player.sendMessage(CC.translate("&cUsage: /gamemode <gamemode> [player]"));
             return;
