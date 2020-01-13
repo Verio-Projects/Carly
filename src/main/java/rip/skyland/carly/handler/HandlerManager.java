@@ -7,6 +7,7 @@ import rip.skyland.carly.handler.impl.ServerHandler;
 import rip.skyland.carly.profile.ProfileHandler;
 import rip.skyland.carly.punishments.PunishmentHandler;
 import rip.skyland.carly.rank.RankHandler;
+import rip.skyland.carly.util.menu.MenuHandler;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -29,6 +30,8 @@ public class HandlerManager {
         this.registerHandler(this.getClass().getField("profileHandler"), new ProfileHandler());
         this.registerHandler(this.getClass().getField("punishmentHandler"), new PunishmentHandler());
         this.registerHandler(this.getClass().getField("serverHandler"), new ServerHandler());
+
+        Core.INSTANCE.setMenuHandler(new MenuHandler());
     }
 
     private void registerHandler(Field field, IHandler handler) throws IllegalAccessException {

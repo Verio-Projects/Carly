@@ -18,6 +18,7 @@ public enum Locale {
     REDIS_HOST("redis.host", "127.0.0.1"),
     REDIS_PORT("redis.port", 6379),
     REDIS_PASSWORD("redis.auth.password", ""),
+    REDIS_CHANNEL("redis.channel", "carly"),
 
 
     RANK_HELP("rank.help", Arrays.asList(

@@ -1,8 +1,11 @@
 package rip.skyland.carly.util.menu;
 
 import lombok.Getter;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import rip.skyland.carly.Core;
 import rip.skyland.carly.util.CC;
+import rip.skyland.carly.util.menu.button.ButtonListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +21,8 @@ public class MenuHandler {
     public MenuHandler() {
         instance = this;
         this.menus = new ArrayList<>();
+
+        Bukkit.getPluginManager().registerEvents(new ButtonListener(), Core.INSTANCE.getPlugin());
     }
 
     public void createMenu(Menu menu) {

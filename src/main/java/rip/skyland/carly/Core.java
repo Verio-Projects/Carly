@@ -1,6 +1,7 @@
 package rip.skyland.carly;
 
 import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import rip.skyland.carly.command.*;
@@ -18,7 +19,6 @@ import rip.skyland.carly.util.database.mongo.packet.MongoPacket;
 import rip.skyland.carly.util.database.redis.RedisHandler;
 import rip.skyland.carly.util.database.redis.packet.RedisPacket;
 import rip.skyland.carly.util.menu.MenuHandler;
-import rip.skyland.carly.util.menu.button.ButtonListener;
 
 import java.util.Arrays;
 
@@ -30,6 +30,8 @@ public enum Core {
     private JavaPlugin plugin;
     private MongoHandler mongoHandler;
     private RedisHandler redisHandler;
+
+    @Setter
     private MenuHandler menuHandler;
 
     private HandlerManager handlerManager;
@@ -44,7 +46,7 @@ public enum Core {
 
         // register handlers
         this.mongoHandler = new MongoHandler(Locale.MONGO_USERNAME.getAsString(), Locale.MONGO_PASSWORD.getAsString(), Locale.MONGO_HOST.getAsString(), Locale.MONGO_DATABASE.getAsString(), Locale.MONGO_PORT.getAsInteger()).connect();
-        this.redisHandler = new RedisHandler(Locale.REDIS_HOST.getAsString(), Locale.REDIS_PASSWORD.getAsString(), Locale.REDIS_PORT.getAsInteger()).connect("carly");
+        this.redisHandler = new RedisHandler(Locale.REDIS_HOST.getAsString(), Locale.REDIS_PASSWORD.getAsString(), Locale.REDIS_PORT.getAsInteger()).connect(Locale.REDIS_CHANNEL.getAsString());
         this.handlerManager = new HandlerManager();
 
         // register commands
@@ -61,12 +63,8 @@ public enum Core {
         // register listeners
         Arrays.asList(
                 new PlayerListener(handlerManager.getProfileHandler()),
-                new ButtonListener(),
                 new ChatListener()
         ).forEach(listener -> Bukkit.getPluginManager().registerEvents(listener, plugin));
-
-        // register menu handler
-        this.menuHandler = new MenuHandler();
     }
 
     public void sendPacket(IPacket packet) {
