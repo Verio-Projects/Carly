@@ -38,7 +38,7 @@ public class ChatCommands {
     }
 
     @Command(names={"slow", "slowchat"}, permission="core.chat.slow")
-    public void executeSlowChat(CommandSender sender, @Param(name="duration") int duration) {
+    public void executeSlowChat(CommandSender sender, int duration) {
         Bukkit.broadcastMessage(CC.translate(Locale.CHAT_SLOW.getAsString()));
         handler.setChatSlowDuration(duration*1000);
     }

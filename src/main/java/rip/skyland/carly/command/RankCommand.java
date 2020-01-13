@@ -23,7 +23,7 @@ public class RankCommand {
     }
 
     @Command(names = "rank create", permission = "core.rank.create")
-    public void executeCreate(CommandSender sender, @Param(name = "name") String name) {
+    public void executeCreate(CommandSender sender, String name) {
         if (handler.getRankByName(name) != null) {
             sender.sendMessage(CC.translate(Locale.RANK_ALREADY_EXISTS.getAsString()));
             return;
@@ -34,7 +34,7 @@ public class RankCommand {
     }
 
     @Command(names = "rank delete", permission = "core.rank.create")
-    public void executeDelete(CommandSender sender, @Param(name = "name") String name) {
+    public void executeDelete(CommandSender sender, String name) {
         if (handler.getRankByName(name) == null) {
             sender.sendMessage(CC.translate(Locale.RANK_DOES_NOT_EXIST.getAsString()));
             return;
@@ -46,7 +46,7 @@ public class RankCommand {
     }
 
     @Command(names = "rank prefix", permission = "core.rank.prefix")
-    public void executePrefix(CommandSender sender, @Param(name = "name") String name, @Param(name = "prefix") String prefix) {
+    public void executePrefix(CommandSender sender, String name, String prefix) {
         Rank rank = handler.getRankByName(name);
 
         if (rank == null) {
@@ -60,7 +60,7 @@ public class RankCommand {
     }
 
     @Command(names = "rank suffix", permission = "core.rank.suffix")
-    public void executeSuffix(CommandSender sender, @Param(name = "name") String name, @Param(name = "suffix") String suffix) {
+    public void executeSuffix(CommandSender sender, String name, String suffix) {
         Rank rank = handler.getRankByName(name);
 
         if (rank == null) {
@@ -74,7 +74,7 @@ public class RankCommand {
     }
 
     @Command(names = "rank weight", permission = "core.rank.weight")
-    public void executeWeight(CommandSender sender, @Param(name = "name") String name, @Param(name = "weight") int weight) {
+    public void executeWeight(CommandSender sender, String name, int weight) {
         Rank rank = handler.getRankByName(name);
 
         if (rank == null) {
@@ -88,7 +88,7 @@ public class RankCommand {
     }
 
     @Command(names = "rank permission", permission = "core.rank.permission")
-    public void executePermission(CommandSender sender, @Param(name = "name") String name, @Param(name = "add|remove") String type, @Param(name = "permission") String permission) {
+    public void executePermission(CommandSender sender, String name, @Param(name = "add|remove") String type, String permission) {
         Rank rank = handler.getRankByName(name);
 
         if (rank == null) {
@@ -118,7 +118,7 @@ public class RankCommand {
     }
 
     @Command(names = "rank color", permission = "core.rank.color")
-    public void executeColor(CommandSender sender, @Param(name = "name") String name, @Param(name = "color") CC color, @Param(name = "bold") boolean bold, @Param(name = "italic") boolean italic) {
+    public void executeColor(CommandSender sender, String name,CC color, boolean bold, boolean italic) {
         Rank rank = handler.getRankByName(name);
 
         if (rank == null) {
@@ -137,7 +137,7 @@ public class RankCommand {
     }
 
     @Command(names = "rank info", permission = "core.rank.info")
-    public void executeInfo(CommandSender sender, @Param(name = "name") String name) {
+    public void executeInfo(CommandSender sender, String name) {
         Rank rank = handler.getRankByName(name);
 
         if (rank == null) {

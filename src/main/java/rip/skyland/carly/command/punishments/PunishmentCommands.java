@@ -25,23 +25,23 @@ public class PunishmentCommands {
     private PunishmentHandler handler;
     
     @Command(names={"ban", "tempban", "tban"}, permission="core.ban")
-    public void executeBan(CommandSender sender, @Param(name="player") String targetName, @Param(name="reason", value="Not set -s") String reason) {
-        this.execute(sender, targetName, reason.substring(reason.split(" ")[0].length()), reason.substring(0, reason.split(" ")[0].length()), PunishmentType.BAN, false);
+    public void executeBan(CommandSender sender, String player, @Param(name="reason", value="Not set -s") String reason) {
+        this.execute(sender, player, reason.substring(reason.split(" ")[0].length()), reason.substring(0, reason.split(" ")[0].length()), PunishmentType.BAN, false);
     }
 
     @Command(names="unban", permission="core.unban")
-    public void executeUnban(CommandSender sender, @Param(name="player") String targetName, @Param(name="reason", value="Not set -s") String reason) {
-        this.execute(sender, targetName, reason, "", PunishmentType.BAN, true);
+    public void executeUnban(CommandSender sender, String player, @Param(name="reason", value="Not set -s") String reason) {
+        this.execute(sender, player, reason, "", PunishmentType.BAN, true);
     }
 
     @Command(names={"mute", "tempmute", "tmute"}, permission="core.mute")
-    public void executeMute(CommandSender sender, @Param(name="player") String targetName, @Param(name="reason", value="Not set -s") String reason) {
-        this.execute(sender, targetName, reason.substring(reason.split(" ")[0].length()), reason.substring(0, reason.split(" ")[0].length()), PunishmentType.MUTE, false);
+    public void executeMute(CommandSender sender, String player, @Param(name="reason", value="Not set -s") String reason) {
+        this.execute(sender, player, reason.substring(reason.split(" ")[0].length()), reason.substring(0, reason.split(" ")[0].length()), PunishmentType.MUTE, false);
     }
 
     @Command(names="unmute", permission="core.unmute")
-    public void executeUnmute(CommandSender sender, @Param(name="player") String targetName, @Param(name="reason", value="Not set -s") String reason) {
-        this.execute(sender, targetName, reason, "", PunishmentType.MUTE, true);
+    public void executeUnmute(CommandSender sender, String player, @Param(name="reason", value="Not set -s") String reason) {
+        this.execute(sender, player, reason, "", PunishmentType.MUTE, true);
     }
 
 

@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public final class TimeUtil {
+public class TimeUtil {
 
     public static String unixToDate(long unixTime) {
         return new Date(unixTime*1000).toString();

@@ -6,7 +6,7 @@
 
     <groupId>rip.skyland.carly.CorePlugin</groupId>
     <artifactId>Carly</artifactId>
-    <version>0.7-SNAPSHOT</version>
+    <version>0.9-SNAPSHOT</version>
     <url>https://github.com/NotNV6/Carly</url>
 
     <build>
@@ -44,6 +44,8 @@
                 <configuration>
                     <source>8</source>
                     <target>8</target>
+                    <!-- allows u to get the parameter names !-->
+                    <compilerArgument>-parameters</compilerArgument>
                 </configuration>
             </plugin>
         </plugins>

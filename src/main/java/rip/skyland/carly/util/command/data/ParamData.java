@@ -9,13 +9,14 @@ import rip.skyland.carly.util.command.annotation.Param;
 public class ParamData {
 
     private Param param;
+    private String name;
     private String value;
     private Class<?> parameterClass;
 
-    public ParamData(Param annotation, Class<?> parameterClass) {
+    public ParamData(Param annotation, String name, Class<?> parameterClass) {
         this.param = annotation;
+        this.name = name;
         this.value = annotation == null || annotation.value().isEmpty() ? "" : annotation.value();
         this.parameterClass = parameterClass;
     }
-
 }

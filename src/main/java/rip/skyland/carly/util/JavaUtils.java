@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 // ugly code lol, but it works.
-public final class JavaUtils {
+public class JavaUtils {
 
     public static <K,V> Map<K,V> mapOf(K k1, V v1) {
         Map<K,V> map = new HashMap<>();

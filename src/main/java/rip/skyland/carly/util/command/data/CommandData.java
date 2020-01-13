@@ -21,7 +21,7 @@ public class CommandData {
 
         methodData.getParameterData().forEach(data -> {
             boolean required = data.getValue().isEmpty();
-            builder.append(required ? "<" : "[").append(data.getParam().name()).append(required ? ">" : "]").append(" ");
+            builder.append(required ? "<" : "[").append(data.getName()).append(required ? ">" : "]").append(" ");
         });
 
         return "/" + alias.trim().toLowerCase()  + " " + builder.toString().trim().toLowerCase();

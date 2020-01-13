@@ -18,6 +18,7 @@ import rip.skyland.carly.util.command.data.MethodData;
 import rip.skyland.carly.util.command.data.ParamData;
 
 import java.lang.reflect.Method;
+import java.lang.reflect.Parameter;
 import java.util.*;
 import java.util.stream.IntStream;
 
@@ -36,8 +37,7 @@ public class CommandHandler {
 
         Bukkit.getPluginManager().registerEvents(new CommandListener(this), plugin);
 
-        JavaUtils.mapOf(boolean.class, new BooleanTypeAdapter(), CC.class, new ChatColorTypeAdapter(), float.class, new FloatTypeAdapter(), double.class, new DoubleTypeAdapter(), int.class, new IntegerTypeAdapter(), OfflinePlayer.class, new OfflinePlayerTypeAdapter(), Player.class, new PlayerTypeAdapter(), Profile.class, new ProfileTypeAdapter())
-            .forEach(this::registerParameterType);
+        JavaUtils.mapOf(boolean.class, new BooleanTypeAdapter(), CC.class, new ChatColorTypeAdapter(), float.class, new FloatTypeAdapter(), double.class, new DoubleTypeAdapter(), int.class, new IntegerTypeAdapter(), OfflinePlayer.class, new OfflinePlayerTypeAdapter(), Player.class, new PlayerTypeAdapter(), Profile.class, new ProfileTypeAdapter()).forEach(this::registerParameterType);
     }
 
     private void registerParameterType(Class<?> transforms, CommandTypeAdapter parameterType) {
@@ -49,13 +49,16 @@ public class CommandHandler {
             Command command = method.getAnnotation(Command.class);
             List<ParamData> paramDataList = new ArrayList<>();
 
-            IntStream.range(0, method.getParameterAnnotations().length).forEach(i ->
-                Arrays.stream(method.getParameterAnnotations()[i])
-                        .filter(annotation -> annotation instanceof Param)
-                        .forEach(annotation -> paramDataList.add(new ParamData((Param) annotation, method.getParameterTypes()[i])))
-            );
+            IntStream.range(1, method.getParameters().length).forEach(i -> {
+                Parameter parameter = method.getParameters()[i];
+                if (parameter.getAnnotation(Param.class) != null) {
+                    paramDataList.add(new ParamData(parameter.getAnnotation(Param.class), parameter.getAnnotation(Param.class).name(), method.getParameterTypes()[i]));
+                } else {
+                    paramDataList.add(new ParamData(null, parameter.getName(), method.getParameterTypes()[i]));
+                }
+            });
 
-            commands.add(new CommandData(object, command.names(),  command.permission(), new MethodData(method, paramDataList), command.usage()));
+            commands.add(new CommandData(object, command.names(), command.permission(), new MethodData(method, paramDataList), command.usage()));
             commands.sort(Comparator.comparingInt(cmd -> {
 
                 List<String> stringList = Arrays.asList(cmd.getNames());

@@ -32,26 +32,26 @@ public class CommandListener implements Listener {
 
     @EventHandler
     public void onCommand(PlayerCommandPreprocessEvent event) {
-        if(getCommandData(event.getMessage()) != null) {
-            executeCommand(event.getPlayer(), this.getCommandData(event.getMessage()), event.getMessage(), event);
-        }
-    }
-
-    @EventHandler
-    public void onCommand(ServerCommandEvent event) {
-        if(getCommandData(event.getCommand()) != null) {
-            executeCommand(event.getSender(), this.getCommandData(event.getCommand()), event.getCommand(), null);
-        }
-    }
-
-    private CommandData getCommandData( String command) {
-        AtomicReference<CommandData> data1 = new AtomicReference<>(null);
-
+        Player player = event.getPlayer();
         this.handler.getCommands()
                 .stream()
                 .filter(key -> Arrays.stream(key.getNames()).filter(name -> {
                     String alias = name + " ";
-                    String message = command.replace("/", "").replace(handler.getFallbackPrefix(), "") + " ";
+                    String message = event.getMessage().replace("/", "") + " ";
+
+                    return message.toLowerCase().startsWith(alias.toLowerCase());
+                }).findFirst().orElse(null) != null)
+                .findFirst().ifPresent(data -> executeCommand(player, data, event.getMessage(), event));
+    }
+
+    @EventHandler
+    public void onCommand(ServerCommandEvent event) {
+        CommandSender player = event.getSender();
+        this.handler.getCommands()
+                .stream()
+                .filter(key -> Arrays.stream(key.getNames()).filter(name -> {
+                    String alias = name + " ";
+                    String message = event.getCommand().replace("/", "") + " ";
 
                     return message.toLowerCase().startsWith(alias.toLowerCase());
                 }).findFirst().orElse(null) != null)
@@ -59,12 +59,10 @@ public class CommandListener implements Listener {
             if(data.getMethodData().getMethod().getParameters()[0].getType().equals(Player.class))
                 return;
 
-            data1.set(data);
+            executeCommand(player, data, event.getCommand(), null);
         });
 
-        return data1.get();
     }
-
     private void executeCommand(CommandSender sender, CommandData data, String message, Event event) {
         if(event != null)
             ((Cancellable) event).setCancelled(true);

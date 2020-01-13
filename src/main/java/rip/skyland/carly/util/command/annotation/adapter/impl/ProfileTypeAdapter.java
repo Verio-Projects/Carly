@@ -13,7 +13,7 @@ public class ProfileTypeAdapter implements CommandTypeAdapter<Profile> {
 
     @Override
     public Profile transform(CommandSender sender, String source) {
-        if (sender instanceof Player && (source.equalsIgnoreCase("self") || source.equals(""))) {
+        if (sender instanceof Player && (source.equalsIgnoreCase("sender") || source.equals(""))) {
             return Core.INSTANCE.getHandlerManager().getProfileHandler().getProfileByUuid(((Player) sender).getUniqueId());
         }
 

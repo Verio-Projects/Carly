@@ -1,6 +1,6 @@
 package rip.skyland.carly.util;
 
-public final class WoolColor {
+public class WoolColor {
 
     public static byte getWoolColor(CC color) {
         int c;
