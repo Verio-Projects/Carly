@@ -35,7 +35,7 @@ public class HistoryCommand {
 
     @Command(names={"history", "c"}, permission="core.history")
     public void execute(Player player, @Param(name="player") String targetName) {
-        Profile profile = CoreAPI.INSTANCE.getProfileByName(targetName);
+        Profile profile = CoreAPI.INSTANCE.getProfileByNameAndCreate(targetName);
 
         if(profile == null) {
             player.sendMessage(CC.translate("&cThat player does not exist"));

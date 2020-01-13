@@ -1,10 +1,9 @@
 package rip.skyland.carly;
 
+import lombok.Getter;
 import org.apache.commons.lang.StringUtils;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public enum Locale {
 
@@ -84,6 +83,7 @@ public enum Locale {
     GRANT_SET_REASON("grant.set_reason", "&ePlease type a reason for this grant to be added, or type &ccancel &eto cancel."),
     GRANT_SET_DURATION("grant.set_duration", "&ePlease type a duration for this grant, \"perm\" for permanent or type &ccancel &eto cancel."),
     GRANT_CANCELLED_GRANTING("grant.cancelled_granting", "&cYou have cancelled granting"),
+    GRANT_FINISHED("grant.finished_grant", "&aYou have finished granting"),
     GRANT_MENU_TITLE("grant.menu.title", "Choose a Rank"),
     GRANT_MENU_ITEM("grant.menu.item", Arrays.asList(
             "&7&m--------------------------",
@@ -145,7 +145,12 @@ public enum Locale {
 
     private Object value;
 
+    @Getter
+    private Map<String, String> replacements;
+
     Locale(String path, Object defaultValue) {
+        this.replacements = new HashMap<>();
+
         if(Core.INSTANCE.getPlugin().getConfig().contains(path)) {
             // set value of to value in config.yml
             this.value = Core.INSTANCE.getPlugin().getConfig().get(path);
@@ -159,15 +164,28 @@ public enum Locale {
     }
 
     public List<String> getAsStringList() {
+        List<String> toReturn = new ArrayList<>((List<String>) this.value);
+        for(int index = 0; index < toReturn.size(); index++) {
+            String toReplace = toReturn.get(index);
+            for (Map.Entry<String, String> entry : replacements.entrySet()) {
+                toReplace = toReplace.replace(entry.getKey(), entry.getValue());
+            }
+
+            toReturn.remove(index);
+            toReturn.add(index, toReplace);
+        }
+
+
         return (List<String>) this.value;
     }
 
     public String getAsString() {
-        return (String) this.value;
-    }
+        String toReturn = (String) this.value;
+        for(Map.Entry<String, String> entry : replacements.entrySet()) {
+            toReturn = toReturn.replace(entry.getKey(), entry.getValue());
+        }
 
-    public boolean getAsBoolean() {
-        return (boolean) this.value;
+        return toReturn;
     }
 
     public int getAsInteger() {

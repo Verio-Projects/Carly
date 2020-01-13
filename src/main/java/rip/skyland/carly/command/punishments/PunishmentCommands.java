@@ -46,7 +46,7 @@ public class PunishmentCommands {
 
 
     private void execute(CommandSender sender, String targetName, String reason, String duration, PunishmentType punishmentType, boolean undo) {
-        Profile profile = CoreAPI.INSTANCE.getProfileByName(targetName);
+        Profile profile = CoreAPI.INSTANCE.getProfileByNameAndCreate(targetName);
 
         if(profile == null) {
             sender.sendMessage(CC.translate("&cThat player does not exist"));

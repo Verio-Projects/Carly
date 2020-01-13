@@ -51,7 +51,7 @@ public class GrantCommand {
     }
 
     @Command(names = "grant", permission = "core.grant")
-    public void performGrant(CommandSender sender, @Param(name = "player") String target, @Param(name = "rank", value = "not set") String rankName) {
+    public void performGrant(CommandSender sender, @Param(name = "player") String target, @Param(name = "rank", value = "not set") String rankName, @Param(name="reason", value="console grant") String reason, @Param(name="duration", value="perm") String duration) {
        Profile profile = CoreAPI.INSTANCE.getProfileByName(target);
 
        if(profile == null) {
@@ -111,8 +111,16 @@ public class GrantCommand {
                 return;
             }
 
-            Core.INSTANCE.getHandlerManager().getProfileHandler().addGrant(new PermanentGrant(rank, profile.getUuid(), "console grant", "&4CONSOLE", System.currentTimeMillis(), true), profile);
+            IGrant grant;
 
+            if(duration.equalsIgnoreCase("perm")) {
+                grant = new PermanentGrant(rank, profile.getUuid(), reason, "&4CONSOLE", System.currentTimeMillis(), true);
+            } else {
+                grant = new TemporaryGrant(rank, profile.getUuid(), reason, "&4CONSOLE", System.currentTimeMillis(), (System.currentTimeMillis()+ TimeUtil.parseTime(duration)), true);
+            }
+
+            Core.INSTANCE.getHandlerManager().getProfileHandler().addGrant(grant, profile);
+            sender.sendMessage(CC.translate(Locale.GRANT_FINISHED.getAsString()));
         }
     }
 

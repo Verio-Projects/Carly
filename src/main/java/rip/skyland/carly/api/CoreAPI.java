@@ -6,6 +6,7 @@ import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import rip.skyland.carly.Core;
+import rip.skyland.carly.Locale;
 import rip.skyland.carly.profile.Profile;
 import rip.skyland.carly.rank.Rank;
 import rip.skyland.carly.util.ReflectionCache;
@@ -32,7 +33,7 @@ public enum CoreAPI {
     }
 
     @Deprecated
-    public Profile getProfileByName(String name) {
+    public Profile getProfileByNameAndCreate(String name) {
         Preconditions.checkArgument(Core.INSTANCE.getHandlerManager() != null, "handler manager is null");
 
         if (Bukkit.getOfflinePlayer(name).getUniqueId() == null) {
@@ -68,6 +69,10 @@ public enum CoreAPI {
 
     public Profile getProfileByPlayer(Player player) {
         return this.getProfileByUuid(player.getUniqueId());
+    }
+
+    public void addPlaceholder(Locale locale, String toReplace, String replacement) {
+        locale.getReplacements().put(toReplace, replacement);
     }
 
     public int getPing(Player player) throws NoSuchMethodException, NoSuchFieldException, IllegalAccessException, InvocationTargetException {
