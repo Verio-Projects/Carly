@@ -1,7 +1,6 @@
 package rip.skyland.carly;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.logging.log4j.core.lookup.StrSubstitutor;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -92,6 +91,7 @@ public enum Locale {
             "&7&m--------------------------"
     )),
 
+    MUTED("punishment.muted", "&cYou are currently muted for: &f%reason%"),
     PUNISHMENT_BAN_KICK("punishment.ban.kick_message", "&cYou have been banned off the SkylandRIP Network\n \n \n&cVisit skyland.rip/appeal to appeal for an unban."),
     PUNISHMENT_MUTE_SILENT("punishment.mute.silent_broadcast", "&7[Silent] %player% &ahas been muted by %punisher%&a."),
     PUNISHMENT_BAN_SILENT("punishment.ban.silent_broadcast", "&7[Silent] %player% &ahas been banned by %punisher%&a."),

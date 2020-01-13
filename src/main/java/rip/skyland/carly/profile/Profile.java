@@ -23,6 +23,7 @@ public class Profile {
     private List<IGrant> grants;
     private long lastChat;
 
+    @Deprecated
     public Profile(UUID uuid) {
         this.uuid = uuid;
         this.grants = new ArrayList<>();

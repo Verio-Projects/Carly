@@ -3,7 +3,6 @@ package rip.skyland.carly.util.command;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -37,7 +36,7 @@ public class CommandHandler {
 
         Bukkit.getPluginManager().registerEvents(new CommandListener(this), plugin);
 
-        JavaUtils.mapOf(boolean.class, new BooleanTypeAdapter(), CC.class, new ChatColorTypeAdapter(), float.class, new FloatTypeAdapter(), double.class, new DoubleTypeAdapter(), int.class, new IntegerTypeAdapter(), OfflinePlayer.class, new OfflinePlayerTypeAdapter(), Player.class, new PlayerTypeAdapter(), World.class, new WorldTypeAdapter(), Profile.class, new ProfileTypeAdapter())
+        JavaUtils.mapOf(boolean.class, new BooleanTypeAdapter(), CC.class, new ChatColorTypeAdapter(), float.class, new FloatTypeAdapter(), double.class, new DoubleTypeAdapter(), int.class, new IntegerTypeAdapter(), OfflinePlayer.class, new OfflinePlayerTypeAdapter(), Player.class, new PlayerTypeAdapter(), Profile.class, new ProfileTypeAdapter())
             .forEach(this::registerParameterType);
     }
 

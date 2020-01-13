@@ -10,6 +10,7 @@ import rip.skyland.carly.Locale;
 import rip.skyland.carly.handler.impl.ServerHandler;
 import rip.skyland.carly.profile.Profile;
 import rip.skyland.carly.profile.ProfileHandler;
+import rip.skyland.carly.punishments.PunishmentType;
 import rip.skyland.carly.rank.grants.GrantProcedure;
 import rip.skyland.carly.util.CC;
 
@@ -22,6 +23,7 @@ public class ChatListener implements Listener {
         Player player = event.getPlayer();
         Profile profile = profileHandler.getProfileByUuid(player.getUniqueId());
 
+        // check if player is granting
         if(Core.INSTANCE.getHandlerManager().getRankHandler().getProcedureByUuid(player.getUniqueId()) != null) {
             event.setCancelled(true);
             GrantProcedure procedure = Core.INSTANCE.getHandlerManager().getRankHandler().getProcedureByUuid(player.getUniqueId());
@@ -46,15 +48,23 @@ public class ChatListener implements Listener {
             return;
         }
 
+        // check for active mute
+        if(profile.getActivePunishment(PunishmentType.MUTE) != null) {
+            player.sendMessage(Locale.MUTED.getAsString().replace("%reason%", profile.getActivePunishment(PunishmentType.MUTE).getReason()));
+            return;
+        }
+
         ServerHandler serverHandler = Core.INSTANCE.getHandlerManager().getServerHandler();
 
+        // check for muted chat
         if(serverHandler.isChatMuted() && !player.hasPermission("core.bypass.mutechat")) {
             player.sendMessage(CC.translate(Locale.CHAT_MUTED.getAsString()));
             event.setCancelled(true);
             return;
         }
 
-        if(serverHandler.getChatSlowDuration() > 0 && profile.getLastChat() > 0) {
+        // check for chat slowdown
+        if(serverHandler.getChatSlowDuration() > 0 && profile.getLastChat() > 0 && !player.hasPermission("core.bypass.slowchat")) {
             if((profile.getLastChat()+serverHandler.getChatSlowDuration())-System.currentTimeMillis() > 0) {
                 player.sendMessage(CC.translate(Locale.CHAT_SLOWCHAT.getAsString()));
                 event.setCancelled(true);

@@ -14,11 +14,11 @@ public enum ReflectionCache {
 
 
     public int getPing(Player player) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException, NoSuchFieldException {
-        if(handleObject == null) {
+        if (handleObject == null) {
             handleObject = player.getClass().getMethod("getHandle").invoke(player);
             pingField = handleObject.getClass().getField("ping");
         }
 
-        return pingField.getInt(player);
+        return pingField.getInt(handleObject);
     }
 }

@@ -26,41 +26,43 @@ public class CommandListener implements Listener {
 
     private CommandHandler handler;
 
-    public CommandListener(CommandHandler handler) {
+    CommandListener(CommandHandler handler) {
         this.handler = handler;
     }
 
     @EventHandler
     public void onCommand(PlayerCommandPreprocessEvent event) {
-        Player player = event.getPlayer();
-        this.handler.getCommands()
-                .stream()
-                .filter(key -> Arrays.stream(key.getNames()).filter(name -> {
-                    String alias = name + " ";
-                    String message = event.getMessage().replace("/", "").replace(handler.getFallbackPrefix(), "") + " ";
-
-                    return message.toLowerCase().startsWith(alias.toLowerCase());
-                }).findFirst().orElse(null) != null)
-                .findFirst().ifPresent(data -> executeCommand(player, data, event.getMessage(), event));
+        if(getCommandData(event.getMessage()) != null) {
+            executeCommand(event.getPlayer(), this.getCommandData(event.getMessage()), event.getMessage(), event);
+        }
     }
 
     @EventHandler
     public void onCommand(ServerCommandEvent event) {
+        if(getCommandData(event.getCommand()) != null) {
+            executeCommand(event.getSender(), this.getCommandData(event.getCommand()), event.getCommand(), null);
+        }
+    }
+
+    private CommandData getCommandData( String command) {
+        AtomicReference<CommandData> data1 = new AtomicReference<>(null);
+
         this.handler.getCommands()
                 .stream()
                 .filter(key -> Arrays.stream(key.getNames()).filter(name -> {
                     String alias = name + " ";
-                    String message = event.getCommand().replace("/", "").replace(handler.getFallbackPrefix(), "") + " ";
+                    String message = command.replace("/", "").replace(handler.getFallbackPrefix(), "") + " ";
 
                     return message.toLowerCase().startsWith(alias.toLowerCase());
                 }).findFirst().orElse(null) != null)
                 .findFirst().ifPresent(data -> {
-                    if(data.getMethodData().getMethod().getParameters()[0].getType().equals(Player.class))
-                        return;
+            if(data.getMethodData().getMethod().getParameters()[0].getType().equals(Player.class))
+                return;
 
-                    executeCommand(event.getSender(), data, event.getCommand(), null);
+            data1.set(data);
         });
 
+        return data1.get();
     }
 
     private void executeCommand(CommandSender sender, CommandData data, String message, Event event) {
