@@ -12,7 +12,6 @@ public enum ReflectionCache {
     private Object handleObject;
     private Field pingField;
 
-
     public int getPing(Player player) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException, NoSuchFieldException {
         if (handleObject == null) {
             handleObject = player.getClass().getMethod("getHandle").invoke(player);

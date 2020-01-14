@@ -29,6 +29,7 @@ public class HandlerManager {
     public HandlerManager() throws NoSuchFieldException, IllegalAccessException {
         this.handlers = new ArrayList<>();
 
+        // check if server has Vault
         if(Bukkit.getPluginManager().getPlugin("Vault") != null) {
             this.registerHandler(this.getClass().getField("vaultHandler"), new VaultHandler());
         }

@@ -9,6 +9,7 @@ import rip.skyland.carly.Core;
 import rip.skyland.carly.Locale;
 import rip.skyland.carly.profile.Profile;
 import rip.skyland.carly.rank.Rank;
+import rip.skyland.carly.util.JavaUtils;
 import rip.skyland.carly.util.ReflectionCache;
 
 import java.lang.reflect.InvocationTargetException;
@@ -70,6 +71,10 @@ public enum CoreAPI {
 
     public Profile getProfileByPlayer(Player player) {
         return this.getProfileByUuid(player.getUniqueId());
+    }
+
+    public void addPlaceholder(Locale locale, String toReplace, String replacement) {
+        this.addPlaceholder(locale, JavaUtils.mapOf(toReplace, replacement));
     }
 
     public void addPlaceholder(Locale locale, Map<String, String> replacements) {

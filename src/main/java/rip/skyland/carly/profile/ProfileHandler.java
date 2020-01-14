@@ -79,20 +79,21 @@ public class ProfileHandler implements IHandler {
                     if (!profile.getGrants().isEmpty()) {
                         Core.INSTANCE.getHandlerManager().getVaultHandler().getPermission().playerAddGroup(null, Bukkit.getOfflinePlayer(uuid), profile.getRank().getName());
                     }
+                    System.out.println(Core.INSTANCE.getHandlerManager().getVaultHandler().getPermission().getPrimaryGroup(Bukkit.getPlayer(uuid)));
                 }
-                System.out.println(Core.INSTANCE.getHandlerManager().getVaultHandler().getPermission().getPrimaryGroup(Bukkit.getPlayer(uuid)));
-
             }
         }, 1L);
 
-        profile.getGrants().forEach(grant -> grant.getRank().getAllPermissions().forEach(permission -> {
-            Player player = Bukkit.getPlayer(profile.getUuid());
-            PermissionAttachment attachment = player.addAttachment(Core.INSTANCE.getPlugin());
-            attachment.setPermission(permission, true);
+        if(Bukkit.getPlayer(profile.getUuid()) != null) {
+            profile.getGrants().forEach(grant -> grant.getRank().getAllPermissions().forEach(permission -> {
+                Player player = Bukkit.getPlayer(profile.getUuid());
+                PermissionAttachment attachment = player.addAttachment(Core.INSTANCE.getPlugin());
+                attachment.setPermission(permission, true);
 
-            // some spigots don't automatically recalculate permissions after setting a permission, dont ask me why.
-            player.recalculatePermissions();
-        }));
+                // some spigots don't automatically recalculate permissions after setting a permission, dont ask me why.
+                player.recalculatePermissions();
+            }));
+        }
 
         profiles.add(profile);
         return profile;
@@ -101,14 +102,16 @@ public class ProfileHandler implements IHandler {
     public void addGrant(IGrant grant, Profile profile) {
         profile.getGrants().add(grant);
 
-        grant.getRank().getAllPermissions().forEach(permission -> {
-            Player player = Bukkit.getPlayer(profile.getUuid());
-            PermissionAttachment attachment = player.addAttachment(Core.INSTANCE.getPlugin());
-            attachment.setPermission(permission, true);
+        if(Bukkit.getPlayer(profile.getUuid()) != null) {
+            grant.getRank().getAllPermissions().forEach(permission -> {
+                Player player = Bukkit.getPlayer(profile.getUuid());
+                PermissionAttachment attachment = player.addAttachment(Core.INSTANCE.getPlugin());
+                attachment.setPermission(permission, true);
 
-            // some spigots don't automatically recalculate permissions after setting a permission, dont ask me why.
-            player.recalculatePermissions();
-        });
+                // some spigots don't automatically recalculate permissions after setting a permission, dont ask me why.
+                player.recalculatePermissions();
+            });
+        }
     }
 
     public void unloadProfile(Profile profile) {
