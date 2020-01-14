@@ -16,9 +16,7 @@ import rip.skyland.carly.profile.redis.packet.RedisProfileLeave;
 import rip.skyland.carly.rank.grants.IGrant;
 import rip.skyland.carly.rank.grants.impl.PermanentGrant;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Getter
 public class ProfileHandler implements IHandler {
@@ -47,11 +45,12 @@ public class ProfileHandler implements IHandler {
         } else if (document == null) {
             profile = new Profile(uuid);
             // add default grant
-            this.addGrant(new PermanentGrant(Core.INSTANCE.getHandlerManager().getRankHandler().getRankByName("Default"), uuid, "first time join", "&4CONSOLE", System.currentTimeMillis(), true), profile);
 
-            // let the player join event set the player's name so i can save it inside of mongo
-            // also instantly save the profile because it doesn't exist yet. (not needed)
-            Bukkit.getScheduler().runTaskLater(Core.INSTANCE.getPlugin(), () -> Core.INSTANCE.sendPacket(new ProfileSavePacket(profile)), 5L);
+            if (Bukkit.getOfflinePlayer(uuid) != null) {
+                profile.setPlayerName(Bukkit.getOfflinePlayer(uuid).getName());
+            }
+
+            Core.INSTANCE.sendPacket(new ProfileSavePacket(profile));
         } else {
             profile = new Profile(uuid);
 
@@ -62,11 +61,27 @@ public class ProfileHandler implements IHandler {
             profiles.add(profile);
         }
 
-        RedisProfile redisProfile = new RedisProfile(uuid, profile.getDisplayName());
-        redisProfile.setLastSeenServer(Locale.SERVER_NAME.getAsString());
-        redisProfile.setLastAction(RedisProfile.LastAction.JOIN_SERVER);
+        if (profile.getGrants().isEmpty()) {
+            this.addGrant(new PermanentGrant(Core.INSTANCE.getHandlerManager().getRankHandler().getRankByName("Default"), uuid, "first time join", "&4CONSOLE", System.currentTimeMillis(), true), profile);
+        }
 
-        Core.INSTANCE.sendPacket(new RedisProfileJoin(redisProfile.toJson(), Locale.SERVER_NAME.getAsString()));
+        Bukkit.getScheduler().runTaskLater(Core.INSTANCE.getPlugin(), () -> {
+            if (Bukkit.getPlayer(uuid) != null) {
+                RedisProfile redisProfile = new RedisProfile(uuid, profile.getDisplayName());
+                redisProfile.setLastSeenServer(Locale.SERVER_NAME.getAsString());
+                redisProfile.setLastAction(RedisProfile.LastAction.JOIN_SERVER);
+
+                Core.INSTANCE.sendPacket(new RedisProfileJoin(redisProfile.toJson(), Locale.SERVER_NAME.getAsString()));
+
+                if (Core.INSTANCE.getHandlerManager().getVaultHandler() != null) {
+                    if (!profile.getGrants().isEmpty()) {
+                        Core.INSTANCE.getHandlerManager().getVaultHandler().getPermission().playerAddGroup(null, Bukkit.getOfflinePlayer(uuid), profile.getRank().getName());
+                    }
+                }
+
+            }
+            System.out.println(Core.INSTANCE.getHandlerManager().getVaultHandler().getPermission().getPrimaryGroup(Bukkit.getPlayer(uuid)));
+        }, 1L);
 
         profiles.add(profile);
         return profile;

@@ -1,6 +1,5 @@
 package rip.skyland.carly.util.command.annotation.adapter.impl;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -17,7 +16,7 @@ public class ProfileTypeAdapter implements CommandTypeAdapter<Profile> {
             return Core.INSTANCE.getHandlerManager().getProfileHandler().getProfileByUuid(((Player) sender).getUniqueId());
         }
 
-        Profile player = CoreAPI.INSTANCE.getProfileByName2(source);
+        Profile player = CoreAPI.INSTANCE.getProfileByName(source);
         if (player == null) {
             sender.sendMessage(ChatColor.RED + "Profile " + source + " not found.");
             return null;

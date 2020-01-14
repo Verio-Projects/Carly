@@ -136,6 +136,33 @@ public class RankCommand {
         handler.saveRank(rank);
     }
 
+    @Command(names="rank inherits", permission="core.rank.inherits")
+    public void executeInheritance(CommandSender sender, String name, @Param(name="add|remove") String type, String inherit) {
+        Rank rank = handler.getRankByName(name);
+        Rank inheritRank = handler.getRankByName(inherit);
+
+        if (rank == null || inheritRank == null) {
+            sender.sendMessage(CC.translate(Locale.RANK_DOES_NOT_EXIST.getAsString()));
+            return;
+        }
+
+        switch(type.toLowerCase()) {
+            case "add": {
+                handler.addInheritance(rank, inheritRank.getUuid());
+                sender.sendMessage(CC.translate(Locale.RANK_ADD_INHERITANCE.getAsString()));
+            } break;
+
+            case "remove": {
+                handler.removeInheritance(rank, inheritRank.getUuid());
+                sender.sendMessage(CC.translate(Locale.RANK_REMOVE_INHERITANCE.getAsString()));
+            } break;
+
+            default: {
+                sender.sendMessage(CC.translate("&c/rank inherits <add|remove> <inherit>"));
+            }
+        }
+    }
+
     @Command(names = "rank info", permission = "core.rank.info")
     public void executeInfo(CommandSender sender, String name) {
         Rank rank = handler.getRankByName(name);

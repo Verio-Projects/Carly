@@ -12,6 +12,7 @@ import rip.skyland.carly.rank.Rank;
 import rip.skyland.carly.util.ReflectionCache;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.Map;
 import java.util.UUID;
 
 public enum CoreAPI {
@@ -26,7 +27,7 @@ public enum CoreAPI {
         return Core.INSTANCE.getHandlerManager().getRankHandler().getRankByName(name);
     }
 
-    public Profile getProfileByName2(String name) {
+    public Profile getProfileByName(String name) {
         Preconditions.checkArgument(Core.INSTANCE.getHandlerManager() != null, "handler manager is null");
 
         return Core.INSTANCE.getHandlerManager().getProfileHandler().getProfiles().stream().filter(profile -> profile.getPlayerName().equalsIgnoreCase(name)).findFirst().orElse(null);
@@ -71,8 +72,8 @@ public enum CoreAPI {
         return this.getProfileByUuid(player.getUniqueId());
     }
 
-    public void addPlaceholder(Locale locale, String toReplace, String replacement) {
-        locale.getReplacements().put(toReplace, replacement);
+    public void addPlaceholder(Locale locale, Map<String, String> replacements) {
+        locale.getReplacements().putAll(replacements);
     }
 
     public int getPing(Player player) throws NoSuchMethodException, NoSuchFieldException, IllegalAccessException, InvocationTargetException {

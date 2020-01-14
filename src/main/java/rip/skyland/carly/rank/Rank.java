@@ -23,6 +23,8 @@ public class Rank {
     private int weight;
     private CC color;
     private boolean bold, italic;
+
+    private List<UUID> inheritances;
     private List<String> permissions;
 
     public void delete() {

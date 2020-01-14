@@ -63,13 +63,17 @@ public class RankHandler implements IHandler {
         rank.setBold(document.getBoolean("bold"));
         rank.setItalic(document.getBoolean("italic"));
 
+        List<UUID> inherits = new ArrayList<>();
+        CoreAPI.INSTANCE.PARSER.parse(document.getString("inheritances")).getAsJsonArray().forEach(element -> inherits.add(UUID.fromString(element.getAsString())));
+        rank.setInheritances(inherits);
+
         List<String> permissions = new ArrayList<>();
         CoreAPI.INSTANCE.PARSER.parse(document.getString("permissions")).getAsJsonArray().forEach(element -> permissions.add(element.getAsString()));
         rank.setPermissions(permissions);
     }
 
     public Rank createRank(String name, UUID uuid, boolean sendPacket) {
-        Rank rank = new Rank(uuid, name, "", "", 0, CC.WHITE, false, false, Collections.emptyList());
+        Rank rank = new Rank(uuid, name, "", "", 0, CC.WHITE, false, false, Collections.emptyList(), Collections.emptyList());
         ranks.add(rank);
 
         if (sendPacket) {
@@ -91,7 +95,7 @@ public class RankHandler implements IHandler {
             ranks.add(rank);
         }
 
-        Core.INSTANCE.sendPacket(new RankSavePacket(rank.getUuid(), rank.getName(), rank.getPrefix(), rank.getSuffix(), rank.getWeight(), rank.getColor(), rank.isBold(), rank.isItalic(), rank.getPermissions()));
+        Core.INSTANCE.sendPacket(new RankSavePacket(rank.getUuid(), rank.getName(), rank.getPrefix(), rank.getSuffix(), rank.getWeight(), rank.getColor(), rank.isBold(), rank.isItalic(), rank.getInheritances(), rank.getPermissions()));
     }
 
     public void addPermission(Rank rank, String permission) {
@@ -116,6 +120,42 @@ public class RankHandler implements IHandler {
                     // some spigots don't automatically recalculate permissions after setting a permission, dont ask me why.
                     player.recalculatePermissions();
                 });
+    }
+
+    public void addInheritance(Rank rank, UUID inheritance) {
+        if (!rank.getInheritances().contains(inheritance)) {
+            rank.getInheritances().add(inheritance);
+            Core.INSTANCE.getHandlerManager().getProfileHandler().getProfiles().stream()
+                    .filter(profile -> profile.getGrants().stream().anyMatch(grant -> grant.getRank().equals(rank)) && Bukkit.getPlayer(profile.getUuid()) != null)
+                    .forEach(profile -> {
+                        Player player = Bukkit.getPlayer(profile.getUuid());
+                        PermissionAttachment attachment = player.addAttachment(Core.INSTANCE.getPlugin());
+
+                        getRankByUuid(inheritance).getPermissions().forEach(permission -> attachment.setPermission(permission, true));
+
+                        // some spigots don't automatically recalculate permissions after setting a permission, dont ask me why.
+                        player.recalculatePermissions();
+                    });
+        }
+    }
+
+    public void removeInheritance(Rank rank, UUID inheritance) {
+        if (rank.getInheritances().contains(inheritance)) {
+            rank.getInheritances().remove(inheritance);
+            Core.INSTANCE.getHandlerManager().getProfileHandler().getProfiles().stream()
+                    .filter(profile -> profile.getGrants().stream().anyMatch(grant -> grant.getRank().equals(rank)) && Bukkit.getPlayer(profile.getUuid()) != null)
+                    .forEach(profile -> {
+                        Player player = Bukkit.getPlayer(profile.getUuid());
+                        PermissionAttachment attachment = player.addAttachment(Core.INSTANCE.getPlugin());
+
+                        getRankByUuid(inheritance).getPermissions().stream()
+                                .filter(permission -> profile.getGrants().stream().anyMatch(grant -> grant.getRank().getPermissions().stream().noneMatch(permission2 -> permission2.equalsIgnoreCase(permission))))
+                                .forEach(permission -> attachment.setPermission(permission, true));
+
+                        // some spigots don't automatically recalculate permissions after setting a permission, dont ask me why.
+                        player.recalculatePermissions();
+                    });
+        }
     }
 
     public IGrant getGrantByJson(JsonObject object) {

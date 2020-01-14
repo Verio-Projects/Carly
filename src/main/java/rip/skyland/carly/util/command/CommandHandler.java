@@ -44,7 +44,7 @@ public class CommandHandler {
         parameterTypes.put(transforms, parameterType);
     }
 
-    public void registerCommand(Object object) {
+    private void registerCommand(Object object) {
         Arrays.stream(object.getClass().getMethods()).filter(method -> method.getAnnotation(Command.class) != null).forEach(method -> {
             Command command = method.getAnnotation(Command.class);
             List<ParamData> paramDataList = new ArrayList<>();
@@ -73,10 +73,6 @@ public class CommandHandler {
 
     public void registerCommands(Object... objects) {
         Arrays.stream(objects).forEach(this::registerCommand);
-    }
-
-    public void registerCommand(Method method, Command command) {
-
     }
 
     Object transformParameter(CommandSender sender, String parameter, Class<?> transformTo) {

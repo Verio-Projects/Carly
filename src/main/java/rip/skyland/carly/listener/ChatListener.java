@@ -43,6 +43,7 @@ public class ChatListener implements Listener {
             if(procedure.getDuration().equalsIgnoreCase("Not set")) {
                 procedure.setDuration(event.getMessage());
 
+                player.sendMessage(CC.translate(Locale.GRANT_FINISHED.getAsString()));
                 procedure.finishProcedure();
             }
             return;

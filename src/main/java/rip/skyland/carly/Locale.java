@@ -43,6 +43,8 @@ public enum Locale {
     RANK_ADD_PERMISSION("rank.add_permission", "&eYou have added a permission to a rank"),
     RANK_REMOVE_PERMISSION("rank.add_permission", "&eYou have removed a permission from a rank"),
     RANK_SET_COLOR("rank.set_color", "&eYou have set the color of a rank"),
+    RANK_ADD_INHERITANCE("rank.add_inheritance", "&eYou have added an inheritance to a rank"),
+    RANK_REMOVE_INHERITANCE("rank.remove_inheritance", "&eYou have removed an inheritance from a rank"),
     RANK_INFO("rank.info", Arrays.asList(
             "&9&m" + StringUtils.repeat("-", 39),
             "&a&l%rank% &7- &c%default%",

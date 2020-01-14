@@ -24,6 +24,7 @@ public class RankSavePacket implements MongoPacket, RedisPacket {
     private int weight;
     private CC color;
     private boolean bold, italic;
+    private List<UUID> inherits;
     private List<String> permissions;
 
     @Override
@@ -36,6 +37,7 @@ public class RankSavePacket implements MongoPacket, RedisPacket {
         rank.setSuffix(suffix);
         rank.setWeight(weight);
         rank.setColor(color);
+        rank.setInheritances(inherits);
         rank.setPermissions(permissions);
         rank.setBold(bold);
         rank.setItalic(italic);
@@ -57,6 +59,7 @@ public class RankSavePacket implements MongoPacket, RedisPacket {
                 .put("color", color.name())
                 .put("bold", bold)
                 .put("italic", italic)
+                .put("inheritances", inherits.toString())
                 .put("permissions", permissions.toString()).getDocument(), new ReplaceOptions().upsert(true));
     }
 }
