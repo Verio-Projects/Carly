@@ -94,7 +94,7 @@ public class HistoryCommand {
 
                     Locale locale = punishment.isActive() ? Locale.HISTORY_PUNISHMENT_BUTTON : Locale.HISTORY_PUNISHMENT_BUTTON_INACTIVE;
                     locale.getAsStringList().forEach(string -> strings.add(string
-                            .replace("%reason%", punishment.getReason())
+                            .replace("%reason%", punishment.getReason().replace("-s", ""))
                             .replace("%punisher%", punishment.getPunisher())
                             .replace("%expiration%", expirationString)
                             .replace("%unpunishReason%", punishment.getUnpunishReason())

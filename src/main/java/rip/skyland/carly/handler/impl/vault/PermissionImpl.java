@@ -100,6 +100,9 @@ public class PermissionImpl extends Permission {
 
     @Override
     public String getPrimaryGroup(String world, String player) {
+        if(CoreAPI.INSTANCE.getProfileByName(player) == null)
+            return "no_profile";
+
         return CoreAPI.INSTANCE.getProfileByName(player).getRank().getName();
     }
 

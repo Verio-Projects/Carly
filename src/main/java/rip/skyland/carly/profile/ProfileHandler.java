@@ -5,6 +5,8 @@ import com.mongodb.client.model.Filters;
 import lombok.Getter;
 import org.bson.Document;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
+import org.bukkit.permissions.PermissionAttachment;
 import rip.skyland.carly.Core;
 import rip.skyland.carly.Locale;
 import rip.skyland.carly.api.CoreAPI;
@@ -78,10 +80,19 @@ public class ProfileHandler implements IHandler {
                         Core.INSTANCE.getHandlerManager().getVaultHandler().getPermission().playerAddGroup(null, Bukkit.getOfflinePlayer(uuid), profile.getRank().getName());
                     }
                 }
+                System.out.println(Core.INSTANCE.getHandlerManager().getVaultHandler().getPermission().getPrimaryGroup(Bukkit.getPlayer(uuid)));
 
             }
-            System.out.println(Core.INSTANCE.getHandlerManager().getVaultHandler().getPermission().getPrimaryGroup(Bukkit.getPlayer(uuid)));
         }, 1L);
+
+        profile.getGrants().forEach(grant -> grant.getRank().getAllPermissions().forEach(permission -> {
+            Player player = Bukkit.getPlayer(profile.getUuid());
+            PermissionAttachment attachment = player.addAttachment(Core.INSTANCE.getPlugin());
+            attachment.setPermission(permission, true);
+
+            // some spigots don't automatically recalculate permissions after setting a permission, dont ask me why.
+            player.recalculatePermissions();
+        }));
 
         profiles.add(profile);
         return profile;
@@ -89,6 +100,15 @@ public class ProfileHandler implements IHandler {
 
     public void addGrant(IGrant grant, Profile profile) {
         profile.getGrants().add(grant);
+
+        grant.getRank().getAllPermissions().forEach(permission -> {
+            Player player = Bukkit.getPlayer(profile.getUuid());
+            PermissionAttachment attachment = player.addAttachment(Core.INSTANCE.getPlugin());
+            attachment.setPermission(permission, true);
+
+            // some spigots don't automatically recalculate permissions after setting a permission, dont ask me why.
+            player.recalculatePermissions();
+        });
     }
 
     public void unloadProfile(Profile profile) {

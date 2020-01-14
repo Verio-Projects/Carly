@@ -10,8 +10,11 @@ import org.bson.Document;
 import rip.skyland.carly.Core;
 import rip.skyland.carly.util.CC;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -33,6 +36,14 @@ public class Rank {
         Preconditions.checkArgument(document != null, "Rank with uuid does not exist");
 
         collection.deleteOne(document);
+    }
+
+    public List<String> getAllPermissions() {
+        List<String> permissions = new ArrayList<>();
+        permissions.addAll(permissions);
+        inheritances.stream().map(uuid -> Core.INSTANCE.getHandlerManager().getRankHandler().getRankByUuid(uuid).getPermissions()).collect(Collectors.toList()).forEach(permissions::addAll);
+
+        return permissions;
     }
 
     public String getFormattedPrefix() { return this.prefix.replace("_", " "); }

@@ -25,7 +25,7 @@ public class PunishmentCommands {
     private PunishmentHandler handler;
     
     @Command(names={"ban", "tempban", "tban"}, permission="core.ban")
-    public void executeBan(CommandSender sender, String player, @Param(name="reason", value="Not set -s") String reason) {
+    public void executeBan(CommandSender sender, String player, @Param(name="reason", value="perm Not set -s") String reason) {
         this.execute(sender, player, reason.substring(reason.split(" ")[0].length()), reason.substring(0, reason.split(" ")[0].length()), PunishmentType.BAN, false);
     }
 
@@ -35,7 +35,7 @@ public class PunishmentCommands {
     }
 
     @Command(names={"mute", "tempmute", "tmute"}, permission="core.mute")
-    public void executeMute(CommandSender sender, String player, @Param(name="reason", value="Not set -s") String reason) {
+    public void executeMute(CommandSender sender, String player, @Param(name="reason", value="perm Not set -s") String reason) {
         this.execute(sender, player, reason.substring(reason.split(" ")[0].length()), reason.substring(0, reason.split(" ")[0].length()), PunishmentType.MUTE, false);
     }
 
@@ -70,6 +70,8 @@ public class PunishmentCommands {
 
                 if(!containsDigit) {
                     reason = duration + reason;
+                    duration = "perm";
+                    System.out.println(duration + ", " + reason);
                 }
             }
 

@@ -51,7 +51,8 @@ public class ChatListener implements Listener {
 
         // check for active mute
         if(profile.getActivePunishment(PunishmentType.MUTE) != null) {
-            player.sendMessage(Locale.MUTED.getAsString().replace("%reason%", profile.getActivePunishment(PunishmentType.MUTE).getReason()));
+            player.sendMessage(CC.translate(Locale.MUTED.getAsString().replace("%reason%", profile.getActivePunishment(PunishmentType.MUTE).getReason().replace("-s", ""))));
+            event.setCancelled(true);
             return;
         }
 
