@@ -8,11 +8,11 @@ import rip.skyland.carly.Core;
 import rip.skyland.carly.Locale;
 import rip.skyland.carly.api.CoreAPI;
 import rip.skyland.carly.profile.Profile;
-import rip.skyland.carly.punishments.IPunishment;
-import rip.skyland.carly.punishments.PunishmentHandler;
-import rip.skyland.carly.punishments.PunishmentType;
-import rip.skyland.carly.punishments.impl.PermanentPunishment;
-import rip.skyland.carly.punishments.impl.TemporaryPunishment;
+import rip.skyland.carly.profile.punishments.IPunishment;
+import rip.skyland.carly.profile.punishments.PunishmentHandler;
+import rip.skyland.carly.profile.punishments.PunishmentType;
+import rip.skyland.carly.profile.punishments.impl.PermanentPunishment;
+import rip.skyland.carly.profile.punishments.impl.TemporaryPunishment;
 import rip.skyland.carly.util.CC;
 import rip.skyland.carly.util.TimeUtil;
 import rip.skyland.carly.util.WoolColor;
@@ -55,8 +55,8 @@ public class HistoryCommand {
             @Override
             public List<Button> getButtons() {
                 return Arrays.asList(
-                        getMainMenuButton(2, PunishmentType.BAN, target, this),
-                        getMainMenuButton(5, PunishmentType.MUTE, target, this)
+                        getMainMenuButton(2, PunishmentType.BAN, target),
+                        getMainMenuButton(6, PunishmentType.MUTE, target)
                 );
             }
 
@@ -120,13 +120,13 @@ public class HistoryCommand {
         };
     }
 
-    private Button getMainMenuButton(int index, PunishmentType type, Profile profile, Menu originalMenu) {
+    private Button getMainMenuButton(int index, PunishmentType type, Profile profile) {
         List<String> strings = new ArrayList<>();
         Locale.HISTORY_MAIN_BUTTON.getAsStringList().forEach(string -> strings.add(string
                 .replace("%active%", "" + handler.getPunishments().stream().filter(punishment -> punishment.getTargetUuid().equals(profile.getUuid()) && punishment.getPunishmentType().equals(type) && punishment.isActive()).count())
                 .replace("%inactive%", "" + handler.getPunishments().stream().filter(punishment -> punishment.getTargetUuid().equals(profile.getUuid()) &&  punishment.getPunishmentType().equals(type) && !punishment.isActive()).count())));
 
-        return new Button(index, Material.WOOL, CC.ORANGE.toString() + type.name().charAt(0) + type.name().toLowerCase().substring(1), strings, WoolColor.getWoolColor(CC.ORANGE), player -> {
+        return new Button(index, Material.WOOL, CC.ORANGE.toString() + type.name().charAt(0) + type.name().toLowerCase().substring(1) + 's', strings, WoolColor.getWoolColor(CC.ORANGE), player -> {
             player.closeInventory();
             Core.INSTANCE.getMenuHandler().createMenu(getPunishmentMenu(player, type, profile));
         });

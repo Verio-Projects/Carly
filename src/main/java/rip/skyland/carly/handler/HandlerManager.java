@@ -4,9 +4,9 @@ import lombok.Getter;
 import org.bukkit.Bukkit;
 import rip.skyland.carly.Core;
 import rip.skyland.carly.handler.impl.ServerHandler;
-import rip.skyland.carly.handler.impl.vault.VaultHandler;
+import rip.skyland.carly.hooks.vault.VaultHandler;
 import rip.skyland.carly.profile.ProfileHandler;
-import rip.skyland.carly.punishments.PunishmentHandler;
+import rip.skyland.carly.profile.punishments.PunishmentHandler;
 import rip.skyland.carly.rank.RankHandler;
 import rip.skyland.carly.util.menu.MenuHandler;
 

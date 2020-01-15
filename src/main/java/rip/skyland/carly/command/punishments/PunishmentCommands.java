@@ -1,17 +1,15 @@
 package rip.skyland.carly.command.punishments;
 
 import lombok.AllArgsConstructor;
-import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import rip.skyland.carly.Core;
 import rip.skyland.carly.api.CoreAPI;
 import rip.skyland.carly.profile.Profile;
-import rip.skyland.carly.punishments.IPunishment;
-import rip.skyland.carly.punishments.PunishmentHandler;
-import rip.skyland.carly.punishments.PunishmentType;
-import rip.skyland.carly.punishments.impl.PermanentPunishment;
-import rip.skyland.carly.punishments.impl.TemporaryPunishment;
+import rip.skyland.carly.profile.punishments.IPunishment;
+import rip.skyland.carly.profile.punishments.PunishmentHandler;
+import rip.skyland.carly.profile.punishments.PunishmentType;
+import rip.skyland.carly.profile.punishments.impl.PermanentPunishment;
+import rip.skyland.carly.profile.punishments.impl.TemporaryPunishment;
 import rip.skyland.carly.util.CC;
 import rip.skyland.carly.util.TimeUtil;
 import rip.skyland.carly.util.command.annotation.Command;

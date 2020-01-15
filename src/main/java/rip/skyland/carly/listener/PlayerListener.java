@@ -4,18 +4,14 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
-import rip.skyland.carly.Core;
 import rip.skyland.carly.Locale;
 import rip.skyland.carly.profile.Profile;
 import rip.skyland.carly.profile.ProfileHandler;
-import rip.skyland.carly.punishments.PunishmentType;
-import rip.skyland.carly.rank.grants.GrantProcedure;
+import rip.skyland.carly.profile.punishments.PunishmentType;
 import rip.skyland.carly.util.CC;
 
 @Getter

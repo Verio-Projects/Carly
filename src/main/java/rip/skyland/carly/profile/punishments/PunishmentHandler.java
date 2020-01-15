@@ -1,4 +1,4 @@
-package rip.skyland.carly.punishments;
+package rip.skyland.carly.profile.punishments;
 
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.ReplaceOptions;
@@ -6,11 +6,10 @@ import lombok.Getter;
 import org.bson.Document;
 import rip.skyland.carly.Core;
 import rip.skyland.carly.handler.IHandler;
-import rip.skyland.carly.punishments.impl.PermanentPunishment;
-import rip.skyland.carly.punishments.impl.TemporaryPunishment;
-import rip.skyland.carly.punishments.packet.PunishPlayerPacket;
-import rip.skyland.carly.punishments.packet.UnpunishPlayerPacket;
-import rip.skyland.carly.util.DocumentBuilder;
+import rip.skyland.carly.profile.punishments.impl.PermanentPunishment;
+import rip.skyland.carly.profile.punishments.impl.TemporaryPunishment;
+import rip.skyland.carly.profile.punishments.packet.PunishPlayerPacket;
+import rip.skyland.carly.profile.punishments.packet.UnpunishPlayerPacket;
 
 import java.util.ArrayList;
 import java.util.List;

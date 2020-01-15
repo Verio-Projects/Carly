@@ -1,6 +1,5 @@
 package rip.skyland.carly.command;
 
-import com.sun.jdi.connect.Connector;
 import lombok.AllArgsConstructor;
 import org.bukkit.command.CommandSender;
 import rip.skyland.carly.Locale;
@@ -11,6 +10,7 @@ import rip.skyland.carly.util.command.annotation.Command;
 import rip.skyland.carly.util.command.annotation.Param;
 
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 public class RankCommand {
@@ -180,6 +180,8 @@ public class RankCommand {
                 .replace("%uuid%", rank.getUuid().toString())
                 .replace("%permissionsAmount%", rank.getPermissions().size() + "")
                 .replace("%permissions%", String.join(", ", rank.getPermissions()))
+                .replace("%inheritsAmount%", rank.getInheritances().size() + "")
+                .replace("%inheritances%", rank.getInheritances().stream().map(uuid -> handler.getRankByUuid(uuid).getName()).collect(Collectors.joining(", ")))
                 .replace("%default%", rank.getName().equalsIgnoreCase("Default") + ""))));
 
     }

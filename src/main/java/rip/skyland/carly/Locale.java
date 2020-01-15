@@ -30,6 +30,7 @@ public enum Locale {
             "&c/rank weight <name> <weight>",
             "&c/rank color <name> <color> <bold> <italic>",
             "&c/rank permission <name> <add|remove> <permission>",
+            "&c/rank inherits <name> <add|remove> <inherit>",
             "&c/rank info <name>",
             "&9&m" + StringUtils.repeat("-", 39)
     )),
@@ -56,6 +57,7 @@ public enum Locale {
             "&6-> &eWeight: &c%weight%",
             "",
             "&6-> &ePermissions &6(%permissionsAmount%)&e: &c%permissions%",
+            "&6-> &eInheritances &6(%inheritsAmount%)&e: &c%inheritances%",
             "&9&m" + StringUtils.repeat("-", 39)
             )),
 

@@ -1,4 +1,4 @@
-package rip.skyland.carly.punishments;
+package rip.skyland.carly.profile.punishments;
 
 import com.google.gson.JsonObject;
 

@@ -10,7 +10,7 @@ import rip.skyland.carly.Locale;
 import rip.skyland.carly.handler.impl.ServerHandler;
 import rip.skyland.carly.profile.Profile;
 import rip.skyland.carly.profile.ProfileHandler;
-import rip.skyland.carly.punishments.PunishmentType;
+import rip.skyland.carly.profile.punishments.PunishmentType;
 import rip.skyland.carly.rank.grants.GrantProcedure;
 import rip.skyland.carly.util.CC;
 

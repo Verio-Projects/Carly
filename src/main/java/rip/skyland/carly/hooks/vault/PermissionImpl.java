@@ -1,4 +1,4 @@
-package rip.skyland.carly.handler.impl.vault;
+package rip.skyland.carly.hooks.vault;
 
 import lombok.Getter;
 import net.milkbowl.vault.permission.Permission;

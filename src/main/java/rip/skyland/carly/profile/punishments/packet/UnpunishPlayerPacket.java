@@ -1,4 +1,4 @@
-package rip.skyland.carly.punishments.packet;
+package rip.skyland.carly.profile.punishments.packet;
 
 import com.mongodb.client.model.Filters;
 import lombok.AllArgsConstructor;
@@ -7,8 +7,8 @@ import org.bukkit.Bukkit;
 import rip.skyland.carly.Core;
 import rip.skyland.carly.Locale;
 import rip.skyland.carly.api.CoreAPI;
-import rip.skyland.carly.punishments.IPunishment;
-import rip.skyland.carly.punishments.PunishmentType;
+import rip.skyland.carly.profile.punishments.IPunishment;
+import rip.skyland.carly.profile.punishments.PunishmentType;
 import rip.skyland.carly.util.CC;
 import rip.skyland.carly.util.database.redis.packet.RedisPacket;
 

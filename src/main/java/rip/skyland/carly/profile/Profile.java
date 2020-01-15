@@ -3,9 +3,9 @@ package rip.skyland.carly.profile;
 import lombok.Getter;
 import lombok.Setter;
 import rip.skyland.carly.Core;
-import rip.skyland.carly.punishments.IPunishment;
-import rip.skyland.carly.punishments.PunishmentType;
-import rip.skyland.carly.punishments.impl.TemporaryPunishment;
+import rip.skyland.carly.profile.punishments.IPunishment;
+import rip.skyland.carly.profile.punishments.PunishmentType;
+import rip.skyland.carly.profile.punishments.impl.TemporaryPunishment;
 import rip.skyland.carly.rank.Rank;
 import rip.skyland.carly.rank.grants.IGrant;
 
