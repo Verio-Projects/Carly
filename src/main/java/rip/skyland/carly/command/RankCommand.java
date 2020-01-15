@@ -25,7 +25,7 @@ public class RankCommand {
     @Command(names = "rank create", permission = "core.rank.create")
     public void executeCreate(CommandSender sender, String name) {
         if (handler.getRankByName(name) != null) {
-            sender.sendMessage(CC.translate(Locale.RANK_ALREADY_EXISTS.getAsString()));
+            sender.sendMessage(CC.translate(Locale.ERROR_RANK_ALREADY_EXISTS.getAsString()));
             return;
         }
 
@@ -36,7 +36,7 @@ public class RankCommand {
     @Command(names = "rank delete", permission = "core.rank.create")
     public void executeDelete(CommandSender sender, String name) {
         if (handler.getRankByName(name) == null) {
-            sender.sendMessage(CC.translate(Locale.RANK_DOES_NOT_EXIST.getAsString()));
+            sender.sendMessage(CC.translate(Locale.ERROR_RANK_DOES_NOT_EXIST.getAsString()));
             return;
         }
 
@@ -50,7 +50,7 @@ public class RankCommand {
         Rank rank = handler.getRankByName(name);
 
         if (rank == null) {
-            sender.sendMessage(CC.translate(Locale.RANK_DOES_NOT_EXIST.getAsString()));
+            sender.sendMessage(CC.translate(Locale.ERROR_RANK_DOES_NOT_EXIST.getAsString()));
             return;
         }
 
@@ -64,7 +64,7 @@ public class RankCommand {
         Rank rank = handler.getRankByName(name);
 
         if (rank == null) {
-            sender.sendMessage(CC.translate(Locale.RANK_DOES_NOT_EXIST.getAsString()));
+            sender.sendMessage(CC.translate(Locale.ERROR_RANK_DOES_NOT_EXIST.getAsString()));
             return;
         }
 
@@ -78,7 +78,7 @@ public class RankCommand {
         Rank rank = handler.getRankByName(name);
 
         if (rank == null) {
-            sender.sendMessage(CC.translate(Locale.RANK_DOES_NOT_EXIST.getAsString()));
+            sender.sendMessage(CC.translate(Locale.ERROR_RANK_DOES_NOT_EXIST.getAsString()));
             return;
         }
 
@@ -92,7 +92,7 @@ public class RankCommand {
         Rank rank = handler.getRankByName(name);
 
         if (rank == null) {
-            sender.sendMessage(CC.translate(Locale.RANK_DOES_NOT_EXIST.getAsString()));
+            sender.sendMessage(CC.translate(Locale.ERROR_RANK_DOES_NOT_EXIST.getAsString()));
             return;
         }
 
@@ -122,7 +122,7 @@ public class RankCommand {
         Rank rank = handler.getRankByName(name);
 
         if (rank == null) {
-            sender.sendMessage(CC.translate(Locale.RANK_DOES_NOT_EXIST.getAsString()));
+            sender.sendMessage(CC.translate(Locale.ERROR_RANK_DOES_NOT_EXIST.getAsString()));
             return;
         }
 
@@ -142,7 +142,7 @@ public class RankCommand {
         Rank inheritRank = handler.getRankByName(inherit);
 
         if (rank == null || inheritRank == null) {
-            sender.sendMessage(CC.translate(Locale.RANK_DOES_NOT_EXIST.getAsString()));
+            sender.sendMessage(CC.translate(Locale.ERROR_RANK_DOES_NOT_EXIST.getAsString()));
             return;
         }
 
@@ -168,7 +168,7 @@ public class RankCommand {
         Rank rank = handler.getRankByName(name);
 
         if (rank == null) {
-            sender.sendMessage(CC.translate(Locale.RANK_DOES_NOT_EXIST.getAsString()));
+            sender.sendMessage(CC.translate(Locale.ERROR_RANK_DOES_NOT_EXIST.getAsString()));
             return;
         }
 

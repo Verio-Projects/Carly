@@ -83,6 +83,11 @@ public class RankHandler implements IHandler {
         ranks.sort(Comparator.comparingInt(Rank::getWeight));
         Collections.reverse(ranks);
 
+
+        if(Core.INSTANCE.getHandlerManager().getVaultHandler() != null) {
+            Core.INSTANCE.getHandlerManager().getVaultHandler().getChat().setGroupPrefix((String) null, rank.getName(), rank.getDisplayName());
+        }
+
         return rank;
     }
 

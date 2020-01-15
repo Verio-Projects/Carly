@@ -20,6 +20,18 @@ public enum Locale {
     REDIS_PASSWORD("redis.auth.password", ""),
     REDIS_CHANNEL("redis.channel", "carly"),
 
+    ERROR_RANK_ALREADY_EXISTS("rank.error.already_exists", "&cThat rank already exists."),
+    ERROR_RANK_DOES_NOT_EXIST("rank.error.does_not_exist", "&cThat rank does not exist."),
+    ERROR_MORE_AIR("general.more.error.air", "&6Cannot give you more of &fAIR"),
+
+    MORE_GAVE_MORE("general.more.gave_more", "&6There you go"),
+    FED_PLAYER("general.fed.player", "&6You have fed &f%player%"),
+    FED_YOURSELF("general.fed.yourself", "&6You have set your own food level to &f20"),
+    HEALED_PLAYER("general.healed.player", "&6You have healed %player%"),
+    HEALED_YOURSELF("general.healed.yourself", "&6You have set your own health to &f20"),
+    GAVE_PLAYER("general.gave.player", "&6You have given &f%player% &6%amount of &f%item%"),
+    GAVE_YOURSELF("general.gave.yourself", "&6You have given &fyourself &6%amount of &f%item%"),
+
 
     RANK_HELP("rank.help", Arrays.asList(
             "&9&m" + StringUtils.repeat("-", 39),
@@ -34,8 +46,6 @@ public enum Locale {
             "&c/rank info <name>",
             "&9&m" + StringUtils.repeat("-", 39)
     )),
-    RANK_ALREADY_EXISTS("rank.error.already_exists", "&cThat rank already exists."),
-    RANK_DOES_NOT_EXIST("rank.error.does_not_exist", "&cThat rank does not exist."),
     RANK_CREATED("rank.created_rank", "&aYou have created a rank."),
     RANK_DELETED("rank.deleted_rank", "&cYou have deleted a rank."),
     RANK_SET_PREFIX("rank.set_prefix", "&eYou have set the prefix of a rank"),

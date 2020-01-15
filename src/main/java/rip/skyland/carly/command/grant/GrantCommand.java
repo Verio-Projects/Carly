@@ -107,7 +107,7 @@ public class GrantCommand {
             Rank rank = Core.INSTANCE.getHandlerManager().getRankHandler().getRankByName(rankName);
 
             if (rank == null) {
-                sender.sendMessage(CC.translate(Locale.RANK_DOES_NOT_EXIST.getAsString()));
+                sender.sendMessage(CC.translate(Locale.ERROR_RANK_DOES_NOT_EXIST.getAsString()));
                 return;
             }
 

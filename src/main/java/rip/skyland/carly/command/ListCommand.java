@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 public class ListCommand {
 
-    @Command(names="list")
+    @Command(names={"list", "who", "ewho"})
     public void execute(CommandSender sender) {
         String ranks = Core.INSTANCE.getHandlerManager().getRankHandler().getRanks().stream()
                 // reversed sort by rank's weight

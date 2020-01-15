@@ -5,6 +5,8 @@ import lombok.Setter;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import rip.skyland.carly.command.*;
+import rip.skyland.carly.command.essentials.HealthCommands;
+import rip.skyland.carly.command.essentials.ItemCommands;
 import rip.skyland.carly.command.grant.GrantCommand;
 import rip.skyland.carly.command.punishments.HistoryCommand;
 import rip.skyland.carly.command.punishments.PunishmentCommands;
@@ -58,6 +60,8 @@ public enum Core {
                 new ChatCommands(handlerManager.getServerHandler()),
                 new GamemodeCommand(),
                 new PingCommand(),
+                new HealthCommands(),
+                new ItemCommands(),
                 new HistoryCommand(handlerManager.getPunishmentHandler()));
 
         // register listeners

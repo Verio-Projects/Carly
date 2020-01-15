@@ -1,6 +1,7 @@
 package rip.skyland.carly.hooks.vault;
 
 import lombok.Getter;
+import net.milkbowl.vault.chat.Chat;
 import net.milkbowl.vault.permission.Permission;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.RegisteredServiceProvider;
@@ -12,6 +13,7 @@ import rip.skyland.carly.handler.IHandler;
 public class VaultHandler implements IHandler {
 
     private Permission permission;
+    private Chat chat;
 
     @Override
     public void load() {
@@ -20,6 +22,12 @@ public class VaultHandler implements IHandler {
 
         if (permissionProvider != null) {
             permission = permissionProvider.getProvider();
+        }
+
+        RegisteredServiceProvider<Chat> chatProvider = Bukkit.getServer().getServicesManager().getRegistration(net.milkbowl.vault.chat.Chat.class);
+
+        if (chatProvider != null) {
+            chat = chatProvider.getProvider();
         }
     }
 
