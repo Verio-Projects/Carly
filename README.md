@@ -16,7 +16,7 @@ Requirements:
   * [Maven](https://maven.apache.org/)
  
  Compilation:
- * Clone the repository using ``git clone https://github.com/NotNV6/Carly``
+ * Clone the repository using ``git clone https://github.com/Herkina/Carly``
  * Open git bash inside of the root folder
  * Execute ``mvn clean install``
  * The jar should be located in ~/target/
